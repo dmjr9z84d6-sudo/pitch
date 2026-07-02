@@ -12,7 +12,9 @@
 import React from "react";
 import { DARK, LIGHT, ACCENT, RAD, DESKTOP_MIN_WIDTH } from "./tokens.js";
 import { KARTEN, AUFTAKT_HELLDUNKEL, MARKE } from "./inhalte.js";
+import { stilTexte } from "./stil.js";
 import Lichtschalter from "./Lichtschalter.jsx";
+import Vorschau from "./Vorschau.jsx";
 
 // System-Präferenz Hell/Dunkel auslesen (Start-Grundeinstellung).
 function systemDunkel() {
@@ -27,6 +29,7 @@ export default function PitchApp() {
   const [modus, setModus] = React.useState(systemDunkel() ? "dunkel" : "hell");
   const t = modus === "dunkel" ? DARK : LIGHT;
   const accent = ACCENT;
+  const stil = stilTexte(t, accent);
 
   // Aktuelle Karte. 0 = Lichtschalter-Auftakt, dann KARTEN[0..].
   // Gesamtzahl der Screens = 1 (Lichtschalter) + KARTEN.length.
@@ -98,93 +101,112 @@ export default function PitchApp() {
         ) : <div style={{ height: 36 }} />}
       </div>
 
-      {/* Bühne: aktueller Screen */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 28px", minHeight: 0 }}>
+      {/* Bühne: aktueller Screen. ALLE Screens echt vertikal zentriert, aber
+          optisch einen Tick nach oben (paddingBottom hebt die Mitte an) — wirkt
+          sonst zu tief. Gleiche Logik für Handy und Monitor. */}
+      <div style={{
+        flex: 1, display: "flex", flexDirection: "column",
+        justifyContent: "center", alignItems: "center",
+        padding: "0 28px", paddingBottom: "8vh",
+        minHeight: 0, position: "relative"
+      }}>
         {screen === 0
-          ? <AuftaktHellDunkel modus={modus} onWaehle={setModus} onWeiter={vor} t={t} accent={accent} />
-          : <KartenScreen karte={KARTEN[screen - 1]} t={t} accent={accent} />}
+          ? <AuftaktHellDunkel modus={modus} onWaehle={setModus} t={t} accent={accent} stil={stil} />
+          : <KartenScreen karte={KARTEN[screen - 1]} t={t} accent={accent} stil={stil} />}
+
+        {/* Weiter — nur Pfeil in Cyan (Balkenfarbe), kein Kreis. Leicht,
+            schwebend. Auf allen Folien außer der letzten. Wischen bleibt zusätzlich. */}
+        {screen < gesamt - 1 ? (
+          <button
+            onClick={vor}
+            aria-label="Weiter"
+            style={{
+              position: "absolute", right: "clamp(12px, 5vw, 52px)", bottom: 6,
+              background: "transparent", border: "none",
+              color: accent, fontSize: 34, lineHeight: 1,
+              padding: 12, cursor: "pointer",
+              WebkitTapHighlightColor: "transparent"
+            }}
+          >
+            →
+          </button>
+        ) : null}
       </div>
 
-      {/* Fußzeile: Seiten-Punkte */}
-      <div style={{ display: "flex", justifyContent: "center", gap: 8, padding: "0 0 max(28px, env(safe-area-inset-bottom))" }}>
-        {Array.from({ length: gesamt }).map((_, i) => {
-          const aktiv = i === screen;
-          return (
-            <button
-              key={i}
-              onClick={() => setScreen(i)}
-              aria-label={"Zu Abschnitt " + (i + 1)}
-              style={{
-                width: aktiv ? 22 : 8, height: 8, padding: 0,
-                borderRadius: RAD.pill, border: "none",
-                background: aktiv ? accent : t.border,
-                cursor: "pointer", transition: "width 260ms ease, background 260ms ease",
-                WebkitTapHighlightColor: "transparent"
-              }}
-            />
-          );
-        })}
+      {/* Fußzeile: dezenter Fortschrittsstrich */}
+      <div style={{ padding: "0 28px max(26px, env(safe-area-inset-bottom))" }}>
+        <div style={{ maxWidth: 560, margin: "0 auto", height: 2, background: t.border, borderRadius: RAD.pill, overflow: "hidden" }}>
+          <div style={{
+            height: "100%", background: accent, borderRadius: RAD.pill,
+            width: ((screen + 1) / gesamt * 100) + "%",
+            transition: "width 340ms ease"
+          }} />
+        </div>
       </div>
     </div>
   );
 }
 
-// ── Auftakt-Screen: Lichtschalter + Frage + aktive Beschreibung ─────────────
-function AuftaktHellDunkel({ modus, onWaehle, onWeiter, t, accent }) {
+// ── Auftakt-Screen: Lichtschalter als Star. Überschrift oben, Schalter Mitte,
+//    Beschreibung darunter (ohne zweiten Mond). Der Weiter-Pfeil liegt als
+//    runder Button auf Bühnen-Ebene unten rechts (siehe PitchApp). ──────────
+function AuftaktHellDunkel({ modus, onWaehle, t, accent, stil }) {
   const istDunkel = modus === "dunkel";
   const hd = AUFTAKT_HELLDUNKEL;
   const aktiv = istDunkel ? hd.dunkel : hd.hell;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 56 }}>
-      <div style={{ fontSize: 27, fontWeight: 600, letterSpacing: "-0.01em", textAlign: "center" }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+      {/* Frage — edel, nicht wuchtig */}
+      <div style={{ ...stil.frage, textAlign: "center", marginBottom: 64 }}>
         {hd.frage}
       </div>
 
-      <Lichtschalter modus={modus} onWaehle={onWaehle} t={t} accent={accent} />
+      {/* Der Star: Schalter */}
+      <Lichtschalter modus={modus} onWaehle={onWaehle} t={t} accent={accent} gross />
 
-      {/* Nur die aktive Beschreibung. Feste Höhe → Button springt nicht.
-          key erzwingt sanftes Neu-Einblenden beim Wechsel. */}
-      <div style={{ height: 108, display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
-        <div
-          key={istDunkel ? "d" : "h"}
-          style={{ textAlign: "center", maxWidth: 260, animation: "pitchFade 420ms ease" }}
-        >
-          <div style={{ fontSize: 30, marginBottom: 10 }}>{aktiv.symbol}</div>
-          <div style={{ fontSize: 19, fontWeight: 600, color: t.text }}>{aktiv.titel}</div>
-          <div style={{ fontSize: 15, color: t.sub, lineHeight: 1.5, marginTop: 4 }}>{aktiv.zeile}</div>
+      {/* Beschreibung — nur Text, KEIN zweiter Mond. Feste Höhe für Ruhe. */}
+      <div style={{ height: 86, marginTop: 44, display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
+        <div key={istDunkel ? "d" : "h"} style={{ textAlign: "center", animation: "pitchFade 420ms ease" }}>
+          <div style={stil.beschrTitel}>{aktiv.titel}</div>
+          <div style={stil.beschrZeile}>{aktiv.zeile}</div>
         </div>
       </div>
-
-      <button
-        onClick={onWeiter}
-        style={{
-          background: accent, color: "#FFFFFF",
-          border: "none", borderRadius: RAD.xl,
-          fontSize: 17, fontWeight: 600, padding: "15px 46px",
-          cursor: "pointer", WebkitTapHighlightColor: "transparent",
-          boxShadow: "0 6px 20px rgba(14,116,144,0.30)"
-        }}
-      >
-        Weiter
-      </button>
     </div>
   );
 }
 
+// ── Wortmarke: hebt jedes „AllesDa" im Text farbig hervor (§76: ein Aussehen
+//    für die Marke, egal wo sie im Text steht). Gibt ein Array aus Text +
+//    farbigen <span> zurück. Kein ?. (iOS-Regel).
+function mitWortmarke(text, accent) {
+  if (!text || text.indexOf("AllesDa") === -1) return text;
+  const teile = text.split("AllesDa");
+  const out = [];
+  for (let i = 0; i < teile.length; i++) {
+    if (teile[i]) out.push(teile[i]);
+    if (i < teile.length - 1) {
+      out.push(
+        <span key={"m" + i} style={{ color: accent, fontWeight: 700 }}>AllesDa</span>
+      );
+    }
+  }
+  return out;
+}
+
 // ── Inhalts-Screen: rendert eine Folie je nach Typ ──────────────────────────
-function KartenScreen({ karte, t, accent }) {
+function KartenScreen({ karte, t, accent, stil }) {
   const typ = karte.typ;
 
   if (typ === "auftakt") {
     return (
-      <div style={{ maxWidth: 620, margin: "0 auto" }}>
-        <div style={{ marginBottom: 26 }}>
-          <span style={{ fontSize: 42, fontWeight: 700, color: accent, letterSpacing: "-0.02em" }}>{MARKE.name}</span>
-          <span style={{ fontSize: 42, fontWeight: 400, color: t.muted, letterSpacing: "-0.02em" }}>{MARKE.endung}</span>
+      <div style={{ maxWidth: 560, margin: "0 auto" }}>
+        <div style={{ marginBottom: 28 }}>
+          <span style={stil.markeName}>{MARKE.name}</span>
+          <span style={stil.markeEndung}>{MARKE.endung}</span>
         </div>
         {karte.zeilen.map((z, i) => (
-          <div key={i} style={{ fontSize: 25, fontWeight: 500, lineHeight: 1.45, color: t.text }}>{z}</div>
+          <div key={i} style={stil.auftaktZeile}>{z}</div>
         ))}
       </div>
     );
@@ -192,18 +214,18 @@ function KartenScreen({ karte, t, accent }) {
 
   if (typ === "abschluss") {
     return (
-      <div style={{ maxWidth: 520, margin: "0 auto", textAlign: "center" }}>
+      <div style={{ maxWidth: 520, margin: "0 auto", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
         {karte.zeilen.map((z, i) => (
-          <div key={i} style={{ fontSize: i === 0 ? 23 : 18, fontWeight: i === 0 ? 600 : 400, color: i === 0 ? t.text : t.sub, lineHeight: 1.55, marginBottom: 16 }}>{z}</div>
+          <div key={i} style={{ ...(i === 0 ? stil.abschlussStark : stil.abschlussSub), marginBottom: 16 }}>{z}</div>
         ))}
         <button
           onClick={() => { /* Später: Sprung in die Spielwiese (Stufe 2). */ }}
           style={{
-            marginTop: 26, background: accent, color: "#FFFFFF",
+            marginTop: 24, background: accent, color: "#FFFFFF",
             border: "none", borderRadius: RAD.xl,
-            fontSize: 18, fontWeight: 600, padding: "16px 40px",
+            fontSize: 17, fontWeight: 600, padding: "15px 38px",
             cursor: "pointer", WebkitTapHighlightColor: "transparent",
-            boxShadow: "0 8px 24px rgba(14,116,144,0.35)"
+            boxShadow: "0 6px 18px rgba(14,116,144,0.28)"
           }}
         >
           {karte.knopf}
@@ -216,39 +238,42 @@ function KartenScreen({ karte, t, accent }) {
   const istDarstellung = typ === "darstellung";
   const istStark = typ === "stark";
 
-  return (
-    <div style={{ maxWidth: 600, margin: "0 auto", width: "100%" }}>
-      {karte.eyebrow ? (
-        <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.09em", textTransform: "uppercase", color: accent, marginBottom: 22 }}>
-          {karte.eyebrow}
-        </div>
-      ) : null}
+  // Die frühere Überzeile wird zur Schluss-Aussage UNTER dem Text (Dramaturgie:
+  // erst der Inhalt/Beweis, dann die Aussage als leise Pointe). Gleiche Optik
+  // wie die alte eyebrow, nur Abstand nach oben statt unten. Text-Folien nutzen
+  // `eyebrow`, stark-Folien optional `aussage`.
+  const schlussText = karte.eyebrow || karte.aussage || null;
+  const schlussStil = { ...stil.eyebrow, marginBottom: 0, marginTop: 28 };
+  const schluss = schlussText ? (
+    <div style={schlussStil}>{schlussText}</div>
+  ) : null;
 
+  return (
+    <div style={{ maxWidth: 560, margin: "0 auto", width: "100%" }}>
       {istStark ? (
-        <div style={{ fontSize: 27, fontWeight: 600, lineHeight: 1.4, color: t.text, letterSpacing: "-0.01em" }}>
-          {karte.stark}
-        </div>
+        <div style={stil.stark}>{mitWortmarke(karte.stark, accent)}</div>
       ) : null}
 
       {karte.text ? (
-        <p style={{ fontSize: 20, lineHeight: 1.6, color: t.text, margin: 0, fontWeight: 400 }}>{karte.text}</p>
+        <p style={{ ...stil.text, margin: 0 }}>{mitWortmarke(karte.text, accent)}</p>
       ) : null}
 
       {karte.nachsatz ? (
-        <p style={{ fontSize: 16.5, lineHeight: 1.6, color: t.sub, margin: "22px 0 0" }}>{karte.nachsatz}</p>
+        <p style={{ ...stil.nachsatz, marginBottom: 0 }}>{karte.nachsatz}</p>
       ) : null}
 
+      {/* Schluss-Aussage — bei darstellung VOR der Vorschau (als Überleitung),
+          sonst ganz am Ende. */}
       {istDarstellung ? (
-        <div style={{
-          marginTop: 28, border: `1px dashed ${t.border}`, borderRadius: RAD.lg,
-          padding: "28px 20px", textAlign: "center", color: t.muted, fontSize: 14.5
-        }}>
-          Hier erscheint die Live-Vorschau: Karten ⇆ Liste
-          <div style={{ fontSize: 13, marginTop: 6, color: t.muted }}>
-            (echte AllesDa-Bausteine — kommt im nächsten Bau-Schritt)
+        <>
+          {schluss}
+          <div style={{ marginTop: 22 }}>
+            <Vorschau t={t} accent={accent} />
           </div>
-        </div>
-      ) : null}
+        </>
+      ) : (
+        schluss
+      )}
     </div>
   );
 }
