@@ -4,6 +4,10 @@
 // Farbwelt spricht wie die App selbst (Cyan-Akzent, Dark/Light-Paletten, Radien).
 // ═══════════════════════════════════════════════════════════════════════════
 
+// Pitch-Version — bei jeder Lieferung hochzählen. Dient der Cache-Kontrolle
+// (unauffällig unten links sichtbar).
+export const PITCH_VERSION = "0.1";
+
 export const DARK = {
   bg: "#07070C", surface: "#0D0D16", card: "#13131F", border: "#252540",
   text: "#F0F0FF", sub: "#A0A0CD", muted: "#7575A0", header: "#0D0D14"

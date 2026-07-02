@@ -10,7 +10,7 @@
 // als const, dvh statt vh, Inputs ≥16px.
 // ═══════════════════════════════════════════════════════════════════════════
 import React from "react";
-import { DARK, LIGHT, ACCENT, RAD, DESKTOP_MIN_WIDTH } from "./tokens.js";
+import { DARK, LIGHT, ACCENT, RAD, DESKTOP_MIN_WIDTH, PITCH_VERSION } from "./tokens.js";
 import { KARTEN, AUFTAKT_HELLDUNKEL, MARKE } from "./inhalte.js";
 import { stilTexte } from "./stil.js";
 import Lichtschalter from "./Lichtschalter.jsx";
@@ -85,6 +85,12 @@ export default function PitchApp() {
 
   return (
     <div style={buehneStyle} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      {/* Versionsnummer — unauffällig unten links, zur Cache-Kontrolle. */}
+      <div style={{
+        position: "absolute", left: 10, bottom: 6,
+        fontSize: 10, color: t.muted, opacity: 0.5,
+        letterSpacing: "0.02em", pointerEvents: "none", userSelect: "none"
+      }}>v{PITCH_VERSION}</div>
       {/* Kopfzeile: Überspringen */}
       <div style={{ display: "flex", justifyContent: "flex-end", padding: "max(16px, env(safe-area-inset-top)) 18px 0" }}>
         {zeigeSkip ? (
