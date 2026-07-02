@@ -106,20 +106,17 @@ export default function PitchApp() {
           ? <AuftaktHellDunkel modus={modus} onWaehle={setModus} t={t} accent={accent} stil={stil} />
           : <KartenScreen karte={KARTEN[screen - 1]} t={t} accent={accent} stil={stil} />}
 
-        {/* Runder Pfeil-Button — auf allen Folien außer der letzten (dort
-            steht der „Selbst ausprobieren"-Button). Durchgängiger Weg für
-            Handy UND Monitor. Wischen bleibt am Handy zusätzlich möglich. */}
+        {/* Weiter — nur Pfeil in Cyan (Balkenfarbe), kein Kreis. Leicht,
+            schwebend. Auf allen Folien außer der letzten. Wischen bleibt zusätzlich. */}
         {screen < gesamt - 1 ? (
           <button
             onClick={vor}
             aria-label="Weiter"
             style={{
-              position: "absolute", right: "clamp(8px, 4vw, 48px)", bottom: 8,
-              width: 56, height: 56, borderRadius: RAD.full,
-              background: accent, color: "#FFFFFF", border: "none",
-              fontSize: 24, lineHeight: 1, cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+              position: "absolute", right: "clamp(12px, 5vw, 52px)", bottom: 6,
+              background: "transparent", border: "none",
+              color: accent, fontSize: 34, lineHeight: 1,
+              padding: 12, cursor: "pointer",
               WebkitTapHighlightColor: "transparent"
             }}
           >

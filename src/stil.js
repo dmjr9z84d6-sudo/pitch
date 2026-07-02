@@ -33,9 +33,9 @@ export function stilTexte(t, accent) {
       fontSize: 15, fontWeight: 400, lineHeight: 1.65,
       color: t.sub, marginTop: 24, maxWidth: "34ch"
     },
-    // Marke (Auftakt).
-    markeName: { fontSize: 34, fontWeight: 700, letterSpacing: "-0.02em", color: accent },
-    markeEndung: { fontSize: 34, fontWeight: 300, letterSpacing: "-0.02em", color: t.muted },
+    // Marke (Auftakt) — größer, Name kräftig in Akzentfarbe.
+    markeName: { fontSize: 42, fontWeight: 700, letterSpacing: "-0.02em", color: accent },
+    markeEndung: { fontSize: 42, fontWeight: 300, letterSpacing: "-0.02em", color: t.muted },
     // Auftakt-Zeilen (unter der Marke).
     auftaktZeile: { fontSize: 21, fontWeight: 400, lineHeight: 1.5, color: t.text, opacity: 0.9 },
     // Frage über dem Schalter — edel, nicht wuchtig.
