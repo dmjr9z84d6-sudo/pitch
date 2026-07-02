@@ -106,8 +106,8 @@ export default function PitchApp() {
       <div style={{
         flex: 1, display: "flex", flexDirection: "column",
         justifyContent: screen === 0 ? "center" : "flex-start",
-        paddingTop: screen === 0 ? 0 : "12vh",
-        padding: screen === 0 ? "0 28px" : "12vh 28px 0",
+        paddingTop: screen === 0 ? 0 : "13vh",
+        padding: screen === 0 ? "0 28px" : "13vh 28px 0",
         minHeight: 0, position: "relative"
       }}>
         {screen === 0
