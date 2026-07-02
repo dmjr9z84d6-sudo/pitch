@@ -148,7 +148,7 @@ function AuftaktHellDunkel({ modus, onWaehle, t, accent, stil }) {
   const aktiv = istDunkel ? hd.dunkel : hd.hell;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", marginTop: "-8vh" }}>
       {/* Frage — edel, nicht wuchtig */}
       <div style={{ ...stil.frage, textAlign: "center", marginBottom: 64 }}>
         {hd.frage}
@@ -166,6 +166,24 @@ function AuftaktHellDunkel({ modus, onWaehle, t, accent, stil }) {
       </div>
     </div>
   );
+}
+
+// ── Wortmarke: hebt jedes „AllesDa" im Text farbig hervor (§76: ein Aussehen
+//    für die Marke, egal wo sie im Text steht). Gibt ein Array aus Text +
+//    farbigen <span> zurück. Kein ?. (iOS-Regel).
+function mitWortmarke(text, accent) {
+  if (!text || text.indexOf("AllesDa") === -1) return text;
+  const teile = text.split("AllesDa");
+  const out = [];
+  for (let i = 0; i < teile.length; i++) {
+    if (teile[i]) out.push(teile[i]);
+    if (i < teile.length - 1) {
+      out.push(
+        <span key={"m" + i} style={{ color: accent, fontWeight: 700 }}>AllesDa</span>
+      );
+    }
+  }
+  return out;
 }
 
 // ── Inhalts-Screen: rendert eine Folie je nach Typ ──────────────────────────
@@ -219,11 +237,11 @@ function KartenScreen({ karte, t, accent, stil }) {
       ) : null}
 
       {istStark ? (
-        <div style={stil.stark}>{karte.stark}</div>
+        <div style={stil.stark}>{mitWortmarke(karte.stark, accent)}</div>
       ) : null}
 
       {karte.text ? (
-        <p style={{ ...stil.text, margin: 0 }}>{karte.text}</p>
+        <p style={{ ...stil.text, margin: 0 }}>{mitWortmarke(karte.text, accent)}</p>
       ) : null}
 
       {karte.nachsatz ? (
