@@ -85,10 +85,10 @@ export default function PitchApp() {
 
   return (
     <div style={buehneStyle} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      {/* Versionsnummer — unauffällig unten links, zur Cache-Kontrolle. */}
+      {/* Versionsnummer — dezent unten links, zur Cache-Kontrolle. */}
       <div style={{
-        position: "absolute", left: 10, bottom: 6,
-        fontSize: 10, color: t.muted, opacity: 0.5,
+        position: "fixed", left: 10, bottom: 8, zIndex: 50,
+        fontSize: 11, color: t.sub, opacity: 0.75,
         letterSpacing: "0.02em", pointerEvents: "none", userSelect: "none"
       }}>v{PITCH_VERSION}</div>
       {/* Kopfzeile: Überspringen */}
