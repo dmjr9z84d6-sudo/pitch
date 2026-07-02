@@ -43,12 +43,11 @@ export const KARTEN = [
 
   { id: "kern", typ: "text",
     eyebrow: "Alles an einem Ort",
-    text: "Vom Eigentümer bis zum Zählerstand — alles hängt am Objekt. Verbunden statt verstreut." },
+    text: "Objekt und Kontakt bilden den Kern. Alles andere hängt daran: Eigentümer, Mieter, Einheiten, Dokumente, Termine, Zähler, Verteilerschlüssel." },
 
   { id: "zersplittert", typ: "stark",
-    stark: "Heute liegt vieles verstreut über mehrere Programme.",
-    nachsatz: "Oft zahlen mittelgroße Verwaltungen dafür drei bis fünf Anbietern gleichzeitig.",
-    aussage: "Verwaltung darf einfacher sein." },
+    stark: "Heute zahlen mittelgroße Verwaltungen oft drei bis fünf Anbietern gleichzeitig.",
+    nachsatz: "Eines für die Verwaltung, eines für die Kommunikation, eines für die Versammlung, eines für die Ablage." },
 
   { id: "einort", typ: "stark",
     stark: "AllesDa denkt es als einen Ort.",
@@ -60,8 +59,7 @@ export const KARTEN = [
 
   { id: "warum", typ: "stark",
     stark: "Wer verwaltet, verwaltet drei Dinge: Daten. Informationen. Kommunikation.",
-    nachsatz: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen.",
-    aussage: "Gute Verwaltung verbindet Menschen." },
+    nachsatz: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen." },
 
   { id: "abschluss", typ: "abschluss",
     zeilen: [
