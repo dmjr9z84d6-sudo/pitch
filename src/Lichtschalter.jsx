@@ -22,16 +22,17 @@ function useBreit() {
   return breit;
 }
 
-// modus: "hell" | "dunkel". onWaehle(neuerModus).
-export default function Lichtschalter({ modus, onWaehle, t, accent }) {
+// modus: "hell" | "dunkel". onWaehle(neuerModus). gross = größere Star-Variante.
+export default function Lichtschalter({ modus, onWaehle, t, accent, gross }) {
   const breit = useBreit();
   const istDunkel = modus === "dunkel";
 
   // Spur (Schalter-Rahmen). Bei breit horizontal, sonst vertikal.
-  const spurBreite = breit ? 220 : 96;
-  const spurHoehe = breit ? 96 : 220;
-  const knaufGroesse = breit ? 84 : 84;
-  const rand = 6;
+  // gross-Variante (Auftakt-Star) ist deutlich größer.
+  const spurBreite = breit ? (gross ? 300 : 220) : (gross ? 130 : 96);
+  const spurHoehe = breit ? (gross ? 130 : 96) : (gross ? 300 : 220);
+  const knaufGroesse = gross ? 116 : 84;
+  const rand = 7;
 
   // Knauf-Position: hell = Anfang (oben/links), dunkel = Ende (unten/rechts).
   const verschiebung = breit
@@ -66,7 +67,7 @@ export default function Lichtschalter({ modus, onWaehle, t, accent }) {
       ? "0 4px 14px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)"
       : "0 4px 14px rgba(210,170,60,0.35), 0 0 0 1px rgba(255,255,255,0.6)",
     display: "flex", alignItems: "center", justifyContent: "center",
-    fontSize: 38, lineHeight: 1,
+    fontSize: gross ? 52 : 38, lineHeight: 1,
     transition: "transform 420ms cubic-bezier(.34,1.4,.5,1), background 420ms ease, box-shadow 420ms ease",
     ...verschiebung
   };
