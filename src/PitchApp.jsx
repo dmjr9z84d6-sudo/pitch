@@ -14,6 +14,7 @@ import { DARK, LIGHT, ACCENT, RAD, DESKTOP_MIN_WIDTH } from "./tokens.js";
 import { KARTEN, AUFTAKT_HELLDUNKEL, MARKE } from "./inhalte.js";
 import { stilTexte } from "./stil.js";
 import Lichtschalter from "./Lichtschalter.jsx";
+import Vorschau from "./Vorschau.jsx";
 
 // System-Präferenz Hell/Dunkel auslesen (Start-Grundeinstellung).
 function systemDunkel() {
@@ -100,8 +101,15 @@ export default function PitchApp() {
         ) : <div style={{ height: 36 }} />}
       </div>
 
-      {/* Bühne: aktueller Screen */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 28px", minHeight: 0, position: "relative" }}>
+      {/* Bühne: aktueller Screen. Auftakt (Schalter) zentriert; Textfolien
+          beginnen im oberen Drittel (nicht mittig → wirkt sonst zu tief). */}
+      <div style={{
+        flex: 1, display: "flex", flexDirection: "column",
+        justifyContent: screen === 0 ? "center" : "flex-start",
+        paddingTop: screen === 0 ? 0 : "18vh",
+        padding: screen === 0 ? "0 28px" : "18vh 28px 0",
+        minHeight: 0, position: "relative"
+      }}>
         {screen === 0
           ? <AuftaktHellDunkel modus={modus} onWaehle={setModus} t={t} accent={accent} stil={stil} />
           : <KartenScreen karte={KARTEN[screen - 1]} t={t} accent={accent} stil={stil} />}
@@ -230,12 +238,16 @@ function KartenScreen({ karte, t, accent, stil }) {
   const istDarstellung = typ === "darstellung";
   const istStark = typ === "stark";
 
+  // Die frühere Überzeile wird zur Schluss-Aussage UNTER dem Text (Dramaturgie:
+  // erst der Inhalt/Beweis, dann die Aussage als leise Pointe). Gleiche Optik
+  // wie die alte eyebrow, nur Abstand nach oben statt unten.
+  const schlussStil = { ...stil.eyebrow, marginBottom: 0, marginTop: 28 };
+  const schluss = karte.eyebrow ? (
+    <div style={schlussStil}>{karte.eyebrow}</div>
+  ) : null;
+
   return (
     <div style={{ maxWidth: 560, margin: "0 auto", width: "100%" }}>
-      {karte.eyebrow ? (
-        <div style={stil.eyebrow}>{karte.eyebrow}</div>
-      ) : null}
-
       {istStark ? (
         <div style={stil.stark}>{mitWortmarke(karte.stark, accent)}</div>
       ) : null}
@@ -248,17 +260,18 @@ function KartenScreen({ karte, t, accent, stil }) {
         <p style={{ ...stil.nachsatz, marginBottom: 0 }}>{karte.nachsatz}</p>
       ) : null}
 
+      {/* Schluss-Aussage — bei darstellung VOR der Vorschau (als Überleitung),
+          sonst ganz am Ende. */}
       {istDarstellung ? (
-        <div style={{
-          marginTop: 30, border: `1px dashed ${t.border}`, borderRadius: RAD.lg,
-          padding: "26px 20px", textAlign: "center", color: t.muted, fontSize: 14
-        }}>
-          Hier erscheint die Live-Vorschau: Karten ⇆ Liste
-          <div style={{ fontSize: 12.5, marginTop: 6, color: t.muted }}>
-            (echte AllesDa-Bausteine — kommt im nächsten Bau-Schritt)
+        <>
+          {schluss}
+          <div style={{ marginTop: 22 }}>
+            <Vorschau t={t} accent={accent} />
           </div>
-        </div>
-      ) : null}
+        </>
+      ) : (
+        schluss
+      )}
     </div>
   );
 }
