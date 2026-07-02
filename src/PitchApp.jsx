@@ -106,16 +106,18 @@ export default function PitchApp() {
           ? <AuftaktHellDunkel modus={modus} onWaehle={setModus} t={t} accent={accent} stil={stil} />
           : <KartenScreen karte={KARTEN[screen - 1]} t={t} accent={accent} stil={stil} />}
 
-        {/* Runder Pfeil-Button — nur auf dem Auftakt-Screen, unten rechts, dezent. */}
-        {screen === 0 ? (
+        {/* Runder Pfeil-Button — auf allen Folien außer der letzten (dort
+            steht der „Selbst ausprobieren"-Button). Durchgängiger Weg für
+            Handy UND Monitor. Wischen bleibt am Handy zusätzlich möglich. */}
+        {screen < gesamt - 1 ? (
           <button
             onClick={vor}
             aria-label="Weiter"
             style={{
               position: "absolute", right: "clamp(8px, 4vw, 48px)", bottom: 8,
-              width: 60, height: 60, borderRadius: RAD.full,
+              width: 56, height: 56, borderRadius: RAD.full,
               background: accent, color: "#FFFFFF", border: "none",
-              fontSize: 26, lineHeight: 1, cursor: "pointer",
+              fontSize: 24, lineHeight: 1, cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
               boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
               WebkitTapHighlightColor: "transparent"
@@ -126,25 +128,15 @@ export default function PitchApp() {
         ) : null}
       </div>
 
-      {/* Fußzeile: Seiten-Punkte */}
-      <div style={{ display: "flex", justifyContent: "center", gap: 8, padding: "0 0 max(28px, env(safe-area-inset-bottom))" }}>
-        {Array.from({ length: gesamt }).map((_, i) => {
-          const aktiv = i === screen;
-          return (
-            <button
-              key={i}
-              onClick={() => setScreen(i)}
-              aria-label={"Zu Abschnitt " + (i + 1)}
-              style={{
-                width: aktiv ? 22 : 8, height: 8, padding: 0,
-                borderRadius: RAD.pill, border: "none",
-                background: aktiv ? accent : t.border,
-                cursor: "pointer", transition: "width 260ms ease, background 260ms ease",
-                WebkitTapHighlightColor: "transparent"
-              }}
-            />
-          );
-        })}
+      {/* Fußzeile: dezenter Fortschrittsstrich */}
+      <div style={{ padding: "0 28px max(26px, env(safe-area-inset-bottom))" }}>
+        <div style={{ maxWidth: 560, margin: "0 auto", height: 2, background: t.border, borderRadius: RAD.pill, overflow: "hidden" }}>
+          <div style={{
+            height: "100%", background: accent, borderRadius: RAD.pill,
+            width: ((screen + 1) / gesamt * 100) + "%",
+            transition: "width 340ms ease"
+          }} />
+        </div>
       </div>
     </div>
   );
