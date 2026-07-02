@@ -240,10 +240,12 @@ function KartenScreen({ karte, t, accent, stil }) {
 
   // Die frühere Überzeile wird zur Schluss-Aussage UNTER dem Text (Dramaturgie:
   // erst der Inhalt/Beweis, dann die Aussage als leise Pointe). Gleiche Optik
-  // wie die alte eyebrow, nur Abstand nach oben statt unten.
+  // wie die alte eyebrow, nur Abstand nach oben statt unten. Text-Folien nutzen
+  // `eyebrow`, stark-Folien optional `aussage`.
+  const schlussText = karte.eyebrow || karte.aussage || null;
   const schlussStil = { ...stil.eyebrow, marginBottom: 0, marginTop: 28 };
-  const schluss = karte.eyebrow ? (
-    <div style={schlussStil}>{karte.eyebrow}</div>
+  const schluss = schlussText ? (
+    <div style={schlussStil}>{schlussText}</div>
   ) : null;
 
   return (

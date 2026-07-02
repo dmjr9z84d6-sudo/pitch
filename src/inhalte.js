@@ -47,7 +47,8 @@ export const KARTEN = [
 
   { id: "zersplittert", typ: "stark",
     stark: "Heute liegt vieles verstreut über mehrere Programme.",
-    nachsatz: "Oft zahlen mittelgroße Verwaltungen dafür drei bis fünf Anbietern gleichzeitig." },
+    nachsatz: "Oft zahlen mittelgroße Verwaltungen dafür drei bis fünf Anbietern gleichzeitig.",
+    aussage: "Verwaltung darf einfacher sein." },
 
   { id: "einort", typ: "stark",
     stark: "AllesDa denkt es als einen Ort.",
@@ -59,7 +60,8 @@ export const KARTEN = [
 
   { id: "warum", typ: "stark",
     stark: "Wer verwaltet, verwaltet drei Dinge: Daten. Informationen. Kommunikation.",
-    nachsatz: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen." },
+    nachsatz: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen.",
+    aussage: "Gute Verwaltung verbindet Menschen." },
 
   { id: "abschluss", typ: "abschluss",
     zeilen: [
