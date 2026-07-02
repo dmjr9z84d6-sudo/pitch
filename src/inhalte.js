@@ -43,23 +43,28 @@ export const KARTEN = [
 
   { id: "kern", typ: "text",
     eyebrow: "Alles an einem Ort",
-    text: "Objekt und Kontakt bilden den Kern. Alles andere hängt daran: Eigentümer, Mieter, Einheiten, Dokumente, Termine, Zähler, Verteilerschlüssel." },
+    text: "Vom Eigentümer bis zum Zählerstand — alles hängt am Objekt. Verbunden statt verstreut." },
 
   { id: "zersplittert", typ: "stark",
-    stark: "Heute zahlen mittelgroße Verwaltungen oft drei bis fünf Anbietern gleichzeitig.",
-    nachsatz: "Eines für die Verwaltung, eines für die Kommunikation, eines für die Versammlung, eines für die Ablage." },
+    stark: "Heute liegt vieles verstreut über mehrere Programme.",
+    nachsatz: "Oft zahlen mittelgroße Verwaltungen dafür drei bis fünf Anbietern gleichzeitig.",
+    aussage: "Verwaltung darf einfacher sein." },
 
   { id: "einort", typ: "stark",
     stark: "AllesDa denkt es als einen Ort.",
     nachsatz: "Zentral, verknüpft, griffbereit." },
 
-  { id: "darstellung", typ: "darstellung",
+  { id: "darstellung-text", typ: "text",
     eyebrow: "Passt sich Ihnen an",
     text: "Sie entscheiden, wie Ihre Daten aussehen: als Karten mit vielen Informationen — oder als Liste, so übersichtlich wie gewohnt. Ein Fingertipp genügt." },
 
+  { id: "darstellung-live", typ: "darstellung",
+    ueberschrift: "oder" },
+
   { id: "warum", typ: "stark",
     stark: "Wer verwaltet, verwaltet drei Dinge: Daten. Informationen. Kommunikation.",
-    nachsatz: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen." },
+    nachsatz: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen.",
+    aussage: "Gute Verwaltung verbindet Menschen." },
 
   { id: "abschluss", typ: "abschluss",
     zeilen: [

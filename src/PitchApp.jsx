@@ -116,27 +116,45 @@ export default function PitchApp() {
         padding: "0 28px", paddingBottom: "8vh",
         minHeight: 0, position: "relative"
       }}>
-        {screen === 0
-          ? <AuftaktHellDunkel modus={modus} onWaehle={setModus} t={t} accent={accent} stil={stil} />
-          : <KartenScreen karte={KARTEN[screen - 1]} t={t} accent={accent} stil={stil} />}
+        {/* Fade-Wrapper: key erzwingt sanftes Ein-Gleiten bei jedem Folienwechsel. */}
+        <div key={screen} style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", animation: "pitchFade 380ms ease" }}>
+          {screen === 0
+            ? <AuftaktHellDunkel modus={modus} onWaehle={setModus} t={t} accent={accent} stil={stil} />
+            : <KartenScreen karte={KARTEN[screen - 1]} t={t} accent={accent} stil={stil} />}
+        </div>
 
-        {/* Weiter — nur Pfeil in Cyan (Balkenfarbe), kein Kreis. Leicht,
-            schwebend. Auf allen Folien außer der letzten. Wischen bleibt zusätzlich. */}
-        {screen < gesamt - 1 ? (
-          <button
-            onClick={vor}
-            aria-label="Weiter"
-            style={{
-              position: "absolute", right: "clamp(12px, 5vw, 52px)", bottom: 6,
-              background: "transparent", border: "none",
-              color: accent, fontSize: 34, lineHeight: 1,
-              padding: 12, cursor: "pointer",
-              WebkitTapHighlightColor: "transparent"
-            }}
-          >
-            →
-          </button>
-        ) : null}
+        {/* Zurück + Weiter — Pfeile in Cyan, kein Kreis. Zurück nur ab Folie 1,
+            Weiter auf allen außer der letzten. Wischen bleibt zusätzlich. */}
+        <div style={{ position: "absolute", right: "clamp(12px, 5vw, 52px)", bottom: 6, display: "flex", gap: 8 }}>
+          {screen > 0 ? (
+            <button
+              onClick={zurueck}
+              aria-label="Zurück"
+              style={{
+                background: "transparent", border: "none",
+                color: t.muted, fontSize: 34, lineHeight: 1,
+                padding: 12, cursor: "pointer",
+                WebkitTapHighlightColor: "transparent"
+              }}
+            >
+              ←
+            </button>
+          ) : null}
+          {screen < gesamt - 1 ? (
+            <button
+              onClick={vor}
+              aria-label="Weiter"
+              style={{
+                background: "transparent", border: "none",
+                color: accent, fontSize: 34, lineHeight: 1,
+                padding: 12, cursor: "pointer",
+                WebkitTapHighlightColor: "transparent"
+              }}
+            >
+              →
+            </button>
+          ) : null}
+        </div>
       </div>
 
       {/* Fußzeile: dezenter Fortschrittsstrich */}
@@ -163,8 +181,8 @@ function AuftaktHellDunkel({ modus, onWaehle, t, accent, stil }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-      {/* Frage — edel, nicht wuchtig */}
-      <div style={{ ...stil.frage, textAlign: "center", marginBottom: 64 }}>
+      {/* Frage — edel, nicht wuchtig. Mehr Luft nach unten. */}
+      <div style={{ ...stil.frage, textAlign: "center", marginBottom: 92 }}>
         {hd.frage}
       </div>
 
@@ -172,10 +190,10 @@ function AuftaktHellDunkel({ modus, onWaehle, t, accent, stil }) {
       <Lichtschalter modus={modus} onWaehle={onWaehle} t={t} accent={accent} gross />
 
       {/* Beschreibung — nur Text, KEIN zweiter Mond. Feste Höhe für Ruhe. */}
-      <div style={{ height: 86, marginTop: 44, display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
+      <div style={{ height: 96, marginTop: 68, display: "flex", alignItems: "flex-start", justifyContent: "center" }}>
         <div key={istDunkel ? "d" : "h"} style={{ textAlign: "center", animation: "pitchFade 420ms ease" }}>
           <div style={stil.beschrTitel}>{aktiv.titel}</div>
-          <div style={stil.beschrZeile}>{aktiv.zeile}</div>
+          <div style={{ ...stil.beschrZeile, marginTop: 10 }}>{aktiv.zeile}</div>
         </div>
       </div>
     </div>
@@ -206,8 +224,8 @@ function KartenScreen({ karte, t, accent, stil }) {
 
   if (typ === "auftakt") {
     return (
-      <div style={{ maxWidth: 560, margin: "0 auto" }}>
-        <div style={{ marginBottom: 28 }}>
+      <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
+        <div style={{ marginBottom: 32 }}>
           <span style={stil.markeName}>{MARKE.name}</span>
           <span style={stil.markeEndung}>{MARKE.endung}</span>
         </div>
@@ -255,7 +273,7 @@ function KartenScreen({ karte, t, accent, stil }) {
   ) : null;
 
   return (
-    <div style={{ maxWidth: 560, margin: "0 auto", width: "100%" }}>
+    <div style={{ maxWidth: 560, margin: "0 auto", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
       {istStark ? (
         <div style={stil.stark}>{mitWortmarke(karte.stark, accent)}</div>
       ) : null}
@@ -268,14 +286,14 @@ function KartenScreen({ karte, t, accent, stil }) {
         <p style={{ ...stil.nachsatz, marginBottom: 0 }}>{karte.nachsatz}</p>
       ) : null}
 
-      {/* Schluss-Aussage — bei darstellung VOR der Vorschau (als Überleitung),
-          sonst ganz am Ende. */}
+      {/* Darstellungs-Folie: nur die Überschrift („oder") + der Live-Baustein.
+          Sonst: Schluss-Aussage am Ende. */}
       {istDarstellung ? (
         <>
-          {schluss}
-          <div style={{ marginTop: 22 }}>
-            <Vorschau t={t} accent={accent} />
+          <div style={{ fontSize: 22, fontWeight: 500, color: t.text, opacity: 0.9, textAlign: "center", marginBottom: 24 }}>
+            {karte.ueberschrift || ""}
           </div>
+          <Vorschau t={t} accent={accent} />
         </>
       ) : (
         schluss
