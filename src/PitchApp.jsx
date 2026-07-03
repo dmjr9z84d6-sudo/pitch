@@ -203,17 +203,26 @@ function AuftaktHellDunkel({ modus, onWaehle, t, accent, stil }) {
 // ── Wortmarke: hebt jedes „AllesDa" im Text farbig hervor (§76: ein Aussehen
 //    für die Marke, egal wo sie im Text steht). Gibt ein Array aus Text +
 //    farbigen <span> zurück. Kein ?. (iOS-Regel).
-function mitWortmarke(text, accent) {
+function mitWortmarke(text, accent, muted) {
   if (!text || text.indexOf("AllesDa") === -1) return text;
   const teile = text.split("AllesDa");
   const out = [];
   for (let i = 0; i < teile.length; i++) {
-    if (teile[i]) out.push(teile[i]);
-    if (i < teile.length - 1) {
+    let stueck = teile[i];
+    if (i > 0) {
       out.push(
         <span key={"m" + i} style={{ color: accent, fontWeight: 700 }}>AllesDa</span>
       );
+      // Folgt direkt ".one", wird es als dezente Logo-Endung gesetzt
+      // (wie markeEndung im Auftakt: leicht + muted).
+      if (stueck.indexOf(".one") === 0) {
+        out.push(
+          <span key={"e" + i} style={{ color: muted, fontWeight: 300 }}>.one</span>
+        );
+        stueck = stueck.slice(4);
+      }
     }
+    if (stueck) out.push(stueck);
   }
   return out;
 }
@@ -275,11 +284,11 @@ function KartenScreen({ karte, t, accent, stil }) {
   return (
     <div style={{ maxWidth: 560, margin: "0 auto", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
       {istStark ? (
-        <div style={stil.stark}>{mitWortmarke(karte.stark, accent)}</div>
+        <div style={stil.stark}>{mitWortmarke(karte.stark, accent, t.muted)}</div>
       ) : null}
 
       {karte.text ? (
-        <p style={{ ...stil.text, margin: 0 }}>{mitWortmarke(karte.text, accent)}</p>
+        <p style={{ ...stil.text, margin: 0 }}>{mitWortmarke(karte.text, accent, t.muted)}</p>
       ) : null}
 
       {karte.nachsatz ? (

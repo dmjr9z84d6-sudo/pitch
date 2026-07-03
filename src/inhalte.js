@@ -39,24 +39,23 @@ export const KARTEN = [
 
   { id: "umgekehrt", typ: "stark",
     stark: "AllesDa macht es umgekehrt: Die App passt sich dem Objekt an — nicht das Objekt der App.",
-    nachsatz: "Das Wesentliche wird strukturiert erfasst, der Rest sauber verwahrt." },
+    aussage: "Strukturiert erfassen, sauber verwahren." },
 
   { id: "kern", typ: "text",
     eyebrow: "Alles an einem Ort",
     text: "Vom Eigentümer bis zum Zählerstand — alles hängt am Objekt. Verbunden statt verstreut." },
 
   { id: "zersplittert", typ: "stark",
-    stark: "Heute liegt vieles verstreut über mehrere Programme.",
-    nachsatz: "Oft zahlen mittelgroße Verwaltungen dafür drei bis fünf Anbietern gleichzeitig.",
+    stark: "Heute liegt vieles verstreut über mehrere Programme an unterschiedlichen Orten.",
     aussage: "Verwaltung darf einfacher sein." },
 
   { id: "einort", typ: "stark",
-    stark: "AllesDa denkt es als einen Ort.",
-    nachsatz: "Zentral, verknüpft, griffbereit." },
+    stark: "AllesDa.one denkt anders, alles an einem Ort.",
+    aussage: "Zentral, verknüpft, griffbereit." },
 
   { id: "darstellung-text", typ: "text",
     eyebrow: "Passt sich Ihnen an",
-    text: "Sie entscheiden, wie Ihre Daten aussehen: als Karten mit vielen Informationen — oder als Liste, so übersichtlich wie gewohnt. Ein Fingertipp genügt." },
+    text: "Sie entscheiden, wie Ihre Daten aussehen: als Karten mit vielen Informationen — oder als Liste, so übersichtlich wie gewohnt." },
 
   { id: "darstellung-live", typ: "darstellung",
     ueberschrift: "oder" },

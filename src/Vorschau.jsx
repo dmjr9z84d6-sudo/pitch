@@ -210,7 +210,7 @@ export default function Vorschau({ t, accent }) {
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "left" }}>{/* Folie zentriert Text — Karten/Zeilen sind linksbündig */}
       <div style={{ display: "flex", gap: 4, padding: 4, marginBottom: 14, background: t.surface, borderRadius: RAD.md, border: `1px solid ${t.border}` }}>
         {pill("karten", "Karten")}
         {pill("liste", "Liste")}
