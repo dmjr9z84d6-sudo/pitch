@@ -6,8 +6,8 @@
 
 export const AUFTAKT_HELLDUNKEL = {
   frage: "Wie darf es heute sein?",
-  hell: { symbol: "☀️", titel: "Hell", zeile: "Klar, freundlich und luftig." },
-  dunkel: { symbol: "🌙", titel: "Dunkel", zeile: "Elegant, augenschonend und fokussiert." }
+  hell: { symbol: "☀️", titel: "Hell", zeile: "Klar, freundlich, luftig." },
+  dunkel: { symbol: "🌙", titel: "Dunkel", zeile: "Elegant, augenschonend, fokussiert." }
 };
 
 // Marke: Name dominant, .one als dezenter Zusatz.

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+  <title>AllesDa</title>
+  <meta name="description" content="AllesDa — Verwaltung beginnt mit dem Objekt. Alles an einem Ort." />
+  <meta name="theme-color" content="#07070C" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { -webkit-font-smoothing: antialiased; overscroll-behavior: none; }
+    #root { height: 100dvh; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    // Cache-Busting: lädt immer die frische Bundle-Version.
+    (function () {
+      var s = document.createElement("script");
+      s.src = "pitch.js?v=" + Date.now();
+      s.defer = true;
+      document.body.appendChild(s);
+    })();
+  </script>
+</body>
+</html>
