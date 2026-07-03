@@ -67,7 +67,7 @@ export const KARTEN = [
     aussage: "Daten. Informationen. Kommunikation." },
 
   { id: "warum-uebersicht", typ: "stark",
-    stark: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht.",
+    stark: "Sind sie griffbereit und verbunden, wird aus Verwalten Wissen.",
     aussage: "Grundlage für gute Entscheidungen." },
 
   // Pointe: Kernaussage im Aussage-Stil, darunter das Logo — dann folgt der
