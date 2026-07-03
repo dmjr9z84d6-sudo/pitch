@@ -43,37 +43,37 @@ export const KARTEN = [
 
   { id: "kern", typ: "text",
     eyebrow: "Alles an einem Ort",
-    text: "Vom Eigentümer bis zum Zählerstand — alles hängt am Objekt. Verbunden statt verstreut." },
+    text: "Vom Eigentümer bis zum Zählerstand — alles hängt am Objekt.\nVerbunden statt verstreut." },
 
   { id: "zersplittert", typ: "stark",
     stark: "Heute liegt vieles verteilt,\nunvollständig über mehrere Programme an unterschiedlichen Orten.",
     aussage: "Verwaltung darf einfacher sein." },
 
   { id: "einort", typ: "stark",
-    stark: "AllesDa.one denkt anders, alles an einem Ort.",
+    stark: "AllesDa.one denkt anders,\nalles an einem Ort.",
     aussage: "Zentral, verknüpft, griffbereit." },
 
   { id: "darstellung-text", typ: "text",
     eyebrow: "Passt sich Ihnen an",
-    text: "Sie entscheiden, Karte mit vielen Informationen oder übersichtliche Liste." },
+    text: "Sie entscheiden,\nKarte mit vielen Informationen\noder übersichtliche Liste." },
 
   { id: "darstellung-live", typ: "darstellung",
     ueberschrift: "oder" },
 
   // Die frühere „warum"-Folie, aufgeteilt in drei: eine Idee pro Folie.
-  // `akzent` = Teilsatz, der in Akzentfarbe gesetzt wird.
+  // Statements stehen einheitlich als kleine farbige Aussage-Zeile darunter.
   { id: "warum-dinge", typ: "stark",
-    stark: "Wer verwaltet, verwaltet drei Dinge: Daten. Informationen. Kommunikation.",
-    akzent: "Daten. Informationen. Kommunikation." },
+    stark: "Wer verwaltet,\nverwaltet drei Dinge:",
+    aussage: "Daten. Informationen. Kommunikation." },
 
   { id: "warum-uebersicht", typ: "stark",
-    stark: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen.",
-    akzent: "die Grundlage für gute Entscheidungen" },
+    stark: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht.",
+    aussage: "Grundlage für gute Entscheidungen." },
 
-  // Pointe: großer farbiger Kernsatz, darunter das Logo — dann folgt der
+  // Pointe: Kernaussage im Aussage-Stil, darunter das Logo — dann folgt der
   // Abschluss mit dem Button zur Spielwiese.
   { id: "warum-pointe", typ: "pointe",
-    zeile: "Gute Verwaltung verbindet Menschen." },
+    zeile: "Gute Verwaltung verbindet." },
 
   { id: "abschluss", typ: "abschluss",
     zeilen: [

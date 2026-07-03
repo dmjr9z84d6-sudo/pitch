@@ -27,7 +27,8 @@ export function stilTexte(t, accent) {
     // Fließtext (text-Folien).
     text: {
       fontSize: 19, fontWeight: 400, lineHeight: 1.6,
-      color: t.text, opacity: 0.9, maxWidth: "30ch"
+      color: t.text, opacity: 0.9, maxWidth: "30ch",
+      whiteSpace: "pre-line"
     },
     // Nachsatz — leiser, kleiner, schmaler.
     nachsatz: {

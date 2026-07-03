@@ -6,7 +6,7 @@
 
 // Pitch-Version — bei jeder Lieferung hochzählen. Dient der Cache-Kontrolle
 // (unauffällig unten links sichtbar).
-export const PITCH_VERSION = "0.7";
+export const PITCH_VERSION = "0.8";
 
 export const DARK = {
   bg: "#07070C", surface: "#0D0D16", card: "#13131F", border: "#252540",
