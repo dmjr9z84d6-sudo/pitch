@@ -73,7 +73,7 @@ export const KARTEN = [
   // Pointe: Kernaussage im Aussage-Stil, darunter das Logo — dann folgt der
   // Abschluss mit dem Button zur Spielwiese.
   { id: "warum-pointe", typ: "pointe",
-    zeile: "Gute Verwaltung verbindet." },
+    zeile: "Gute Verwaltung verbindet…" },
 
   { id: "abschluss", typ: "abschluss",
     zeilen: [

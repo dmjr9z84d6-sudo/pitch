@@ -30,6 +30,7 @@ const MIETER = "#22C55E";         // M grün
 const EIGENT = "#F472B6";         // E pink
 const EN_BLAU = "#3B82F6";        // EN blau (Eigennutzung)
 const NIESS = "#9333EA";          // N lila (Nießbraucher)
+const LEER = "#EF4444";           // LS rot (Leerstand)
 const WARN = "#F59E0B";           // Warn-Orange (Fälligkeit)
 
 // Echter building-SVG-Pfad aus utils-icons.jsx.
@@ -114,9 +115,9 @@ function ObjKarte({ t }) {
   return (
     <div style={{ border: `1px solid ${t.border}`, borderRadius: RAD.lg, background: t.card, overflow: "hidden" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px" }}>
-        {/* Avatar mit 2 Eck-Badges: EN oben-rechts (blau), M unten-links (grün) */}
+        {/* Avatar mit 2 Eck-Badges: LS oben-rechts (rot, Leerstand), M unten-links (grün) */}
         <Av firma={true} farbe={OBJEKT_FARBE} size={40}
-            badgeOR={{ k: "EN", farbe: EN_BLAU }} badgeUL={{ k: "M", farbe: MIETER }} />
+            badgeOR={{ k: "LS", farbe: LEER }} badgeUL={{ k: "M", farbe: MIETER }} />
         {/* Mitte: VE-Nr + fetter Name + Straße + Ort */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 15, fontWeight: 800, color: OBJEKT_FARBE, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{o.nr}</div>
