@@ -259,12 +259,12 @@ function KartenScreen({ karte, t, accent, stil }) {
     );
   }
 
-  // Pointe: Kernaussage im einheitlichen Aussage-Stil (klein + farbig,
-  // wie auf allen Folien), darunter die Wortmarke als stiller Absender.
+  // Pointe: Kernsatz in Weiß (einheitlicher stark-Stil), darunter die
+  // farbige Wortmarke als stiller Absender.
   if (typ === "pointe") {
     return (
       <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div style={{ ...stil.eyebrow, marginBottom: 0 }}>{karte.zeile}</div>
+        <div style={stil.stark}>{karte.zeile}</div>
         <div style={{ marginTop: 40 }}>
           <span style={{ ...stil.markeName, fontSize: 32 }}>{MARKE.name}</span>
           <span style={{ ...stil.markeEndung, fontSize: 23 }}>{MARKE.endung}</span>
