@@ -46,7 +46,7 @@ export const KARTEN = [
     text: "Vom Eigentümer bis zum Zählerstand — alles hängt am Objekt. Verbunden statt verstreut." },
 
   { id: "zersplittert", typ: "stark",
-    stark: "Heute liegt vieles verstreut über mehrere Programme an unterschiedlichen Orten.",
+    stark: "Heute liegt vieles verteilt,\nunvollständig über mehrere Programme an unterschiedlichen Orten.",
     aussage: "Verwaltung darf einfacher sein." },
 
   { id: "einort", typ: "stark",
@@ -55,15 +55,25 @@ export const KARTEN = [
 
   { id: "darstellung-text", typ: "text",
     eyebrow: "Passt sich Ihnen an",
-    text: "Sie entscheiden, wie Ihre Daten aussehen: als Karten mit vielen Informationen — oder als Liste, so übersichtlich wie gewohnt." },
+    text: "Sie entscheiden, Karte mit vielen Informationen oder übersichtliche Liste." },
 
   { id: "darstellung-live", typ: "darstellung",
     ueberschrift: "oder" },
 
-  { id: "warum", typ: "stark",
+  // Die frühere „warum"-Folie, aufgeteilt in drei: eine Idee pro Folie.
+  // `akzent` = Teilsatz, der in Akzentfarbe gesetzt wird.
+  { id: "warum-dinge", typ: "stark",
     stark: "Wer verwaltet, verwaltet drei Dinge: Daten. Informationen. Kommunikation.",
-    nachsatz: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen.",
-    aussage: "Gute Verwaltung verbindet Menschen." },
+    akzent: "Daten. Informationen. Kommunikation." },
+
+  { id: "warum-uebersicht", typ: "stark",
+    stark: "Sind sie griffbereit und verbunden, wird aus Verwalten Übersicht — die Grundlage für gute Entscheidungen.",
+    akzent: "die Grundlage für gute Entscheidungen" },
+
+  // Pointe: großer farbiger Kernsatz, darunter das Logo — dann folgt der
+  // Abschluss mit dem Button zur Spielwiese.
+  { id: "warum-pointe", typ: "pointe",
+    zeile: "Gute Verwaltung verbindet Menschen." },
 
   { id: "abschluss", typ: "abschluss",
     zeilen: [

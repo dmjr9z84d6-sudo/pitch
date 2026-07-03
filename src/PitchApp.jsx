@@ -227,6 +227,20 @@ function mitWortmarke(text, accent, muted) {
   return out;
 }
 
+// Färbt einen Teilsatz (karte.akzent) in Akzentfarbe. Der Text davor/danach
+// läuft weiter durch mitWortmarke (AllesDa/.one-Behandlung bleibt erhalten).
+function mitAkzent(text, akzent, accent, muted) {
+  const i = akzent && text ? text.indexOf(akzent) : -1;
+  if (i === -1) return mitWortmarke(text, accent, muted);
+  const davor = text.slice(0, i);
+  const danach = text.slice(i + akzent.length);
+  const out = [];
+  if (davor) out.push(<span key="v">{mitWortmarke(davor, accent, muted)}</span>);
+  out.push(<span key="a" style={{ color: accent }}>{akzent}</span>);
+  if (danach) out.push(<span key="n">{mitWortmarke(danach, accent, muted)}</span>);
+  return out;
+}
+
 // ── Inhalts-Screen: rendert eine Folie je nach Typ ──────────────────────────
 function KartenScreen({ karte, t, accent, stil }) {
   const typ = karte.typ;
@@ -241,6 +255,23 @@ function KartenScreen({ karte, t, accent, stil }) {
         {karte.zeilen.map((z, i) => (
           <div key={i} style={stil.auftaktZeile}>{z}</div>
         ))}
+      </div>
+    );
+  }
+
+  // Pointe: großer Kernsatz in Akzentfarbe, darunter die Wortmarke als
+  // stiller Absender (etwas kleiner als im Auftakt — Zurückhaltung).
+  if (typ === "pointe") {
+    return (
+      <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{
+          fontSize: 26, fontWeight: 600, lineHeight: 1.45,
+          letterSpacing: "-0.005em", color: accent, maxWidth: "22ch"
+        }}>{karte.zeile}</div>
+        <div style={{ marginTop: 40 }}>
+          <span style={{ ...stil.markeName, fontSize: 32 }}>{MARKE.name}</span>
+          <span style={{ ...stil.markeEndung, fontSize: 23 }}>{MARKE.endung}</span>
+        </div>
       </div>
     );
   }
@@ -284,7 +315,7 @@ function KartenScreen({ karte, t, accent, stil }) {
   return (
     <div style={{ maxWidth: 560, margin: "0 auto", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
       {istStark ? (
-        <div style={stil.stark}>{mitWortmarke(karte.stark, accent, t.muted)}</div>
+        <div style={stil.stark}>{mitAkzent(karte.stark, karte.akzent, accent, t.muted)}</div>
       ) : null}
 
       {karte.text ? (

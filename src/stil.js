@@ -21,6 +21,7 @@ export function stilTexte(t, accent) {
     stark: {
       fontSize: 22, fontWeight: 500, lineHeight: 1.5,
       letterSpacing: "-0.005em", color: t.text, opacity: 0.94,
+      whiteSpace: "pre-line",
       maxWidth: "26ch"
     },
     // Fließtext (text-Folien).
