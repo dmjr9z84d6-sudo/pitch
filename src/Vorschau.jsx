@@ -1,20 +1,36 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // Vorschau.jsx — Live-Vorschau „Karten ⇆ Liste" für Karte 3 des Pitch.
-// WEG B1: ORIGINALGETREUE Nachbildung der echten AllesDa-Bausteine — echtes
-// Gebäude-Icon (SVG-Pfad 1:1), echte Avatar-Form (Firma=rounded rect,
-// Person=Kreis, bg {color}22, Rand {color}40), echte Rollen-Badges
-// (Mieter "M" grün #22C55E, Eigentümer "E" pink #F472B6), Bereichsfarben
-// (Objekte Cyan #0E7490, Kontakte Violett #8B5CF6). Zeigt Objekte UND Kontakte.
+// VOLL ORIGINALGETREUE Nachbildung der echten AllesDa-Bausteine:
+// - Objekt-Karte: Avatar mit ZWEI Eck-Badges (EN blau oben-rechts, M grün
+//   unten-links), drei Textzeilen (VE-Nr cyan → fetter Name → Straße → Ort),
+//   rechts „7 WE" + drei runde Verwendungs-Badges (M/EN/N), unten orange
+//   Fälligkeitszeile mit Trennlinie.
+// - Kontakt-Karte: Avatar (Firma=rounded rect, Person=Kreis) mit Rollen-Badge
+//   unten-links, Name violett, Tel/Mail mit Icons.
+// - Listen strikt einzeilig: Objekt (Punkt + VE-Nr + Adresse + EH),
+//   Kontakt (Punkt + Name [Firma unterstrichen] + Rolle).
+// Farben 1:1 aus der App: Objekte Cyan, Kontakte Violett, Mieter grün,
+// Eigentümer pink, Eigennutzung blau, Nießbraucher lila, Warn-Orange.
 // Unabhängig von den App-Hooks (sicher), aber optisch echt.
 // Kein ?. (iOS-Regel), Werte vor return als const.
+//
+// KOPF-FIX (Grid-Overlay): Beide Ansichten liegen im SELBEN Grid-Feld
+// übereinander — der Container ist immer so hoch wie die höhere Variante
+// (Karten). Beim Umschalten ändert sich die Folien-Höhe nicht, die
+// Überschrift („oder") und der Umschalter bleiben exakt stehen. Die
+// inaktive Variante ist per Opacity ausgeblendet und nicht klickbar
+// (weicher Cross-Fade statt Neuaufbau).
 // ═══════════════════════════════════════════════════════════════════════════
 import React from "react";
 import { RAD } from "./tokens.js";
 
-const OBJEKT_FARBE = "#0E7490";   // Cyan
-const KONTAKT_FARBE = "#8B5CF6";  // Violett
+const OBJEKT_FARBE = "#0E7490";   // Cyan (Bereich Objekte)
+const KONTAKT_FARBE = "#8B5CF6";  // Violett (Bereich Kontakte)
 const MIETER = "#22C55E";         // M grün
 const EIGENT = "#F472B6";         // E pink
+const EN_BLAU = "#3B82F6";        // EN blau (Eigennutzung)
+const NIESS = "#9333EA";          // N lila (Nießbraucher)
+const WARN = "#F59E0B";           // Warn-Orange (Fälligkeit)
 
 // Echter building-SVG-Pfad aus utils-icons.jsx.
 const BUILDING = "M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21";
@@ -32,73 +48,110 @@ function Icon({ d, size, color, stroke }) {
   );
 }
 
+// ── Runder Verwendungs-/Rollen-Badge (M/EN/N/E) ──
+function RundBadge({ k, farbe, size }) {
+  const r = size || 22;
+  return (
+    <div style={{
+      width: r, height: r, borderRadius: "50%",
+      background: farbe, color: "#FFFFFF",
+      fontSize: r * 0.42, fontWeight: 700,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      flexShrink: 0
+    }}>{k}</div>
+  );
+}
+
 // ── Avatar (echte Form): Firma=rounded rect mit building-Icon, Person=Kreis
-//    mit Initialen. Optional Eck-Badge unten-rechts (Rolle). ──
-function Av({ firma, initialen, farbe, badge, size }) {
+//    mit Initialen. Optional ZWEI Eck-Badges: oben-rechts + unten-links. ──
+function Av({ firma, initialen, farbe, size, badgeOR, badgeUL }) {
   const s = size || 40;
-  const bg = farbe + "22";
-  const rand = farbe + "40";
+  const bs = s * 0.44;
   return (
     <div style={{ position: "relative", width: s, height: s, flexShrink: 0 }}>
       <div style={{
         width: s, height: s,
         borderRadius: firma ? Math.round(s * 0.22) : "50%",
-        background: bg, border: `1.5px solid ${rand}`,
+        background: farbe + "22", border: `1.5px solid ${farbe}40`,
         display: "flex", alignItems: "center", justifyContent: "center",
         boxSizing: "border-box"
       }}>
         {firma
-          ? <Icon d={BUILDING} size={Math.round(s * 0.5)} color={farbe} stroke={1.6} />
+          ? <Icon d={BUILDING} size={Math.round(s * 0.5)} color={farbe} />
           : <span style={{ fontSize: s * 0.36, fontWeight: 800, color: farbe, lineHeight: 1 }}>{initialen}</span>}
       </div>
-      {badge ? (
-        <div style={{
-          position: "absolute", right: -3, bottom: -3,
-          width: s * 0.42, height: s * 0.42, borderRadius: "50%",
-          background: badge.farbe, color: "#FFFFFF",
-          fontSize: s * 0.26, fontWeight: 700,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          border: "2px solid #0D0D16"
-        }}>{badge.k}</div>
+      {badgeOR ? (
+        <div style={{ position: "absolute", top: -bs * 0.35, right: -bs * 0.35 }}>
+          <RundBadge k={badgeOR.k} farbe={badgeOR.farbe} size={bs} />
+        </div>
+      ) : null}
+      {badgeUL ? (
+        <div style={{ position: "absolute", bottom: -bs * 0.35, left: -bs * 0.35 }}>
+          <RundBadge k={badgeUL.k} farbe={badgeUL.farbe} size={bs} />
+        </div>
       ) : null}
     </div>
   );
 }
 
-// Beispiel-Objekte (mit den Sonderfällen aus dem Pitch).
-const OBJEKTE = [
-  { nr: "WEG Lindenhof", adr: "Lindenstraße 12, Kassel", eh: 18, status: "#EF4444" },
-  { nr: "Objekt Rheinblick", adr: "Uferweg 3–5, Mainz", eh: 9, status: null }
-];
+// Beispiel-Objekt (mit allen Details wie im echten Screenshot).
+const OBJ = {
+  nr: "VE-001", name: "WEG Lessingstraße 22, Leipzig",
+  strasse: "Lessingstraße 22", ort: "Leipzig", we: 7,
+  faellig: "Haus- und Grundbesitzerhaftpflicht in 43 Tagen",
+  status: WARN
+};
+const OBJ2 = { nr: "VE-002", name: "Objekt Rheinblick", strasse: "Uferweg 3–5", ort: "Mainz", we: 9, status: null };
 
-// Beispiel-Kontakte (Firma + Person, mit Rollen-Badge).
 const KONTAKTE = [
-  { firma: true, name: "Bäckerei Körnig e.K.", ini: "B", tel: "+49 1550 00 01001", mail: "gewerbe.koernig@…", badge: { k: "M", farbe: MIETER } },
-  { firma: false, name: "Dirk Mahler", ini: "DM", tel: "+49 555 01 033", mail: "d.mahler@…", badge: { k: "E", farbe: EIGENT } }
+  { firma: true, name: "Bäckerei Körnig e.K.", ini: "B", tel: "+49 1550 00 01001", mail: "gewerbe.koernig@…", rolle: "Mieter", punkt: MIETER, badge: { k: "M", farbe: MIETER } },
+  { firma: false, name: "Dirk Mahler", ini: "DM", tel: "+49 555 01 033", mail: "d.mahler@…", rolle: "Eigentümer", punkt: EIGENT, badge: { k: "E", farbe: EIGENT } }
 ];
 
-// ── Objekt als Karte ──
-function ObjKarte({ o, t }) {
+// ── OBJEKT-KARTE (voll originalgetreu) ──
+function ObjKarte({ t }) {
+  const o = OBJ;
   return (
-    <div style={{ border: `1px solid ${t.border}`, borderRadius: RAD.lg, background: t.card, padding: "10px 12px", display: "flex", alignItems: "center", gap: 12 }}>
-      <Av firma={true} farbe={OBJEKT_FARBE} size={40} />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 15, fontWeight: 800, color: OBJEKT_FARBE, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{o.nr}</div>
-        <div style={{ fontSize: 13, color: t.sub, marginTop: 1 }}>{o.adr}</div>
+    <div style={{ border: `1px solid ${t.border}`, borderRadius: RAD.lg, background: t.card, overflow: "hidden" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px" }}>
+        {/* Avatar mit 2 Eck-Badges: EN oben-rechts (blau), M unten-links (grün) */}
+        <Av firma={true} farbe={OBJEKT_FARBE} size={40}
+            badgeOR={{ k: "EN", farbe: EN_BLAU }} badgeUL={{ k: "M", farbe: MIETER }} />
+        {/* Mitte: VE-Nr + fetter Name + Straße + Ort */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 15, fontWeight: 800, color: OBJEKT_FARBE, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{o.nr}</div>
+          <div style={{ fontSize: 13.5, fontWeight: 600, color: t.text, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{o.name}</div>
+          <div style={{ fontSize: 12.5, color: t.sub, marginTop: 1 }}>{o.strasse}</div>
+          <div style={{ fontSize: 12.5, color: t.sub }}>{o.ort}</div>
+        </div>
+        {/* Rechts: WE-Zahl + drei runde Verwendungs-Badges */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8, flexShrink: 0 }}>
+          <div style={{ fontSize: 13, color: t.sub, whiteSpace: "nowrap" }}><strong style={{ color: t.text }}>{o.we}</strong> WE</div>
+          <div style={{ display: "flex", gap: 4 }}>
+            <RundBadge k="M" farbe={MIETER} size={20} />
+            <RundBadge k="EN" farbe={EN_BLAU} size={20} />
+            <RundBadge k="N" farbe={NIESS} size={20} />
+          </div>
+        </div>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-        <div style={{ fontSize: 13, color: t.sub, whiteSpace: "nowrap" }}><strong style={{ color: t.text }}>{o.eh}</strong> EH</div>
-        {o.status ? <div style={{ width: 9, height: 9, borderRadius: "50%", background: o.status }} /> : null}
+      {/* Unten: orange Fälligkeitszeile mit Trennlinie */}
+      <div style={{
+        borderTop: `1px solid ${t.border}`, padding: "0 12px", height: 30,
+        display: "flex", alignItems: "center", color: WARN,
+        fontSize: 12.5, fontWeight: 700, letterSpacing: "0.02em",
+        whiteSpace: "nowrap", overflow: "hidden"
+      }}>
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{o.faellig}</span>
       </div>
     </div>
   );
 }
 
-// ── Kontakt als Karte (Avatar + Name + Tel/Mail + Eck-Badge groß rechts) ──
+// ── Kontakt als Karte (Avatar + Name + Tel/Mail + Rollen-Badge unten-links) ──
 function KonKarte({ k, t }) {
   return (
     <div style={{ border: `1px solid ${t.border}`, borderRadius: RAD.lg, background: t.card, padding: "12px 14px", display: "flex", alignItems: "center", gap: 12 }}>
-      <Av firma={k.firma} initialen={k.ini} farbe={KONTAKT_FARBE} badge={k.badge} size={44} />
+      <Av firma={k.firma} initialen={k.ini} farbe={KONTAKT_FARBE} size={44} badgeUL={k.badge} />
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: KONTAKT_FARBE, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{k.name}</div>
         <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 3 }}>
@@ -112,26 +165,28 @@ function KonKarte({ k, t }) {
   );
 }
 
-// ── Objekt als Listenzeile ──
-function ObjZeile({ o, t, letzte }) {
+// ── Objekt als Listenzeile (strikt einzeilig, eigene Karte) ──
+function ObjZeile({ o, t }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderBottom: letzte ? "none" : `1px solid ${t.border}` }}>
-      {o.status ? <div style={{ width: 8, height: 8, borderRadius: "50%", background: o.status, flexShrink: 0 }} /> : <div style={{ width: 8, flexShrink: 0 }} />}
-      <div style={{ fontSize: 14, fontWeight: 700, color: t.text, flexShrink: 0 }}>{o.nr}</div>
-      <div style={{ fontSize: 13, color: t.sub, flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{o.adr}</div>
-      <div style={{ fontSize: 13, color: t.sub, flexShrink: 0 }}>{o.eh} EH</div>
+    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", border: `1px solid ${t.border}`, borderRadius: RAD.md, background: t.card }}>
+      <span style={{ width: 9, height: 9, borderRadius: "50%", background: o.status || t.muted, flexShrink: 0 }} />
+      <div style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "baseline", gap: 8 }}>
+        <span style={{ fontSize: 14, fontWeight: 700, color: t.text, flexShrink: 0 }}>{o.nr}</span>
+        <span style={{ fontSize: 13, color: t.sub, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{o.strasse}, {o.ort}</span>
+      </div>
+      <span style={{ fontSize: 12.5, color: t.muted, flexShrink: 0, whiteSpace: "nowrap" }}>{o.we} EH</span>
     </div>
   );
 }
 
-// ── Kontakt als Listenzeile ──
-function KonZeile({ k, t, letzte }) {
+// ── Kontakt als Listenzeile (strikt einzeilig, Firma unterstrichen) ──
+function KonZeile({ k, t }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", borderBottom: letzte ? "none" : `1px solid ${t.border}` }}>
-      <Av firma={k.firma} initialen={k.ini} farbe={KONTAKT_FARBE} badge={k.badge} size={30} />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: t.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{k.name}</div>
-        <div style={{ fontSize: 12.5, color: t.sub }}>{k.tel}</div>
+    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", border: `1px solid ${t.border}`, borderRadius: RAD.md, background: t.card }}>
+      <span style={{ width: 9, height: 9, borderRadius: "50%", background: k.punkt, flexShrink: 0 }} />
+      <div style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "baseline", gap: 8 }}>
+        <span style={{ fontSize: 14, fontWeight: 700, color: t.text, flexShrink: 0, textDecoration: k.firma ? "underline" : "none" }}>{k.name}</span>
+        <span style={{ fontSize: 13, color: t.sub, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{k.rolle}</span>
       </div>
     </div>
   );
@@ -161,21 +216,37 @@ export default function Vorschau({ t, accent }) {
         {pill("liste", "Liste")}
       </div>
 
-      <div key={ansicht} style={{ animation: "pitchFade 300ms ease" }}>
-        {ansicht === "karten" ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-            <ObjKarte o={OBJEKTE[0]} t={t} />
+      {/* KOPF-FIX: Beide Varianten liegen im SELBEN Grid-Feld übereinander —
+          der Container ist dadurch immer so hoch wie die höhere Variante
+          (Karten). Beim Umschalten ändert sich die Folien-Höhe nicht, der
+          Kopf (Überschrift + Umschalter) bleibt exakt stehen. Die inaktive
+          Variante ist per Opacity ausgeblendet und nicht klickbar. */}
+      <div style={{ display: "grid" }}>
+        <div style={{
+          gridArea: "1 / 1", alignSelf: "start",
+          opacity: ansicht === "karten" ? 1 : 0,
+          pointerEvents: ansicht === "karten" ? "auto" : "none",
+          transition: "opacity 300ms ease"
+        }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <ObjKarte t={t} />
             <KonKarte k={KONTAKTE[0]} t={t} />
             <KonKarte k={KONTAKTE[1]} t={t} />
           </div>
-        ) : (
-          <div style={{ border: `1px solid ${t.border}`, borderRadius: RAD.lg, background: t.card, overflow: "hidden" }}>
-            <ObjZeile o={OBJEKTE[0]} t={t} />
-            <ObjZeile o={OBJEKTE[1]} t={t} />
+        </div>
+        <div style={{
+          gridArea: "1 / 1", alignSelf: "start",
+          opacity: ansicht === "liste" ? 1 : 0,
+          pointerEvents: ansicht === "liste" ? "auto" : "none",
+          transition: "opacity 300ms ease"
+        }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <ObjZeile o={OBJ} t={t} />
+            <ObjZeile o={OBJ2} t={t} />
             <KonZeile k={KONTAKTE[0]} t={t} />
-            <KonZeile k={KONTAKTE[1]} t={t} letzte={true} />
+            <KonZeile k={KONTAKTE[1]} t={t} />
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
