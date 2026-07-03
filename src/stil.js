@@ -19,10 +19,10 @@ export function stilTexte(t, accent) {
     },
     // Großer Kernsatz — edel: kleiner als vorher, leichteres Gewicht.
     stark: {
-      fontSize: 22, fontWeight: 500, lineHeight: 1.5,
+      fontSize: 19, fontWeight: 500, lineHeight: 1.6,
       letterSpacing: "-0.005em", color: t.text, opacity: 0.94,
       whiteSpace: "pre-line",
-      maxWidth: "26ch"
+      maxWidth: "30ch"
     },
     // Fließtext (text-Folien).
     text: {
