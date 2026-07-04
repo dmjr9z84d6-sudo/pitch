@@ -88,7 +88,9 @@
     }
     return n2;
   }
-  // {alleTexte:[…]}: kleinster sichtbarer Container, der ALLE Texte enthält
+  // {alleTexte:[…]}: kleinster sichtbarer Container, der ALLE Texte enthält.
+  // Klettert danach zum klickbaren Vorfahren (Karte mit onClick), damit
+  // „tippen"-Schritte ein sinnvolles Klickziel bekommen.
   function findeContainer(texte) {
     var best = null, bestA = Infinity;
     var alle = alleElemente();
@@ -104,6 +106,22 @@
       var r = n.getBoundingClientRect();
       var a = r.width * r.height;
       if (a > 4 && a < bestA) { bestA = a; best = n; }
+    }
+    if (!best) return null;
+    // Zum klickbaren Wrapper hoch (button/a/onclick/cursor:pointer), aber nur
+    // solange der Textumfang gleich bleibt (nicht in die ganze Liste klettern).
+    var startTxt = (best.textContent || "").replace(/\s+/g, " ").trim();
+    var n2 = best, hoch = 0;
+    while (n2 && hoch < 4) {
+      var tag = (n2.tagName || "").toLowerCase();
+      if (tag === "button" || tag === "a" || n2.onclick) return n2;
+      var st = window.getComputedStyle(n2);
+      if (st.cursor === "pointer") return n2;
+      var p = n2.parentElement;
+      if (!p) break;
+      var pt = (p.textContent || "").replace(/\s+/g, " ").trim();
+      if (pt !== startTxt) break; // Eltern trägt mehr → nicht weiter hoch
+      n2 = p; hoch++;
     }
     return best;
   }
@@ -206,24 +224,23 @@
     });
     blase.__tour = true;
 
-    // Position: verschobene Position gewinnt. Sonst bei „tippen" dem Ziel
-    // ausweichen (unter oder über dem Spotlight), sonst mittig.
-    if (ov.blasePos) {
-      blase.style.left = ov.blasePos.x + "px";
-      blase.style.top = ov.blasePos.y + "px";
-      blase.style.transform = "none";
-    } else if (ausweichRect) {
-      var platzUnten = window.innerHeight - ausweichRect.bottom;
-      var obenY;
-      if (platzUnten > 220) {
-        obenY = ausweichRect.bottom + 16;           // unter dem Ziel
-      } else {
-        obenY = Math.max(12, ausweichRect.top - 210); // über dem Ziel
-      }
-      blase.style.left = "50%";
-      blase.style.top = obenY + "px";
-      blase.style.transform = "translateX(-50%)";
+    // Position: Die Blase bleibt IMMER dort, wo sie zuletzt war. Beim ersten
+    // Erscheinen wird sie einmal platziert (mittig, etwas oberhalb der Mitte,
+    // damit sie Tipp-Ziele im oberen Bereich seltener verdeckt) und diese
+    // Position in ov.blasePos festgehalten. Ab dann springt sie NIE mehr —
+    // weder bei Schrittwechsel noch beim Neuzeichnen. Verschiebt der Nutzer
+    // sie, wird die neue Position gemerkt und beibehalten.
+    if (!ov.blasePos) {
+      // Startposition einmalig festlegen (px, nicht transform — dann ist sie
+      // von Anfang an „fest" und Folgeschritte rechnen nicht neu).
+      var startBreite = Math.min(440, window.innerWidth - 24);
+      var startX = Math.round((window.innerWidth - startBreite) / 2);
+      var startY = Math.round(window.innerHeight * 0.30);
+      ov.blasePos = { x: startX, y: startY };
     }
+    blase.style.left = ov.blasePos.x + "px";
+    blase.style.top = ov.blasePos.y + "px";
+    blase.style.transform = "none";
 
     var fortschritt = (ov.schrittIdx + 1) + " / " + TOUR_SCHRITTE.length;
 
@@ -356,16 +373,13 @@
     function versuche_finden() {
       var ziel = findeAnker(s.anker);
       if (ziel) {
-        try { ziel.scrollIntoView({ block: "center", behavior: "smooth" }); } catch (e) {}
-        setTimeout(function () {
-          ov.ziel = ziel;
-          zeichneSpotlight(ziel, s.art === "tippen");
-          // Bei „tippen" darf die Blase das Ziel nicht verdecken (Klick nötig)
-          // → weiche-Rect mitgeben; bei „zeigen"/„karte" mittig.
-          var ausweichRect = (s.art === "tippen") ? ziel.getBoundingClientRect() : null;
-          zeichneBlase(s, s.art === "zeigen", false, ausweichRect);
-          if (s.art === "tippen") lauscheAufZielKlick(ziel);
-        }, 220);
+        // KEIN scrollIntoView: das verschiebt das App-Layout und ließ die
+        // Blase/den Spotlight springen. Der Spotlight legt sich dorthin, wo
+        // das Ziel gerade steht; die Blase bleibt an ihrer festen Position.
+        ov.ziel = ziel;
+        zeichneSpotlight(ziel, s.art === "tippen");
+        zeichneBlase(s, s.art === "zeigen", false, null);
+        if (s.art === "tippen") lauscheAufZielKlick(ziel);
       } else if (versuche++ < 10) {
         sucheTimer = setTimeout(versuche_finden, 300);
       } else {
@@ -382,10 +396,13 @@
       if (!ov.aktiv) { document.removeEventListener("click", handler, true); return; }
       var r = ziel.getBoundingClientRect();
       var x = e.clientX, y = e.clientY;
-      if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) {
+      var imRect = (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom);
+      var imZiel = ziel.contains && e.target && ziel.contains(e.target);
+      if (imRect || imZiel) {
         document.removeEventListener("click", handler, true);
-        // App klicken lassen, dann weiter (Render abwarten)
-        setTimeout(function () { zeigeSchritt(ov.schrittIdx + 1); }, 400);
+        // App klicken lassen, dann weiter. Etwas mehr Zeit, damit das Detail
+        // fertig rendert, bevor der nächste Anker gesucht wird.
+        setTimeout(function () { zeigeSchritt(ov.schrittIdx + 1); }, 550);
       }
     }
     document.addEventListener("click", handler, true);

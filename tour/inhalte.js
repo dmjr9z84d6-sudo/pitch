@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.5";
+var TOUR_VERSION = "0.6";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -102,7 +102,7 @@ var TOUR_SCHRITTE = [
   },
   {
     id: "objekt-karte", art: "tippen",
-    anker: { text: "VE-001" },
+    anker: { alleTexte: ["VE-001", "WEG Lessingstraße"] },
     titel: "Ihr Objekt auf einen Blick",
     text: "Jedes Objekt ist eine Karte. Tippen Sie auf VE-001 — die WEG Lessingstraße 22 in Leipzig."
   },

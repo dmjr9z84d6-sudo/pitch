@@ -210,6 +210,25 @@ Für alles, was die App NICHT per Config kann:
   „Weiter" unten gepinnt; kurze Texte haben mehr Leerraum. Der frühere
   „Tour beenden"-Link IN der Blase ist raus (steht jetzt in der Leiste).
 
+## 5.10 Änderungen v0.6 (04.07.2026)
+
+- **Sprechblase springt nicht mehr:** Sie wird EINMAL platziert (mittig,
+  bei 30 % Höhe) und bleibt exakt dort — über alle Schritte. Verschiebt
+  der Nutzer sie, wird die Position gemerkt und beibehalten. Zwei
+  Sprungquellen entfernt: (1) das automatische `scrollIntoView` bei jedem
+  Schritt (verschob das App-Layout), (2) das „Ausweichen zum Tipp-Ziel"
+  (positionierte die Blase je Schritt neu). Der Spotlight legt sich jetzt
+  dorthin, wo das Ziel steht; die Blase bleibt fest.
+- **Tipp-Bug VE-001 behoben:** „VE-001" steht doppelt im DOM (Listenkarte
+  + Detail-Header). Station-4-Anker jetzt `alleTexte:["VE-001","WEG
+  Lessingstraße"]` → trifft eindeutig die Listenkarte (nur sie hat den
+  Adresszusatz). `findeContainer` klettert zum klickbaren Wrapper.
+  Klick-Erkennung akzeptiert jetzt Rect-Treffer ODER `contains(target)`,
+  Render-Wartezeit 400 → 550 ms.
+- **Beschlusssammlung-Farbe:** war `#F59E0B` = identisch zu Kalender →
+  jetzt `#F97316` (Orange), klar unterscheidbar. Steht in seed.js
+  (KACHELN). Bei App-seitiger Default-Änderung hier nachziehen.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

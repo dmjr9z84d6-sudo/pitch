@@ -35,7 +35,7 @@
     { id: "kontakte",       label: "Kontakte",          icon: "users",    farbe: "#A855F7", reihenfolge: 1 },
     { id: "kalender",       label: "Kalender",          icon: "calendar", farbe: "#F59E0B", reihenfolge: 2 },
     { id: "etv",            label: "ETV",               icon: "calendar", farbe: "#8B5CF6", reihenfolge: 3 },
-    { id: "beschluss",      label: "Beschlusssammlung", icon: "document", farbe: "#F59E0B", reihenfolge: 4 },
+    { id: "beschluss",      label: "Beschlusssammlung", icon: "document", farbe: "#F97316", reihenfolge: 4 },
     { id: "auftraege",      label: "Vorgänge",          icon: "ticket",   farbe: "#EF4444", reihenfolge: 5 },
     { id: "kommunikation",  label: "Kommunikation",     icon: "mail",     farbe: "#0EA5E9", reihenfolge: 6 },
     { id: "finanzen",       label: "Finanzen",          icon: "chart",    farbe: "#22C55E", reihenfolge: 7 },
