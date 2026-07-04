@@ -250,6 +250,15 @@ Für alles, was die App NICHT per Config kann:
   in beiden Leisten-Modi sichtbar — praktisch zur Cache-Kontrolle beim
   Testen (sieht man sofort, ob die neue Version geladen ist).
 
+## 5.13 Änderungen v0.9 (04.07.2026)
+
+- **Rechtliches wie im Pitch:** Aus den mittigen Link-Reihen entfernt und
+  als dezentes Element unten RECHTS platziert — spiegelbildlich zur
+  Versionsnummer links, exakt mit den Pitch-Werten (fontSize 11, opacity
+  0.6, right 12, bottom 6). In beiden Phasen sichtbar. Die zentrale
+  Link-Reihe zeigt jetzt: geführt = „Tour beenden"; frei = „Zurücksetzen
+  · Tour ansehen".
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

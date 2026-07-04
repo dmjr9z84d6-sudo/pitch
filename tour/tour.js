@@ -529,10 +529,10 @@
     var beenden = function () { fuehreAktionAus("freigeben"); };
 
     if (modus === "gefuehrt") {
-      // Während der Tour: KEIN großer Button, nur zwei dezente Schrift-Links.
+      // Während der Tour: KEIN großer Button, nur „Tour beenden" mittig.
+      // (Rechtliches sitzt fest unten rechts — s.u.)
       leiste.appendChild(linkReihe([
-        link("Tour beenden", beenden),
-        link(LEISTE.rechtliches, recht)
+        link("Tour beenden", beenden)
       ]));
     } else {
       // Freie Phase / Weiche: EIN echter Button oben, Schrift-Links darunter.
@@ -549,8 +549,7 @@
       leiste.appendChild(primaerBtn);
       leiste.appendChild(linkReihe([
         link(LEISTE.zuruecksetzen, reset),
-        link(LEISTE.tourNochmal, tourNochmal),
-        link(LEISTE.rechtliches, recht)
+        link(LEISTE.tourNochmal, tourNochmal)
       ]));
     }
 
@@ -559,10 +558,23 @@
       position: "absolute", left: "12px",
       bottom: "calc(6px + env(safe-area-inset-bottom, 0px))",
       fontSize: "11px", color: "#7575A0", opacity: "0.7",
-      pointerEvents: "none", userSelect: "none"
+      letterSpacing: "0.02em", pointerEvents: "none", userSelect: "none"
     }, "v" + (typeof TOUR_VERSION !== "undefined" ? TOUR_VERSION : ""));
     ver.__tour = true;
     leiste.appendChild(ver);
+
+    // „Rechtliches" — dezent unten RECHTS, spiegelbildlich zur Version.
+    // Exakt wie im Pitch (fontSize 11, opacity 0.6, right 12, bottom 6).
+    var rechtEck = el("div", {
+      position: "absolute", right: "12px",
+      bottom: "calc(6px + env(safe-area-inset-bottom, 0px))",
+      fontSize: "11px", color: "#7575A0", opacity: "0.6",
+      letterSpacing: "0.02em", cursor: "pointer",
+      padding: "6px 4px", WebkitTapHighlightColor: "transparent"
+    }, LEISTE.rechtliches);
+    rechtEck.__tour = true;
+    rechtEck.addEventListener("click", recht);
+    leiste.appendChild(rechtEck);
 
     // Auslauf an die echte Footer-Höhe anpassen (nach dem Rendern messen).
     passeAuslaufAn();
