@@ -279,6 +279,17 @@ Für alles, was die App NICHT per Config kann:
   nun fixe Bildschirmkoordinaten haben (unabhängig vom Leisteninhalt),
   springen sie beim Moduswechsel geführt↔frei nicht mehr.
 
+## 5.16 Änderungen v0.12 (04.07.2026)
+
+- **Fußzeile: alles in EINER Zeile ganz unten:** Version (links, 11px) ·
+  Aktionen (Mitte, 14px/fett: geführt = „Tour beenden", frei =
+  „Zurücksetzen · Tour ansehen") · Rechtliches (rechts, 11px). Eigenes
+  fixed-Element `#tour-fusszeile` am unteren Bildschirmrand (bottom 6,
+  ohne safe-area, wie Pitch), pointer-events nur auf den Kindern. Die
+  Aktionen bleiben bewusst KRÄFTIGER als Version/Rechtliches. Die Leiste
+  darüber trägt nur noch den Kennenlernen-Button (frei) bzw. nichts
+  (geführt); Boden-Padding 36 px hält den Button von der Fußzeile frei.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

@@ -480,7 +480,7 @@
         position: "fixed", left: "0", right: "0", bottom: "0",
         zIndex: String(Z + 3),
         display: "flex", flexDirection: "column", gap: "10px", alignItems: "stretch",
-        padding: "12px 16px calc(32px + env(safe-area-inset-bottom, 0px))",
+        padding: "12px 16px 36px",
         // Dezent statt dominant: leicht abgesetzter dunkler Streifen, dünne Linie
         background: "rgba(10,10,18,0.92)",
         borderTop: "1px solid #2A2A45",
@@ -497,24 +497,6 @@
     if (!leiste) return;
     while (leiste.firstChild) leiste.removeChild(leiste.firstChild);
 
-    // klickbare Schrift (kein Button-Rahmen) — dezente sekundäre Aktion
-    function link(label, tue) {
-      var a = el("div", {
-        fontSize: "14px", fontWeight: "600", color: "#A0A0CD",
-        cursor: "pointer", padding: "8px 6px", whiteSpace: "nowrap",
-        WebkitTapHighlightColor: "transparent"
-      }, label);
-      a.__tour = true;
-      a.addEventListener("click", tue);
-      return a;
-    }
-    function linkReihe(links) {
-      var r = el("div", { display: "flex", gap: "18px", flexWrap: "wrap", justifyContent: "center", alignItems: "center" });
-      r.__tour = true;
-      for (var i = 0; i < links.length; i++) r.appendChild(links[i]);
-      return r;
-    }
-
     var reset = function () {
       zeigeInfoKarte(KARTE_RESET, [
         { label: KARTE_RESET.nein, primaer: false, tue: null },
@@ -528,14 +510,9 @@
     var recht = function () { zeigeRecht(); };
     var beenden = function () { fuehreAktionAus("freigeben"); };
 
-    if (modus === "gefuehrt") {
-      // Während der Tour: KEIN großer Button, nur „Tour beenden" mittig.
-      // (Rechtliches sitzt fest unten rechts — s.u.)
-      leiste.appendChild(linkReihe([
-        link("Tour beenden", beenden)
-      ]));
-    } else {
-      // Freie Phase / Weiche: EIN echter Button oben, Schrift-Links darunter.
+    if (modus === "frei") {
+      // Freie Phase / Weiche: EIN echter Button — die Sekundäraktionen
+      // liegen alle in der festen Fußzeile ganz unten (s.u.).
       var primaerBtn = el("button", {
         width: "100%", minHeight: "48px", padding: "13px 18px",
         fontSize: "16px", fontWeight: "700", borderRadius: "999px",
@@ -547,41 +524,74 @@
       primaerBtn.__tour = true;
       primaerBtn.addEventListener("click", function () { fuehreAktionAus("kennenlernen"); });
       leiste.appendChild(primaerBtn);
-      leiste.appendChild(linkReihe([
-        link(LEISTE.zuruecksetzen, reset),
-        link(LEISTE.tourNochmal, tourNochmal)
-      ]));
+    }
+    // geführt: Leiste trägt nichts Eigenes — alle Aktionen in der Fußzeile.
+
+    // ── Fußzeile: EINE Zeile ganz unten, alles im dezenten 11px-Stil ──
+    // Links Version (nicht klickbar) · Mitte die Aktionen · rechts Rechtliches.
+    // Feste Bildschirmkoordinaten wie im Pitch (bottom 6–8, ohne safe-area).
+    var altFuss = document.getElementById("tour-fusszeile");
+    if (altFuss && altFuss.parentNode) altFuss.parentNode.removeChild(altFuss);
+
+    function fussLink(label, tue) {
+      var a = el("div", {
+        fontSize: "14px", fontWeight: "600", color: "#A0A0CD",
+        cursor: "pointer", padding: "6px 4px", whiteSpace: "nowrap",
+        WebkitTapHighlightColor: "transparent"
+      }, label);
+      a.__tour = true;
+      a.addEventListener("click", tue);
+      return a;
     }
 
-    // Versionsnummer + Rechtliches: fixed am ECHTEN Bildschirmrand (wie im
-    // Pitch), nicht in der Leiste — sonst sitzen sie höher. An document.body
-    // gehängt; alte Instanzen vorher entfernen (Leiste wird neu gezeichnet).
-    var altVer = document.getElementById("tour-version");
-    if (altVer && altVer.parentNode) altVer.parentNode.removeChild(altVer);
-    var altRecht = document.getElementById("tour-rechtliches");
-    if (altRecht && altRecht.parentNode) altRecht.parentNode.removeChild(altRecht);
+    var fuss = el("div", {
+      position: "fixed", left: "0", right: "0", bottom: "0",
+      zIndex: String(Z + 4),
+      display: "flex", alignItems: "center",
+      padding: "0 12px 6px 10px",
+      pointerEvents: "none", // nur die Kinder fangen Klicks
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    });
+    fuss.id = "tour-fusszeile";
+    fuss.__tour = true;
 
+    // links: Version (wie Pitch: 11px, opacity .7, nicht klickbar)
     var ver = el("div", {
-      position: "fixed", left: "10px", bottom: "8px",
-      zIndex: String(Z + 4),
       fontSize: "11px", color: "#7575A0", opacity: "0.7",
-      letterSpacing: "0.02em", pointerEvents: "none", userSelect: "none"
+      letterSpacing: "0.02em", userSelect: "none",
+      padding: "6px 0", flexShrink: "0"
     }, "v" + (typeof TOUR_VERSION !== "undefined" ? TOUR_VERSION : ""));
-    ver.id = "tour-version";
     ver.__tour = true;
-    document.body.appendChild(ver);
+    fuss.appendChild(ver);
 
+    // Mitte: Aktionen, zentriert im verbleibenden Raum
+    var mitte = el("div", {
+      flex: "1 1 auto", display: "flex", gap: "22px",
+      justifyContent: "center", alignItems: "center",
+      pointerEvents: "auto", minWidth: "0"
+    });
+    mitte.__tour = true;
+    if (modus === "gefuehrt") {
+      mitte.appendChild(fussLink("Tour beenden", beenden));
+    } else {
+      mitte.appendChild(fussLink(LEISTE.zuruecksetzen, reset));
+      mitte.appendChild(fussLink(LEISTE.tourNochmal, tourNochmal));
+    }
+    fuss.appendChild(mitte);
+
+    // rechts: Rechtliches (wie Pitch: 11px, opacity .6)
     var rechtEck = el("div", {
-      position: "fixed", right: "12px", bottom: "6px",
-      zIndex: String(Z + 4),
       fontSize: "11px", color: "#7575A0", opacity: "0.6",
       letterSpacing: "0.02em", cursor: "pointer",
-      padding: "6px 4px", WebkitTapHighlightColor: "transparent"
+      padding: "6px 0 6px 4px", flexShrink: "0",
+      pointerEvents: "auto",
+      WebkitTapHighlightColor: "transparent"
     }, LEISTE.rechtliches);
-    rechtEck.id = "tour-rechtliches";
     rechtEck.__tour = true;
     rechtEck.addEventListener("click", recht);
-    document.body.appendChild(rechtEck);
+    fuss.appendChild(rechtEck);
+
+    document.body.appendChild(fuss);
 
     // Auslauf an die echte Footer-Höhe anpassen (nach dem Rendern messen).
     passeAuslaufAn();
