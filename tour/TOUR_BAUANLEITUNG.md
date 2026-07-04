@@ -269,6 +269,16 @@ Für alles, was die App NICHT per Config kann:
   Pitch. Leisten-Padding unten auf 32 px erhöht, damit die zentrale
   Link-Reihe nicht mit Version/Rechtliches am Rand kollidiert.
 
+## 5.15 Änderungen v0.11 (04.07.2026)
+
+- **Version/Rechtliches exakt auf Pitch-Höhe:** Ursache des Höhen-
+  unterschieds war nicht absolute/fixed, sondern der safe-area-Zuschlag:
+  Tour hatte `bottom: calc(6px + env(safe-area-inset-bottom))` → auf
+  iPhones mit Home-Indicator ~34 px höher. Pitch nutzt feste `bottom: 8`
+  (Version) / `6` (Rechtliches) OHNE safe-area. Jetzt identisch. Da beide
+  nun fixe Bildschirmkoordinaten haben (unabhängig vom Leisteninhalt),
+  springen sie beim Moduswechsel geführt↔frei nicht mehr.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

@@ -562,8 +562,7 @@
     if (altRecht && altRecht.parentNode) altRecht.parentNode.removeChild(altRecht);
 
     var ver = el("div", {
-      position: "fixed", left: "12px",
-      bottom: "calc(8px + env(safe-area-inset-bottom, 0px))",
+      position: "fixed", left: "10px", bottom: "8px",
       zIndex: String(Z + 4),
       fontSize: "11px", color: "#7575A0", opacity: "0.7",
       letterSpacing: "0.02em", pointerEvents: "none", userSelect: "none"
@@ -573,8 +572,7 @@
     document.body.appendChild(ver);
 
     var rechtEck = el("div", {
-      position: "fixed", right: "12px",
-      bottom: "calc(6px + env(safe-area-inset-bottom, 0px))",
+      position: "fixed", right: "12px", bottom: "6px",
       zIndex: String(Z + 4),
       fontSize: "11px", color: "#7575A0", opacity: "0.6",
       letterSpacing: "0.02em", cursor: "pointer",

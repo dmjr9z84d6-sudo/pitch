@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.10";
+var TOUR_VERSION = "0.11";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
