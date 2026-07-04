@@ -294,7 +294,7 @@ function KartenScreen({ karte, t, accent, stil }) {
           <div key={i} style={{ ...(i === 0 ? stil.abschlussStark : stil.abschlussSub), marginBottom: 16 }}>{z}</div>
         ))}
         <button
-          onClick={() => { /* Später: Sprung in die Spielwiese (Stufe 2). */ }}
+          onClick={() => { window.location.href = "tour/"; }}
           style={{
             marginTop: 24, background: accent, color: "#FFFFFF",
             border: "none", borderRadius: RAD.xl,
