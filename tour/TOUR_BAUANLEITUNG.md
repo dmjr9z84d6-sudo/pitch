@@ -142,6 +142,36 @@ Für alles, was die App NICHT per Config kann:
   klettern: hoch, solange das Eltern-Element (fast) nur diesen Text trägt
   (`länge ≤ text + 12`). So umgesetzt in `findeText` + `sicherheitsnetz`.
 
+## 5.6 Änderungen v0.2 (04.07.2026)
+
+- **Sprechblase mittig + verschiebbar:** Startet zentriert (statt fix
+  unten). Titelleiste ist Zieh-Griff (Maus + Touch). Verschobene Position
+  bleibt über Schritte erhalten (`ov.blasePos`). Bei „tippen"-Schritten
+  weicht die Blase automatisch dem Spotlight aus (unter/über dem Ziel),
+  damit der Klick aufs Ziel frei bleibt.
+- **Layout-Seed (echte App-Settings):** `inhalte.js → TOUR_BESCHNITT.layout`
+  setzt beim Seed `festeSpalten:true`, `kartenSpalten:1` (einreihige
+  Karten-Spalte) und `detailMinBreite:1040` (breites Detailfenster).
+  Schlüssel stammen aus der Erscheinungsbild-Sektion (einstellungen.jsx
+  ~Z.567/574/616). Werte hier zentral änderbar — kein App-Code nötig.
+  Wirkt nur auf Desktop (≥900 px); auf dem iPhone ist die App ohnehin
+  einspaltig.
+
+## 5.7 Änderungen v0.3 (04.07.2026)
+
+- **Erkunden-Leiste zweizeilig:** Die primäre Aktion „Ausgiebiger
+  kennenlernen" steht oben in voller Breite; darunter eine umbrechende
+  Reihe mit den sekundären Aktionen (Zurücksetzen · Tour ansehen ·
+  Rechtliches). Behebt das Abschneiden am iPhone-Rand. Body-Padding
+  unten auf 108 px erhöht.
+- **Rechtliches in der Tour:** Impressum + Datenschutz als Plain-JS-
+  Overlay (`zeigeRecht` in tour.js), inhaltlich identisch zur Pitch-App
+  (recht.jsx). Kontaktdaten stehen in `inhalte.js → RECHT.kontakt` und
+  MÜSSEN mit der Pitch-App übereinstimmen — bei Adress-/E-Mail-Änderung
+  beide Stellen pflegen. Datenschutz-Abschnitt 3 um den Hinweis ergänzt,
+  dass die Demo-Daten nur lokal im Browser-localStorage liegen und das
+  Gerät nicht verlassen.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

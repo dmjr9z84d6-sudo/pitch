@@ -115,7 +115,7 @@
   }
 
   // ── Overlay-Bausteine (Spotlight + Blocker + Sprechblase) ──────────────────
-  var ov = { loch: null, blocker: [], blase: null, ziel: null, schrittIdx: 0, aktiv: false };
+  var ov = { loch: null, blocker: [], blase: null, ziel: null, schrittIdx: 0, aktiv: false, blasePos: null };
 
   function raeumeOverlay() {
     if (ov.loch && ov.loch.parentNode) ov.loch.parentNode.removeChild(ov.loch);
@@ -191,29 +191,67 @@
     }
   }
 
-  function zeichneBlase(schritt, mitWeiter, ohneAnker) {
+  function zeichneBlase(schritt, mitWeiter, ohneAnker, ausweichRect) {
     if (ov.blase && ov.blase.parentNode) ov.blase.parentNode.removeChild(ov.blase);
     var blase = el("div", {
-      position: "fixed", left: "12px", right: "12px",
-      bottom: "calc(16px + env(safe-area-inset-bottom, 0px))",
+      position: "fixed", left: "50%", top: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "calc(100% - 24px)", maxWidth: "440px",
       zIndex: String(Z + 2),
       background: "#12121E", color: "#F0F0FF",
       border: "1px solid #2A2A45", borderRadius: "16px",
-      padding: "16px 18px", maxWidth: "480px", margin: "0 auto",
+      paddingBottom: "16px",
       boxShadow: "0 12px 40px rgba(0,0,0,0.55)",
       fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
     });
     blase.__tour = true;
 
-    var fortschritt = "";
-    var gesamt = TOUR_SCHRITTE.length;
-    fortschritt = (ov.schrittIdx + 1) + " / " + gesamt;
+    // Position: verschobene Position gewinnt. Sonst bei „tippen" dem Ziel
+    // ausweichen (unter oder über dem Spotlight), sonst mittig.
+    if (ov.blasePos) {
+      blase.style.left = ov.blasePos.x + "px";
+      blase.style.top = ov.blasePos.y + "px";
+      blase.style.transform = "none";
+    } else if (ausweichRect) {
+      var platzUnten = window.innerHeight - ausweichRect.bottom;
+      var obenY;
+      if (platzUnten > 220) {
+        obenY = ausweichRect.bottom + 16;           // unter dem Ziel
+      } else {
+        obenY = Math.max(12, ausweichRect.top - 210); // über dem Ziel
+      }
+      blase.style.left = "50%";
+      blase.style.top = obenY + "px";
+      blase.style.transform = "translateX(-50%)";
+    }
 
-    var kopf = el("div", { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "6px" });
-    kopf.appendChild(el("div", { fontSize: "16px", fontWeight: "700", letterSpacing: "-0.01em" }, schritt.titel || ""));
-    kopf.appendChild(el("div", { fontSize: "12px", color: "#7575A0", flexShrink: "0", marginLeft: "10px" }, fortschritt));
+    var fortschritt = (ov.schrittIdx + 1) + " / " + TOUR_SCHRITTE.length;
+
+    // ── Titelleiste (zugleich Zieh-Griff) ──
+    var kopf = el("div", {
+      display: "flex", justifyContent: "space-between", alignItems: "center",
+      gap: "10px", padding: "13px 16px 9px",
+      cursor: "move", touchAction: "none",
+      borderBottom: "1px solid #20203A", userSelect: "none"
+    });
+    var titelWrap = el("div", { display: "flex", alignItems: "center", gap: "8px", minWidth: "0" });
+    // kleines Griff-Symbol (sechs Punkte) als Hinweis „verschiebbar"
+    titelWrap.appendChild(el("div", {
+      fontSize: "13px", color: "#5A5A80", flexShrink: "0",
+      letterSpacing: "1px", lineHeight: "1"
+    }, "\u2807\u2807"));
+    titelWrap.appendChild(el("div", {
+      fontSize: "16px", fontWeight: "700", letterSpacing: "-0.01em",
+      whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
+    }, schritt.titel || ""));
+    kopf.appendChild(titelWrap);
+    kopf.appendChild(el("div", { fontSize: "12px", color: "#7575A0", flexShrink: "0" }, fortschritt));
     blase.appendChild(kopf);
-    blase.appendChild(el("div", { fontSize: "14px", lineHeight: "1.5", color: "#C9C9E8" }, schritt.text || ""));
+    macheZiehbar(blase, kopf);
+
+    // ── Körper ──
+    var body = el("div", { padding: "12px 16px 0" });
+    body.appendChild(el("div", { fontSize: "14px", lineHeight: "1.5", color: "#C9C9E8" }, schritt.text || ""));
 
     var reihe = el("div", { display: "flex", gap: "10px", marginTop: "14px", flexWrap: "wrap" });
     var buttons = schritt.buttons;
@@ -236,19 +274,69 @@
         reihe.appendChild(btn);
       })(buttons[i]);
     }
-    if (reihe.childNodes.length > 0) blase.appendChild(reihe);
+    if (reihe.childNodes.length > 0) body.appendChild(reihe);
 
-    // Dezenter Abbruch (immer): „Tour beenden"
     var abbruch = el("div", {
       marginTop: "10px", textAlign: "center", fontSize: "12px",
       color: "#7575A0", cursor: "pointer", textDecoration: "underline"
     }, "Tour beenden und frei umschauen");
     abbruch.__tour = true;
     abbruch.addEventListener("click", function () { fuehreAktionAus("freigeben"); });
-    blase.appendChild(abbruch);
+    body.appendChild(abbruch);
 
+    blase.appendChild(body);
     document.body.appendChild(blase);
     ov.blase = blase;
+  }
+
+  // ── Blase per Griff verschiebbar machen (Maus + Touch) ─────────────────────
+  function macheZiehbar(blase, griff) {
+    var zieht = false, startX = 0, startY = 0, boxX = 0, boxY = 0;
+    function punkt(e) {
+      if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      return { x: e.clientX, y: e.clientY };
+    }
+    function start(e) {
+      zieht = true;
+      var r = blase.getBoundingClientRect();
+      // Auf feste px-Position umstellen (transform-Zentrierung auflösen)
+      blase.style.left = r.left + "px";
+      blase.style.top = r.top + "px";
+      blase.style.transform = "none";
+      boxX = r.left; boxY = r.top;
+      var p = punkt(e);
+      startX = p.x; startY = p.y;
+      if (e.cancelable) e.preventDefault();
+    }
+    function bewege(e) {
+      if (!zieht) return;
+      var p = punkt(e);
+      var nx = boxX + (p.x - startX);
+      var ny = boxY + (p.y - startY);
+      // In den sichtbaren Bereich klemmen (mind. 40px Griff greifbar lassen)
+      var b = blase.getBoundingClientRect();
+      var maxX = window.innerWidth - 60;
+      var maxY = window.innerHeight - 44;
+      if (nx < 60 - b.width) nx = 60 - b.width;
+      if (nx > maxX) nx = maxX;
+      if (ny < 0) ny = 0;
+      if (ny > maxY) ny = maxY;
+      blase.style.left = nx + "px";
+      blase.style.top = ny + "px";
+      if (e.cancelable) e.preventDefault();
+    }
+    function ende() {
+      if (!zieht) return;
+      zieht = false;
+      var r = blase.getBoundingClientRect();
+      ov.blasePos = { x: r.left, y: r.top }; // Position merken (schrittübergreifend)
+    }
+    griff.addEventListener("mousedown", start);
+    window.addEventListener("mousemove", bewege);
+    window.addEventListener("mouseup", ende);
+    griff.addEventListener("touchstart", start, { passive: false });
+    window.addEventListener("touchmove", bewege, { passive: false });
+    window.addEventListener("touchend", ende);
   }
 
   // ── Schritt-Steuerung ──────────────────────────────────────────────────────
@@ -275,7 +363,10 @@
         setTimeout(function () {
           ov.ziel = ziel;
           zeichneSpotlight(ziel, s.art === "tippen");
-          zeichneBlase(s, s.art === "zeigen", false);
+          // Bei „tippen" darf die Blase das Ziel nicht verdecken (Klick nötig)
+          // → weiche-Rect mitgeben; bei „zeigen"/„karte" mittig.
+          var ausweichRect = (s.art === "tippen") ? ziel.getBoundingClientRect() : null;
+          zeichneBlase(s, s.art === "zeigen", false, ausweichRect);
           if (s.art === "tippen") lauscheAufZielKlick(ziel);
         }, 220);
       } else if (versuche++ < 10) {
@@ -371,8 +462,8 @@
     leiste = el("div", {
       position: "fixed", left: "0", right: "0", bottom: "0",
       zIndex: String(Z + 3),
-      display: "flex", gap: "8px", alignItems: "center", justifyContent: "center",
-      padding: "8px 10px calc(8px + env(safe-area-inset-bottom, 0px))",
+      display: "flex", flexDirection: "column", gap: "8px", alignItems: "stretch",
+      padding: "10px 12px calc(10px + env(safe-area-inset-bottom, 0px))",
       // Bewusst APP-FREMD: warmer, heller Streifen statt App-Dunkelblau
       background: "#F5EFE0", borderTop: "2px solid #D9CDA8",
       fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
@@ -381,35 +472,144 @@
 
     function knopf(label, primaer, tue) {
       var b = el("button", {
-        minHeight: "40px", padding: "8px 14px", fontSize: "14px",
+        minHeight: primaer ? "48px" : "40px",
+        padding: primaer ? "12px 18px" : "8px 12px",
+        fontSize: primaer ? "16px" : "14px",
         fontWeight: primaer ? "700" : "600", borderRadius: "999px",
-        cursor: "pointer", whiteSpace: "nowrap",
+        cursor: "pointer",
+        // sekundäre Buttons dürfen bei Enge schrumpfen + Text kürzen
+        flex: primaer ? "0 0 auto" : "1 1 auto",
+        minWidth: "0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
         border: primaer ? "none" : "1px solid #B9AC85",
         background: primaer ? "#8A6D1F" : "transparent",
-        color: primaer ? "#FFFFFF" : "#5C512E"
+        color: primaer ? "#FFFFFF" : "#5C512E",
+        WebkitTapHighlightColor: "transparent"
       }, label);
       b.__tour = true;
       b.addEventListener("click", tue);
       return b;
     }
 
-    leiste.appendChild(knopf(LEISTE.zuruecksetzen, false, function () {
+    // Zeile 1: primäre Aktion, volle Breite (kein Abschneiden mehr)
+    var primaerBtn = knopf(LEISTE.kennenlernen, true, function () {
+      fuehreAktionAus("kennenlernen");
+    });
+    primaerBtn.style.width = "100%";
+    leiste.appendChild(primaerBtn);
+
+    // Zeile 2: sekundäre Aktionen — dürfen umbrechen, schrumpfen, kürzen
+    var reihe = el("div", { display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center" });
+    reihe.__tour = true;
+    reihe.appendChild(knopf(LEISTE.zuruecksetzen, false, function () {
       zeigeInfoKarte(KARTE_RESET, [
         { label: KARTE_RESET.nein, primaer: false, tue: null },
         { label: KARTE_RESET.ja, primaer: true, tue: setzeAllesZurueck }
       ]);
     }));
-    leiste.appendChild(knopf(LEISTE.tourNochmal, false, function () {
+    reihe.appendChild(knopf(LEISTE.tourNochmal, false, function () {
       try { localStorage.removeItem(LS_STATUS); } catch (e) {}
       window.location.reload();
     }));
-    leiste.appendChild(knopf(LEISTE.kennenlernen, true, function () {
-      fuehreAktionAus("kennenlernen");
+    reihe.appendChild(knopf(LEISTE.rechtliches, false, function () {
+      zeigeRecht();
     }));
+    leiste.appendChild(reihe);
 
     document.body.appendChild(leiste);
-    // Platz schaffen, damit die Leiste nichts verdeckt
-    document.body.style.paddingBottom = "64px";
+    // Platz schaffen, damit die Leiste nichts verdeckt (zweizeilig → mehr)
+    document.body.style.paddingBottom = "108px";
+  }
+
+  // ── Rechtliches-Overlay (Impressum + Datenschutz) ──────────────────────────
+  // Plain-JS-Nachbau des Pitch-Overlays (recht.jsx). Inhalt aus inhalte.js.
+  function zeigeRecht() {
+    var k = (RECHT && RECHT.kontakt) || {};
+    var deckel = el("div", {
+      position: "fixed", left: "0", top: "0", right: "0", bottom: "0",
+      zIndex: String(Z + 20), background: "#07070C",
+      display: "flex", flexDirection: "column",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    });
+    deckel.__tour = true;
+
+    // Kopf mit Schließen
+    var kopf = el("div", {
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      padding: "max(16px, env(safe-area-inset-top)) 20px 12px",
+      borderBottom: "1px solid #252540", flexShrink: "0"
+    });
+    kopf.appendChild(el("span", { fontSize: "16px", fontWeight: "700", color: "#F0F0FF" }, RECHT.titel));
+    var zu = el("button", {
+      background: "transparent", border: "none", color: "#A0A0CD",
+      fontSize: "15px", cursor: "pointer", padding: "8px 4px",
+      WebkitTapHighlightColor: "transparent"
+    }, RECHT.schliessen);
+    zu.__tour = true;
+    zu.addEventListener("click", function () { if (deckel.parentNode) deckel.parentNode.removeChild(deckel); });
+    kopf.appendChild(zu);
+    deckel.appendChild(kopf);
+
+    // Scrollbarer Inhalt
+    var scroll = el("div", { flex: "1", overflowY: "auto", padding: "8px 22px max(28px, env(safe-area-inset-bottom))" });
+    var innen = el("div", { maxWidth: "620px", margin: "0 auto" });
+
+    function h2(text) { return el("div", { fontSize: "18px", fontWeight: "700", color: "#F0F0FF", marginTop: "28px", marginBottom: "8px" }, text); }
+    function p(css) { var o = { fontSize: "14px", lineHeight: "1.6", color: "#A0A0CD", marginBottom: "8px" }; if (css) for (var x in css) o[x] = css[x]; return el("div", o); }
+    function stark(text, extra) { var css = { fontWeight: "700", color: "#F0F0FF", marginTop: "12px" }; if (extra) for (var x in extra) css[x] = extra[x]; return p(css); }
+    function wert(text) { return el("span", { color: "#F0F0FF" }, text); }
+
+    innen.appendChild(h2("Impressum"));
+    var ddg = p(); ddg.textContent = "Angaben gemäß § 5 DDG"; innen.appendChild(ddg);
+    var adr = p();
+    adr.appendChild(wert(k.name)); adr.appendChild(document.createElement("br"));
+    adr.appendChild(wert(k.strasse)); adr.appendChild(document.createElement("br"));
+    adr.appendChild(wert(k.ort));
+    innen.appendChild(adr);
+    var kont = p();
+    var kb = el("strong", { color: "#F0F0FF" }, "Kontakt"); kont.appendChild(kb);
+    kont.appendChild(document.createElement("br"));
+    kont.appendChild(document.createTextNode("E-Mail: ")); kont.appendChild(wert(k.email));
+    innen.appendChild(kont);
+    var verantw = p();
+    verantw.appendChild(document.createTextNode("Verantwortlich für den Inhalt: "));
+    verantw.appendChild(wert(k.name));
+    verantw.appendChild(document.createTextNode(", Anschrift wie oben."));
+    innen.appendChild(verantw);
+
+    innen.appendChild(h2("Datenschutzerklärung"));
+
+    innen.appendChild(stark("1. Verantwortlicher"));
+    var v1 = p();
+    v1.appendChild(document.createTextNode("Verantwortlich für die Datenverarbeitung auf dieser Website ist "));
+    v1.appendChild(wert(k.name));
+    v1.appendChild(document.createTextNode(", "));
+    v1.appendChild(wert(k.strasse + ", " + k.ort));
+    v1.appendChild(document.createTextNode(", E-Mail "));
+    v1.appendChild(wert(k.email));
+    v1.appendChild(document.createTextNode("."));
+    innen.appendChild(v1);
+
+    innen.appendChild(stark("2. Hosting"));
+    var v2 = p(); v2.textContent = "Diese Website wird bei GitHub Pages (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA) gehostet. Beim Aufruf der Seiten werden technisch notwendige Zugriffsdaten wie die IP-Adresse verarbeitet, um die Auslieferung der Seite zu ermöglichen und deren Sicherheit zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer stabilen, sicheren Bereitstellung). Die Übermittlung in die USA erfolgt auf Grundlage der Standardvertragsklauseln.";
+    innen.appendChild(v2);
+
+    innen.appendChild(stark("3. Keine Cookies, kein Tracking"));
+    var v3 = p(); v3.textContent = "Diese Demo setzt keine Cookies und verwendet keine Analyse- oder Tracking-Dienste. Die Beispieldaten der Tour werden ausschließlich lokal in Ihrem Browser gespeichert (localStorage), verlassen Ihr Gerät nicht und werden nicht an uns übertragen. Über die Schaltfläche Zurücksetzen oder das Leeren der Websitedaten sind sie jederzeit entfernt.";
+    innen.appendChild(v3);
+
+    innen.appendChild(stark("4. Ihre Rechte"));
+    var v4 = p(); v4.textContent = "Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie ein Beschwerderecht bei einer Aufsichtsbehörde. Wenden Sie sich dazu an die oben genannte Kontaktadresse.";
+    innen.appendChild(v4);
+
+    var stand = p({ fontSize: "12px", opacity: "0.7", marginTop: "20px" });
+    stand.appendChild(document.createTextNode("Stand: "));
+    stand.appendChild(wert(k.stand));
+    stand.appendChild(document.createTextNode(". Diese Angaben werden ergänzt, sobald weitere Funktionen (z. B. die Anforderung eines Testzugangs) hinzukommen."));
+    innen.appendChild(stand);
+
+    scroll.appendChild(innen);
+    deckel.appendChild(scroll);
+    document.body.appendChild(deckel);
   }
 
   function setzeAllesZurueck() {

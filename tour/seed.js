@@ -62,7 +62,8 @@
   function baueSettings() {
     var m = (TOUR_BESCHNITT && TOUR_BESCHNITT.menue) || {};
     var ot = (TOUR_BESCHNITT && TOUR_BESCHNITT.objektTabs) || {};
-    return {
+    var lay = (TOUR_BESCHNITT && TOUR_BESCHNITT.layout) || {};
+    var s = {
       kacheln: KACHELN.map(function (k) {
         return { id: k.id, label: k.label, icon: k.icon, farbe: k.farbe,
                  reihenfolge: k.reihenfolge, aktiv: m[k.id] === true };
@@ -73,6 +74,14 @@
                  aktiv: t.fix ? true : ot[t.id] === true };
       })
     };
+    // Layout-Vorgaben (Desktop): einreihige Karten-Spalte + breites Detail.
+    // Schlüssel stammen aus der Erscheinungsbild-Sektion (einstellungen.jsx):
+    // festeSpalten, kartenSpalten (1–5), detailMinBreite (400–1400).
+    if (lay.festeSpalten != null)   s.festeSpalten = lay.festeSpalten;
+    if (lay.kartenSpalten != null)  s.kartenSpalten = lay.kartenSpalten;
+    if (lay.detailMinBreite != null) s.detailMinBreite = lay.detailMinBreite;
+    if (lay.kartenMaxBreite != null) s.kartenMaxBreite = lay.kartenMaxBreite;
+    return s;
   }
 
   function seedeWennNoetig(rohdaten) {

@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.1";
+var TOUR_VERSION = "0.3";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -43,6 +43,17 @@ var TOUR_BESCHNITT = {
   // (sonst könnte man ausgeblendete Bereiche wieder aktivieren).
   // Erkennung über den Karten-Titel.
   nurAnsichtKarten: ["Schnellzugriff", "Objekt-Tabs"],
+  // Layout-Vorgaben (Desktop). Werden von seed.js in die App-Settings
+  // geschrieben. Schlüssel = Erscheinungsbild-Sektion der App.
+  //   festeSpalten     : Karten-Übersicht mit fester Spaltenzahl (true)
+  //   kartenSpalten    : Anzahl Karten-Spalten (1 = einreihig)
+  //   detailMinBreite  : Breite des Detailfensters in px (400…1400)
+  //   kartenMaxBreite  : max. Kartenbreite in px (240…480, optional)
+  layout: {
+    festeSpalten: true,
+    kartenSpalten: 1,
+    detailMinBreite: 1040
+  },
   // Sicherheitsnetz: Nav-/Tab-Einträge mit exakt diesem Text werden immer
   // versteckt, falls sie doch auftauchen (z. B. nach Einstellungs-Klicks).
   verboteneNavTexte: [
@@ -140,7 +151,23 @@ var TOUR_SCHRITTE = [
 var LEISTE = {
   zuruecksetzen: "Zurücksetzen",
   tourNochmal: "Tour ansehen",
-  kennenlernen: "Ausgiebiger kennenlernen"
+  kennenlernen: "Ausgiebiger kennenlernen",
+  rechtliches: "Rechtliches"
+};
+
+// ── Rechtliches-Overlay (Impressum + Datenschutz) ───────────────────────────
+// Inhaltlich identisch zur Pitch-App (recht.jsx). Kontaktdaten HIER pflegen
+// (müssen mit der Pitch-App übereinstimmen). Bei Änderung TOUR_VERSION hoch.
+var RECHT = {
+  titel: "Rechtliches",
+  schliessen: "Schließen",
+  kontakt: {
+    name:    "Benjamin Goltz",
+    strasse: "Schwanheimerstr.16/2",
+    ort:     "69421 Eberbach",
+    email:   "recht@allesda.one",
+    stand:   "Juli 2026"
+  }
 };
 
 // ── Karte „Ausgiebiger kennenlernen" (solange ZIEL_KENNENLERNEN leer) ───────
