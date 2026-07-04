@@ -229,6 +229,27 @@ Für alles, was die App NICHT per Config kann:
   jetzt `#F97316` (Orange), klar unterscheidbar. Steht in seed.js
   (KACHELN). Bei App-seitiger Default-Änderung hier nachziehen.
 
+## 5.11 Änderungen v0.7 (04.07.2026)
+
+- **App-Inhalt läuft nicht mehr hinter den Footer:** Statt das Body-
+  Padding zu setzen (das die App mit ihrem eigenen `padding-bottom`
+  überschrieb → Inhalt verschwand hinter dem Footer), hebt die Tour jetzt
+  die CSS-Variable `--ad-auslauf` (DESIGN §33, Scroll-Auslauf, default
+  62dvh) um die gemessene Footer-Höhe an — per inline-style auf `<html>`,
+  der die App-CSS-Regel schlägt. So rechnet die App selbst den Platz ein;
+  der letzte Inhalt lässt sich über den Footer schieben. Messung per
+  doppeltem rAF nach dem Footer-Rendern (`passeAuslaufAn`).
+- **Footer weiter runter (Handy):** unteres Padding der Leiste von
+  10 px auf 22 px über der safe-area erhöht — Inhalt klebt nicht mehr am
+  Display-Rand / Home-Indicator.
+
+## 5.12 Änderungen v0.8 (04.07.2026)
+
+- **Versionsnummer im Footer:** Dezent unten links (`v0.8`), Stil wie im
+  Pitch (fontSize 11, opacity 0.7). Liest `TOUR_VERSION` aus inhalte.js,
+  in beiden Leisten-Modi sichtbar — praktisch zur Cache-Kontrolle beim
+  Testen (sieht man sofort, ob die neue Version geladen ist).
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

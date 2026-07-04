@@ -480,7 +480,7 @@
         position: "fixed", left: "0", right: "0", bottom: "0",
         zIndex: String(Z + 3),
         display: "flex", flexDirection: "column", gap: "10px", alignItems: "stretch",
-        padding: "10px 16px calc(10px + env(safe-area-inset-bottom, 0px))",
+        padding: "12px 16px calc(22px + env(safe-area-inset-bottom, 0px))",
         // Dezent statt dominant: leicht abgesetzter dunkler Streifen, dünne Linie
         background: "rgba(10,10,18,0.92)",
         borderTop: "1px solid #2A2A45",
@@ -534,7 +534,6 @@
         link("Tour beenden", beenden),
         link(LEISTE.rechtliches, recht)
       ]));
-      document.body.style.paddingBottom = "56px";
     } else {
       // Freie Phase / Weiche: EIN echter Button oben, Schrift-Links darunter.
       var primaerBtn = el("button", {
@@ -553,8 +552,41 @@
         link(LEISTE.tourNochmal, tourNochmal),
         link(LEISTE.rechtliches, recht)
       ]));
-      document.body.style.paddingBottom = "112px";
     }
+
+    // Versionsnummer dezent unten links — wie im Pitch, zur Cache-Kontrolle.
+    var ver = el("div", {
+      position: "absolute", left: "12px",
+      bottom: "calc(6px + env(safe-area-inset-bottom, 0px))",
+      fontSize: "11px", color: "#7575A0", opacity: "0.7",
+      pointerEvents: "none", userSelect: "none"
+    }, "v" + (typeof TOUR_VERSION !== "undefined" ? TOUR_VERSION : ""));
+    ver.__tour = true;
+    leiste.appendChild(ver);
+
+    // Auslauf an die echte Footer-Höhe anpassen (nach dem Rendern messen).
+    passeAuslaufAn();
+  }
+
+  // Der App-Inhalt darf nicht hinter den Footer laufen. Die App scrollt auf
+  // Mobile den Body nativ und reserviert unten Platz über die CSS-Variable
+  // --ad-auslauf (DESIGN §33, default 62dvh). Statt das Body-Padding zu
+  // überschreiben (das würde die App überschreiben/kaputt machen), heben wir
+  // --ad-auslauf um die gemessene Footer-Höhe an — so rechnet die App selbst
+  // den Platz ein und der letzte Inhalt lässt sich über den Footer schieben.
+  function passeAuslaufAn() {
+    // Nach dem Layout messen (zwei rAF, damit Flex/Wrap fertig ist).
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        if (!leiste) return;
+        var h = leiste.offsetHeight || 0;
+        // etwas Luft über dem Footer, damit Inhalt nicht direkt anklebt
+        var zusatz = h + 16;
+        try {
+          document.documentElement.style.setProperty("--ad-auslauf", "calc(62dvh + " + zusatz + "px)");
+        } catch (e) {}
+      });
+    });
   }
 
   // ── Rechtliches-Overlay (Impressum + Datenschutz) ──────────────────────────
