@@ -172,6 +172,44 @@ Für alles, was die App NICHT per Config kann:
   dass die Demo-Daten nur lokal im Browser-localStorage liegen und das
   Gerät nicht verlassen.
 
+## 5.8 Änderungen v0.4 (04.07.2026)
+
+- **Seed-Signatur statt Einmal-Marker (wichtig):** Der Marker
+  `allesda:tour:geseedet` speichert jetzt eine Signatur aus TOUR_VERSION +
+  den Seed-Settings. Ändert sich die Konfiguration (neue Layout-Werte,
+  andere Kachel-/Tab-Auswahl, neue Version), wird beim nächsten Laden
+  automatisch NEU geseedet — der Nutzer muss NICHT „Zurücksetzen".
+  Behebt die Marker-Falle: bisher blieben Settings-Änderungen bei allen
+  hängen, die die Tour schon einmal geöffnet hatten (der alte Marker
+  blockierte jedes Neu-Schreiben). Innerhalb derselben ausgelieferten
+  Version bleibt die Signatur konstant → Nutzer-Klicks in der freien
+  Phase gehen NICHT verloren.
+- **Detailbreite 1040 → 1200:** Nachweislich steuert `detailMinBreite`
+  die Detailbreite 1:1 über `passendeMasterSpalten` (utils-icons.jsx
+  ~Z.199) im `MasterDetailRahmen` — ein Wert wirkt auf ALLE Detailkarten
+  (Objekte, Kontakte, Kalender, Statistik …). Belegt per Direktaufruf:
+  detailMinBreite=1200 → Detailbreite 1200 px bei 1850 px Fensterbreite.
+
+## 5.9 Änderungen v0.5 (04.07.2026)
+
+- **Leiste entschärft + zwei Modi:** Der dominante goldene Streifen ist
+  weg. Neu ein dezenter dunkler Streifen (halbtransparent + blur).
+  - *Geführte Phase:* Leiste schon während der Tour sichtbar, nur zwei
+    klickbare Schrift-Links: „Tour beenden" · „Rechtliches". KEIN großer
+    Button. In der Sprechblase bleibt nur „Weiter".
+  - *Freie Phase / ab Weiche:* EIN echter Button „Ausgiebiger
+    kennenlernen" (voll breit), darunter Schrift-Links „Zurücksetzen ·
+    Tour ansehen · Rechtliches".
+  - Sekundäraktionen sind jetzt klickbare Schrift (kein Button-Rahmen).
+  - `zeigeLeiste(modus)` + `zeichneLeisteInhalt(modus)` in tour.js.
+- **„Ausgiebiger kennenlernen" erst ab der Weiche:** Während der 10
+  Stationen taucht der Button nicht auf; er erscheint mit der freien
+  Phase (Weiche-Blase hat nur noch „Frei erkunden" → freigeben).
+- **Sprechblasen gleich groß:** Feste Mindesthöhe (150 px Body), am
+  längsten Text ausgerichtet (Station „Alles am Objekt"). Text oben,
+  „Weiter" unten gepinnt; kurze Texte haben mehr Leerraum. Der frühere
+  „Tour beenden"-Link IN der Blase ist raus (steht jetzt in der Leiste).
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

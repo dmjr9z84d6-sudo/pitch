@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.3";
+var TOUR_VERSION = "0.5";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -52,7 +52,7 @@ var TOUR_BESCHNITT = {
   layout: {
     festeSpalten: true,
     kartenSpalten: 1,
-    detailMinBreite: 1040
+    detailMinBreite: 1200
   },
   // Sicherheitsnetz: Nav-/Tab-Einträge mit exakt diesem Text werden immer
   // versteckt, falls sie doch auftauchen (z. B. nach Einstellungs-Klicks).
@@ -139,10 +139,9 @@ var TOUR_SCHRITTE = [
   {
     id: "weiche", art: "karte",
     titel: "Das war der Überblick",
-    text: "Und jetzt Sie: Schauen Sie sich frei um — tippen Sie, wohin Sie wollen. Es wird nichts gespeichert. Oder lernen Sie AllesDa gleich richtig kennen.",
+    text: "Und jetzt Sie: Schauen Sie sich frei um — tippen Sie, wohin Sie wollen. Es wird nichts gespeichert. Unten finden Sie jederzeit den Weg, AllesDa ausgiebiger kennenzulernen.",
     buttons: [
-      { label: "Ausgiebiger kennenlernen", aktion: "kennenlernen", primaer: true },
-      { label: "Erst frei umschauen", aktion: "freigeben" }
+      { label: "Frei erkunden", aktion: "freigeben", primaer: true }
     ]
   }
 ];

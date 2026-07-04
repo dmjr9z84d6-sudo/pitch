@@ -85,9 +85,19 @@
   }
 
   function seedeWennNoetig(rohdaten) {
-    var schonDa = null;
-    try { schonDa = localStorage.getItem(K.geseedet); } catch (e) {}
-    if (schonDa) return; // Browser-Stand behalten (bis Reset/Cache-Leerung)
+    // Signatur der aktuellen Seed-Konfiguration. Ändert sich die (neue
+    // Layout-Werte, andere Kachel-/Tab-Auswahl, neue TOUR_VERSION), wird
+    // automatisch NEU geseedet — ohne dass der Nutzer „Zurücksetzen" muss.
+    // So schlägt die Marker-Falle bei künftigen Änderungen nicht mehr zu.
+    var signatur = "";
+    try {
+      signatur = TOUR_VERSION + "|" + JSON.stringify(baueSettings());
+    } catch (e) { signatur = TOUR_VERSION; }
+
+    var gespeichert = null;
+    try { gespeichert = localStorage.getItem(K.geseedet); } catch (e) {}
+    if (gespeichert === signatur) return; // exakt dieser Seed liegt schon → nichts tun
+
     try {
       var daten = {
         kontakte: (rohdaten && rohdaten.kontakte) || [],
@@ -97,7 +107,7 @@
       localStorage.setItem(K.daten, JSON.stringify(daten));
       localStorage.setItem(K.settings, JSON.stringify(baueSettings()));
       localStorage.setItem(K.schema, "1");
-      localStorage.setItem(K.geseedet, String(Date.now()));
+      localStorage.setItem(K.geseedet, signatur);
     } catch (e) {
       // localStorage voll/gesperrt: App startet dann leer — Tour zeigt
       // trotzdem ihre Karten (Anker-Fallback greift).

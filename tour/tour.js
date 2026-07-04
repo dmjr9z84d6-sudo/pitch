@@ -232,7 +232,7 @@
       display: "flex", justifyContent: "space-between", alignItems: "center",
       gap: "10px", padding: "13px 16px 9px",
       cursor: "move", touchAction: "none",
-      borderBottom: "1px solid #20203A", userSelect: "none"
+      borderBottom: "1px solid #20203A", userSelect: "none", flexShrink: "0"
     });
     var titelWrap = el("div", { display: "flex", alignItems: "center", gap: "8px", minWidth: "0" });
     // kleines Griff-Symbol (sechs Punkte) als Hinweis „verschiebbar"
@@ -249,11 +249,16 @@
     blase.appendChild(kopf);
     macheZiehbar(blase, kopf);
 
-    // ── Körper ──
-    var body = el("div", { padding: "12px 16px 0" });
-    body.appendChild(el("div", { fontSize: "14px", lineHeight: "1.5", color: "#C9C9E8" }, schritt.text || ""));
+    // ── Körper: feste Mindesthöhe (alle Blasen gleich groß). Text oben,
+    // Buttons unten gepinnt. Kurze Texte → mehr Leerraum darunter. ──
+    var body = el("div", {
+      padding: "14px 16px 4px", display: "flex", flexDirection: "column",
+      // Höhe am längsten Text ausgerichtet (Station „Alles am Objekt", ~6 Zeilen)
+      minHeight: "150px"
+    });
+    body.appendChild(el("div", { fontSize: "14px", lineHeight: "1.5", color: "#C9C9E8", flex: "1 1 auto" }, schritt.text || ""));
 
-    var reihe = el("div", { display: "flex", gap: "10px", marginTop: "14px", flexWrap: "wrap" });
+    var reihe = el("div", { display: "flex", gap: "10px", marginTop: "14px", flexWrap: "wrap", flexShrink: "0" });
     var buttons = schritt.buttons;
     if (!buttons) {
       buttons = [];
@@ -275,14 +280,6 @@
       })(buttons[i]);
     }
     if (reihe.childNodes.length > 0) body.appendChild(reihe);
-
-    var abbruch = el("div", {
-      marginTop: "10px", textAlign: "center", fontSize: "12px",
-      color: "#7575A0", cursor: "pointer", textDecoration: "underline"
-    }, "Tour beenden und frei umschauen");
-    abbruch.__tour = true;
-    abbruch.addEventListener("click", function () { fuehreAktionAus("freigeben"); });
-    body.appendChild(abbruch);
 
     blase.appendChild(body);
     document.body.appendChild(blase);
@@ -401,7 +398,7 @@
       if (sucheTimer) clearTimeout(sucheTimer);
       raeumeOverlay();
       try { localStorage.setItem(LS_STATUS, "frei"); } catch (e) {}
-      zeigeLeiste();
+      zeigeLeiste("frei");
       return;
     }
     if (aktion === "kennenlernen") {
@@ -457,67 +454,90 @@
 
   // ── Freie Phase: die app-fremde Leiste unten ───────────────────────────────
   var leiste = null;
-  function zeigeLeiste() {
-    if (leiste) return;
-    leiste = el("div", {
-      position: "fixed", left: "0", right: "0", bottom: "0",
-      zIndex: String(Z + 3),
-      display: "flex", flexDirection: "column", gap: "8px", alignItems: "stretch",
-      padding: "10px 12px calc(10px + env(safe-area-inset-bottom, 0px))",
-      // Bewusst APP-FREMD: warmer, heller Streifen statt App-Dunkelblau
-      background: "#F5EFE0", borderTop: "2px solid #D9CDA8",
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    });
-    leiste.__tour = true;
+  // modus: "gefuehrt" = nur Schrift-Links (Tour beenden · Rechtliches)
+  //        "frei"     = ein echter Button (Kennenlernen) + Schrift-Links
+  //                     (Zurücksetzen · Tour ansehen · Rechtliches)
+  function zeigeLeiste(modus) {
+    if (!leiste) {
+      leiste = el("div", {
+        position: "fixed", left: "0", right: "0", bottom: "0",
+        zIndex: String(Z + 3),
+        display: "flex", flexDirection: "column", gap: "10px", alignItems: "stretch",
+        padding: "10px 16px calc(10px + env(safe-area-inset-bottom, 0px))",
+        // Dezent statt dominant: leicht abgesetzter dunkler Streifen, dünne Linie
+        background: "rgba(10,10,18,0.92)",
+        borderTop: "1px solid #2A2A45",
+        backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+      });
+      leiste.__tour = true;
+      document.body.appendChild(leiste);
+    }
+    zeichneLeisteInhalt(modus || "frei");
+  }
 
-    function knopf(label, primaer, tue) {
-      var b = el("button", {
-        minHeight: primaer ? "48px" : "40px",
-        padding: primaer ? "12px 18px" : "8px 12px",
-        fontSize: primaer ? "16px" : "14px",
-        fontWeight: primaer ? "700" : "600", borderRadius: "999px",
-        cursor: "pointer",
-        // sekundäre Buttons dürfen bei Enge schrumpfen + Text kürzen
-        flex: primaer ? "0 0 auto" : "1 1 auto",
-        minWidth: "0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-        border: primaer ? "none" : "1px solid #B9AC85",
-        background: primaer ? "#8A6D1F" : "transparent",
-        color: primaer ? "#FFFFFF" : "#5C512E",
+  function zeichneLeisteInhalt(modus) {
+    if (!leiste) return;
+    while (leiste.firstChild) leiste.removeChild(leiste.firstChild);
+
+    // klickbare Schrift (kein Button-Rahmen) — dezente sekundäre Aktion
+    function link(label, tue) {
+      var a = el("div", {
+        fontSize: "14px", fontWeight: "600", color: "#A0A0CD",
+        cursor: "pointer", padding: "8px 6px", whiteSpace: "nowrap",
         WebkitTapHighlightColor: "transparent"
       }, label);
-      b.__tour = true;
-      b.addEventListener("click", tue);
-      return b;
+      a.__tour = true;
+      a.addEventListener("click", tue);
+      return a;
+    }
+    function linkReihe(links) {
+      var r = el("div", { display: "flex", gap: "18px", flexWrap: "wrap", justifyContent: "center", alignItems: "center" });
+      r.__tour = true;
+      for (var i = 0; i < links.length; i++) r.appendChild(links[i]);
+      return r;
     }
 
-    // Zeile 1: primäre Aktion, volle Breite (kein Abschneiden mehr)
-    var primaerBtn = knopf(LEISTE.kennenlernen, true, function () {
-      fuehreAktionAus("kennenlernen");
-    });
-    primaerBtn.style.width = "100%";
-    leiste.appendChild(primaerBtn);
-
-    // Zeile 2: sekundäre Aktionen — dürfen umbrechen, schrumpfen, kürzen
-    var reihe = el("div", { display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center" });
-    reihe.__tour = true;
-    reihe.appendChild(knopf(LEISTE.zuruecksetzen, false, function () {
+    var reset = function () {
       zeigeInfoKarte(KARTE_RESET, [
         { label: KARTE_RESET.nein, primaer: false, tue: null },
         { label: KARTE_RESET.ja, primaer: true, tue: setzeAllesZurueck }
       ]);
-    }));
-    reihe.appendChild(knopf(LEISTE.tourNochmal, false, function () {
+    };
+    var tourNochmal = function () {
       try { localStorage.removeItem(LS_STATUS); } catch (e) {}
       window.location.reload();
-    }));
-    reihe.appendChild(knopf(LEISTE.rechtliches, false, function () {
-      zeigeRecht();
-    }));
-    leiste.appendChild(reihe);
+    };
+    var recht = function () { zeigeRecht(); };
+    var beenden = function () { fuehreAktionAus("freigeben"); };
 
-    document.body.appendChild(leiste);
-    // Platz schaffen, damit die Leiste nichts verdeckt (zweizeilig → mehr)
-    document.body.style.paddingBottom = "108px";
+    if (modus === "gefuehrt") {
+      // Während der Tour: KEIN großer Button, nur zwei dezente Schrift-Links.
+      leiste.appendChild(linkReihe([
+        link("Tour beenden", beenden),
+        link(LEISTE.rechtliches, recht)
+      ]));
+      document.body.style.paddingBottom = "56px";
+    } else {
+      // Freie Phase / Weiche: EIN echter Button oben, Schrift-Links darunter.
+      var primaerBtn = el("button", {
+        width: "100%", minHeight: "48px", padding: "13px 18px",
+        fontSize: "16px", fontWeight: "700", borderRadius: "999px",
+        cursor: "pointer", border: "none",
+        background: "#0E7490", color: "#FFFFFF",
+        boxShadow: "0 6px 18px rgba(14,116,144,0.30)",
+        WebkitTapHighlightColor: "transparent"
+      }, LEISTE.kennenlernen);
+      primaerBtn.__tour = true;
+      primaerBtn.addEventListener("click", function () { fuehreAktionAus("kennenlernen"); });
+      leiste.appendChild(primaerBtn);
+      leiste.appendChild(linkReihe([
+        link(LEISTE.zuruecksetzen, reset),
+        link(LEISTE.tourNochmal, tourNochmal),
+        link(LEISTE.rechtliches, recht)
+      ]));
+      document.body.style.paddingBottom = "112px";
+    }
   }
 
   // ── Rechtliches-Overlay (Impressum + Datenschutz) ──────────────────────────
@@ -789,9 +809,10 @@
     var status = null;
     try { status = localStorage.getItem(LS_STATUS); } catch (e) {}
     if (status === "frei") {
-      zeigeLeiste();
+      zeigeLeiste("frei");
     } else {
       ov.aktiv = true;
+      zeigeLeiste("gefuehrt"); // Leiste schon während der Tour (Tour beenden · Rechtliches)
       setTimeout(function () { zeigeSchritt(0); }, 600);
     }
   }
