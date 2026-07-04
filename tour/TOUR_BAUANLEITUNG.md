@@ -259,6 +259,16 @@ Für alles, was die App NICHT per Config kann:
   Link-Reihe zeigt jetzt: geführt = „Tour beenden"; frei = „Zurücksetzen
   · Tour ansehen".
 
+## 5.14 Änderungen v0.10 (04.07.2026)
+
+- **Version + Rechtliches ganz nach unten (wie Pitch):** Beide vorher
+  `position:absolute` IN der Leiste → saßen höher. Jetzt `position:fixed`
+  am echten Bildschirmrand, an document.body gehängt (IDs tour-version /
+  tour-rechtliches, alte Instanzen werden beim Neuzeichnen entfernt).
+  bottom: 8 px (Version) / 6 px (Rechtliches) + safe-area, exakt wie im
+  Pitch. Leisten-Padding unten auf 32 px erhöht, damit die zentrale
+  Link-Reihe nicht mit Version/Rechtliches am Rand kollidiert.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

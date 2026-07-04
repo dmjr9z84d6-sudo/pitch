@@ -480,7 +480,7 @@
         position: "fixed", left: "0", right: "0", bottom: "0",
         zIndex: String(Z + 3),
         display: "flex", flexDirection: "column", gap: "10px", alignItems: "stretch",
-        padding: "12px 16px calc(22px + env(safe-area-inset-bottom, 0px))",
+        padding: "12px 16px calc(32px + env(safe-area-inset-bottom, 0px))",
         // Dezent statt dominant: leicht abgesetzter dunkler Streifen, dünne Linie
         background: "rgba(10,10,18,0.92)",
         borderTop: "1px solid #2A2A45",
@@ -553,28 +553,37 @@
       ]));
     }
 
-    // Versionsnummer dezent unten links — wie im Pitch, zur Cache-Kontrolle.
+    // Versionsnummer + Rechtliches: fixed am ECHTEN Bildschirmrand (wie im
+    // Pitch), nicht in der Leiste — sonst sitzen sie höher. An document.body
+    // gehängt; alte Instanzen vorher entfernen (Leiste wird neu gezeichnet).
+    var altVer = document.getElementById("tour-version");
+    if (altVer && altVer.parentNode) altVer.parentNode.removeChild(altVer);
+    var altRecht = document.getElementById("tour-rechtliches");
+    if (altRecht && altRecht.parentNode) altRecht.parentNode.removeChild(altRecht);
+
     var ver = el("div", {
-      position: "absolute", left: "12px",
-      bottom: "calc(6px + env(safe-area-inset-bottom, 0px))",
+      position: "fixed", left: "12px",
+      bottom: "calc(8px + env(safe-area-inset-bottom, 0px))",
+      zIndex: String(Z + 4),
       fontSize: "11px", color: "#7575A0", opacity: "0.7",
       letterSpacing: "0.02em", pointerEvents: "none", userSelect: "none"
     }, "v" + (typeof TOUR_VERSION !== "undefined" ? TOUR_VERSION : ""));
+    ver.id = "tour-version";
     ver.__tour = true;
-    leiste.appendChild(ver);
+    document.body.appendChild(ver);
 
-    // „Rechtliches" — dezent unten RECHTS, spiegelbildlich zur Version.
-    // Exakt wie im Pitch (fontSize 11, opacity 0.6, right 12, bottom 6).
     var rechtEck = el("div", {
-      position: "absolute", right: "12px",
+      position: "fixed", right: "12px",
       bottom: "calc(6px + env(safe-area-inset-bottom, 0px))",
+      zIndex: String(Z + 4),
       fontSize: "11px", color: "#7575A0", opacity: "0.6",
       letterSpacing: "0.02em", cursor: "pointer",
       padding: "6px 4px", WebkitTapHighlightColor: "transparent"
     }, LEISTE.rechtliches);
+    rechtEck.id = "tour-rechtliches";
     rechtEck.__tour = true;
     rechtEck.addEventListener("click", recht);
-    leiste.appendChild(rechtEck);
+    document.body.appendChild(rechtEck);
 
     // Auslauf an die echte Footer-Höhe anpassen (nach dem Rendern messen).
     passeAuslaufAn();
