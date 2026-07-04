@@ -24,6 +24,96 @@ function systemDunkel() {
   return (q && q.matches) || false;
 }
 
+// ── Rechtliches-Overlay: Impressum + Datenschutz ────────────────────────────
+// Vollflächiges, scrollbares Overlay im aktuellen Thema. Platzhalter [ ... ]
+// trägt Benny selbst ein — echte Personendaten gehören nicht in den Quellcode
+// des öffentlichen Repos, bis sie bewusst gesetzt werden.
+function RechtOverlay({ t, accent, onClose }) {
+  const h2 = { fontSize: 18, fontWeight: 700, color: t.text, marginTop: 28, marginBottom: 8 };
+  const p = { fontSize: 14, lineHeight: 1.6, color: t.sub, marginBottom: 8 };
+  const platz = { color: accent };
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 100, background: t.bg,
+      display: "flex", flexDirection: "column",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    }}>
+      {/* Kopf mit Schließen */}
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "max(16px, env(safe-area-inset-top)) 20px 12px",
+        borderBottom: `1px solid ${t.border}`, flexShrink: 0
+      }}>
+        <span style={{ fontSize: 16, fontWeight: 700, color: t.text }}>Rechtliches</span>
+        <button onClick={onClose} style={{
+          background: "transparent", border: "none", color: t.sub,
+          fontSize: 15, cursor: "pointer", padding: "8px 4px",
+          WebkitTapHighlightColor: "transparent"
+        }}>Schließen</button>
+      </div>
+      {/* Scrollbarer Inhalt */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "8px 22px max(28px, env(safe-area-inset-bottom))" }}>
+        <div style={{ maxWidth: 620, margin: "0 auto" }}>
+
+          <div style={h2}>Impressum</div>
+          <div style={p}>Angaben gemäß § 5 DDG</div>
+          <div style={p}>
+            <span style={platz}>[Vorname Nachname]</span><br />
+            <span style={platz}>[Straße und Hausnummer]</span><br />
+            <span style={platz}>[PLZ Ort]</span>
+          </div>
+          <div style={p}>
+            <strong style={{ color: t.text }}>Kontakt</strong><br />
+            E-Mail: <span style={platz}>[deine-adresse@allesda.one]</span>
+          </div>
+          <div style={p}>
+            Verantwortlich für den Inhalt: <span style={platz}>[Vorname Nachname]</span>, Anschrift wie oben.
+          </div>
+
+          <div style={h2}>Datenschutzerklärung</div>
+
+          <div style={{ ...p, fontWeight: 700, color: t.text, marginTop: 12 }}>1. Verantwortlicher</div>
+          <div style={p}>
+            Verantwortlich für die Datenverarbeitung auf dieser Website ist
+            <span style={platz}> [Vorname Nachname]</span>, <span style={platz}>[Anschrift]</span>,
+            E-Mail <span style={platz}>[deine-adresse@allesda.one]</span>.
+          </div>
+
+          <div style={{ ...p, fontWeight: 700, color: t.text, marginTop: 12 }}>2. Hosting</div>
+          <div style={p}>
+            Diese Website wird bei GitHub Pages (GitHub, Inc., 88 Colin P. Kelly Jr. Street,
+            San Francisco, CA 94107, USA) gehostet. Beim Aufruf der Seiten werden technisch
+            notwendige Zugriffsdaten wie die IP-Adresse verarbeitet, um die Auslieferung der
+            Seite zu ermöglichen und deren Sicherheit zu gewährleisten. Rechtsgrundlage ist
+            Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer stabilen, sicheren
+            Bereitstellung). Die Übermittlung in die USA erfolgt auf Grundlage der
+            Standardvertragsklauseln.
+          </div>
+
+          <div style={{ ...p, fontWeight: 700, color: t.text, marginTop: 12 }}>3. Keine Cookies, kein Tracking</div>
+          <div style={p}>
+            Diese Website setzt keine Cookies und verwendet keine Analyse- oder
+            Tracking-Dienste. Es werden keine personenbezogenen Profile gebildet.
+          </div>
+
+          <div style={{ ...p, fontWeight: 700, color: t.text, marginTop: 12 }}>4. Ihre Rechte</div>
+          <div style={p}>
+            Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der
+            Verarbeitung, Datenübertragbarkeit und Widerspruch sowie ein Beschwerderecht bei
+            einer Aufsichtsbehörde. Wenden Sie sich dazu an die oben genannte Kontaktadresse.
+          </div>
+
+          <div style={{ ...p, fontSize: 12, opacity: 0.7, marginTop: 20 }}>
+            Stand: <span style={platz}>[Monat Jahr]</span>. Diese Angaben werden ergänzt,
+            sobald weitere Funktionen (z. B. die Anforderung eines Testzugangs) hinzukommen.
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PitchApp() {
   // Hell/Dunkel — Start aus System-Präferenz.
   const [modus, setModus] = React.useState(systemDunkel() ? "dunkel" : "hell");
@@ -35,6 +125,9 @@ export default function PitchApp() {
   // Gesamtzahl der Screens = 1 (Lichtschalter) + KARTEN.length.
   const gesamt = KARTEN.length + 1;
   const [screen, setScreen] = React.useState(0);
+
+  // Rechtliches-Overlay (Impressum + Datenschutz) — dezenter Link unten rechts.
+  const [zeigeRecht, setZeigeRecht] = React.useState(false);
 
   // Touch-Wischen.
   const startRef = React.useRef(null);
@@ -91,6 +184,16 @@ export default function PitchApp() {
         fontSize: 11, color: t.sub, opacity: 0.75,
         letterSpacing: "0.02em", pointerEvents: "none", userSelect: "none"
       }}>v{PITCH_VERSION}</div>
+      {/* „Rechtliches" — dezent unten rechts, spiegelbildlich zur Version.
+          Öffnet das Impressum-/Datenschutz-Overlay. */}
+      <button onClick={() => setZeigeRecht(true)} style={{
+        position: "fixed", right: 12, bottom: 6, zIndex: 50,
+        background: "transparent", border: "none",
+        fontSize: 11, color: t.sub, opacity: 0.6,
+        letterSpacing: "0.02em", cursor: "pointer",
+        padding: "6px 4px", WebkitTapHighlightColor: "transparent"
+      }}>Rechtliches</button>
+      {zeigeRecht ? <RechtOverlay t={t} accent={accent} onClose={() => setZeigeRecht(false)} /> : null}
       {/* Kopfzeile: Überspringen */}
       <div style={{ display: "flex", justifyContent: "flex-end", padding: "max(16px, env(safe-area-inset-top)) 18px 0" }}>
         {zeigeSkip ? (

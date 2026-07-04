@@ -77,8 +77,8 @@ export const KARTEN = [
 
   { id: "abschluss", typ: "abschluss",
     zeilen: [
-      "Klingt gut in der Theorie?",
+      "Klingt gut?",
       "Sehen Sie selbst, wie es sich anfühlt — an einem echten Bestand, den Sie frei erkunden können."
     ],
-    knopf: "Selbst ausprobieren" }
+    knopf: "Reinschauen" }
 ];
