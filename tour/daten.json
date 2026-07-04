@@ -1,0 +1,4202 @@
+{
+ "typ": "allesda-daten",
+ "schema": 1,
+ "appVersion": "11.88",
+ "exportiertAm": "2026-06-28",
+ "hinweis": "MUSTEROBJEKT – frei erfunden, ohne Rechtswirkung.",
+ "kontakte": [
+  {
+   "id": 1,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Andreas",
+   "nachname": "Lindqvist",
+   "name": "Andreas Lindqvist",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 011"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "a.lindqvist@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e2",
+     "anteil": "1/2",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 2,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Petra",
+   "nachname": "Lindqvist",
+   "name": "Petra Lindqvist",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 012"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "p.lindqvist@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e2",
+     "anteil": "1/2",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 3,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Friederike",
+   "nachname": "Aalbers",
+   "name": "Dr. Friederike Aalbers",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 021"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "f.aalbers@example.com"
+    }
+   ],
+   "strasse": "Karl-Tauchnitz-Straße 14",
+   "plz": "04107",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e3",
+     "anteil": "",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 4,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Tomasz",
+   "nachname": "Wieczorek",
+   "name": "Tomasz Wieczorek",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 1550 00 01003"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "t.wieczorek@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 5,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Holger",
+   "nachname": "Mahler",
+   "name": "Holger Mahler",
+   "sub": "Vertreter der Erbengemeinschaft",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 031"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "h.mahler@example.com"
+    }
+   ],
+   "strasse": "Gohliser Straße 21",
+   "plz": "04105",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e4",
+     "anteil": "1/3",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 6,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Sabine",
+   "nachname": "Mahler-Frey",
+   "name": "Sabine Mahler-Frey",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 032"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "s.mahlerfrey@example.com"
+    }
+   ],
+   "strasse": "Bornaische Straße 102",
+   "plz": "04277",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e4",
+     "anteil": "1/3",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 7,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Dirk",
+   "nachname": "Mahler",
+   "name": "Dirk Mahler",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 033"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "d.mahler@example.com"
+    }
+   ],
+   "strasse": "Eisenbahnstraße 47",
+   "plz": "04315",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e4",
+     "anteil": "1/3",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 8,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "",
+   "nachname": "",
+   "name": "Familie Demirkan",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 1550 00 01004"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "fam.demirkan@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 9,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Jonas",
+   "nachname": "Mahler",
+   "name": "Jonas Mahler",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 041"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "j.mahler@example.com"
+    }
+   ],
+   "strasse": "Könneritzstraße 9",
+   "plz": "04229",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e5",
+     "anteil": "",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 10,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Hildegard",
+   "nachname": "Mahler",
+   "name": "Hildegard Mahler",
+   "sub": "Nießbraucherin",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 042"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "h.mahler.nb@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 11,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Sven",
+   "nachname": "Olbrich",
+   "name": "Sven Olbrich",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 051"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "s.olbrich@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e6",
+     "anteil": "1/2",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 12,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Marco",
+   "nachname": "Reiter",
+   "name": "Marco Reiter",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 052"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "m.reiter@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e6",
+     "anteil": "1/2",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 13,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Igor",
+   "nachname": "Wassiljew",
+   "name": "Igor Wassiljew",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 061"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "i.wassiljew@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e7",
+     "anteil": "1/2",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 14,
+   "typ": "person",
+   "anrede": "",
+   "titel": "",
+   "vorname": "Natalia",
+   "nachname": "Wassiljewa",
+   "name": "Natalia Wassiljewa",
+   "sub": "",
+   "badges": [],
+   "tels": [
+    {
+     "type": "Mobil",
+     "nr": "+49 555 01 062"
+    }
+   ],
+   "emails": [
+    {
+     "type": "Privat",
+     "email": "n.wassiljewa@example.com"
+    }
+   ],
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e7",
+     "anteil": "1/2",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": [],
+   "verknuepfungen": []
+  },
+  {
+   "id": 10001,
+   "typ": "firma",
+   "name": "Saaleblick Gewerbe GmbH",
+   "rechtsform": "GmbH",
+   "sub": "GF: R. Saalfeld",
+   "tel": "+49 555 01 001",
+   "email": "saaleblick-gewerbe@example.com",
+   "homepage": "",
+   "strasse": "Brühl 8",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [
+    {
+     "objektId": "ve1",
+     "einheitId": "e1",
+     "anteil": "",
+     "von": "01.01.2020",
+     "bis": "",
+     "status": "aktiv"
+    }
+   ],
+   "zustaendigkeiten": [],
+   "firmenRollen": []
+  },
+  {
+   "id": 10002,
+   "typ": "firma",
+   "name": "Bäckerei Körnig e.K.",
+   "rechtsform": "e.K.",
+   "sub": "Inh. T. Körnig",
+   "tel": "+49 1550 00 01001",
+   "email": "gewerbe.koernig@example.com",
+   "homepage": "",
+   "strasse": "Lessingstraße 22",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [],
+   "firmenRollen": []
+  },
+  {
+   "id": 10003,
+   "typ": "firma",
+   "name": "Pro Immo Hausverwaltung GmbH",
+   "rechtsform": "GmbH",
+   "sub": "",
+   "tel": "0555 1000-0",
+   "email": "weg-verwaltung@example.com",
+   "homepage": "",
+   "strasse": "Musterverwaltung 1",
+   "plz": "68519",
+   "ort": "Viernheim",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Hausverwaltung",
+     "status": "aktiv",
+     "vertragId": null,
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10004,
+   "typ": "firma",
+   "name": "Heizungsbau Förster GmbH",
+   "rechtsform": "GmbH",
+   "sub": "",
+   "tel": "0555 2010-0",
+   "email": "service@foerster.example.com",
+   "homepage": "",
+   "strasse": "Handwerkerstraße 4",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Wartung Heizung/WW/Zirkulation/Druckerhöhung",
+     "status": "aktiv",
+     "vertragId": "vt1",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10005,
+   "typ": "firma",
+   "name": "Schindler Aufzüge GmbH",
+   "rechtsform": "GmbH",
+   "sub": "",
+   "tel": "0555 2020-0",
+   "email": "service@schindler.example.com",
+   "homepage": "",
+   "strasse": "Aufzugweg 12",
+   "plz": "04317",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Wartung Aufzug",
+     "status": "aktiv",
+     "vertragId": "vt2",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10006,
+   "typ": "firma",
+   "name": "TÜV Süd Industrie Service",
+   "rechtsform": "",
+   "sub": "",
+   "tel": "0555 2030-0",
+   "email": "service@tuevsued.example.com",
+   "homepage": "",
+   "strasse": "Prüfstraße 1",
+   "plz": "80339",
+   "ort": "München",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "ZÜS-Prüfung Aufzug",
+     "status": "aktiv",
+     "vertragId": "vt3",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10007,
+   "typ": "firma",
+   "name": "GEZE Service",
+   "rechtsform": "",
+   "sub": "",
+   "tel": "0555 2040-0",
+   "email": "service@geze.example.com",
+   "homepage": "",
+   "strasse": "Serviceweg 8",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Wartung RWA",
+     "status": "aktiv",
+     "vertragId": "vt4",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10008,
+   "typ": "firma",
+   "name": "Elektro Bauer GmbH",
+   "rechtsform": "GmbH",
+   "sub": "",
+   "tel": "0555 2050-0",
+   "email": "service@bauer-elektro.example.com",
+   "homepage": "",
+   "strasse": "Stromgasse 3",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Elektro / Blitzschutz Prüfung",
+     "status": "aktiv",
+     "vertragId": "vt5",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10009,
+   "typ": "firma",
+   "name": "Techem",
+   "rechtsform": "",
+   "sub": "",
+   "tel": "0555 2060-0",
+   "email": "service@techem.example.com",
+   "homepage": "",
+   "strasse": "Messweg 5",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [],
+   "firmenRollen": []
+  },
+  {
+   "id": 10010,
+   "typ": "firma",
+   "name": "Allgemeine Wohnungswirtschaft Versicherung AG",
+   "rechtsform": "AG",
+   "sub": "",
+   "tel": "0555 5110-0",
+   "email": "weg@example.com",
+   "homepage": "",
+   "strasse": "Deichstraße 22",
+   "plz": "30159",
+   "ort": "Hannover",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Gebäude-/Haftpflicht-/Technikversicherung",
+     "status": "aktiv",
+     "vertragId": "vs1",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10011,
+   "typ": "firma",
+   "name": "Rhein-Main Sachversicherung AG",
+   "rechtsform": "AG",
+   "sub": "",
+   "tel": "0555 4400-0",
+   "email": "service@example.com",
+   "homepage": "",
+   "strasse": "Versicherungsplatz 1",
+   "plz": "60311",
+   "ort": "Frankfurt am Main",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Glasversicherung",
+     "status": "aktiv",
+     "vertragId": "vs3",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10012,
+   "typ": "firma",
+   "name": "MessTechnik Verteilservice GmbH",
+   "rechtsform": "GmbH",
+   "sub": "",
+   "tel": "0555 7700-0",
+   "email": "service@example.com",
+   "homepage": "",
+   "strasse": "Zählerstraße 5",
+   "plz": "65760",
+   "ort": "Eschborn",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Heiz-/Wasserkostenverteilung + RWM",
+     "status": "aktiv",
+     "vertragId": "md1",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10013,
+   "typ": "firma",
+   "name": "Stadtwerke Leipzig GmbH",
+   "rechtsform": "GmbH",
+   "sub": "",
+   "tel": "0555 3000-0",
+   "email": "service@example.com",
+   "homepage": "",
+   "strasse": "Versorgungsweg 1",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Versorgung Strom/Gas/Wasser",
+     "status": "aktiv",
+     "vertragId": "vg1",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  },
+  {
+   "id": 10014,
+   "typ": "firma",
+   "name": "Abfallwirtschaftsbetrieb Leipzig",
+   "rechtsform": "",
+   "sub": "",
+   "tel": "0555 3300-0",
+   "email": "abfall@example.com",
+   "homepage": "",
+   "strasse": "Entsorgungsweg 10",
+   "plz": "04109",
+   "ort": "Leipzig",
+   "gewerke": [],
+   "ansprechpartner": [],
+   "besitz": [],
+   "zustaendigkeiten": [
+    {
+     "beteiligterTyp": "firma",
+     "ziel": {
+      "art": "objekt",
+      "objektId": "ve1",
+      "einheitId": null,
+      "anlageId": null,
+      "kontaktId": null
+     },
+     "leistung": "Abfallentsorgung",
+     "status": "aktiv",
+     "vertragId": "vg4",
+     "ansprechpartnerId": null
+    }
+   ],
+   "firmenRollen": []
+  }
+ ],
+ "ves": [
+  {
+   "id": "ve1",
+   "nr": "VE-001",
+   "name": "WEG Lessingstraße 22, Leipzig",
+   "adresse": "Lessingstraße 22, 04109 Leipzig",
+   "verwaltungsart": "weg",
+   "verwaltung": {
+    "beginn": "01.01.2020",
+    "bestelltBis": "31.12.2026",
+    "verwalter": 10003,
+    "buchhalter": null,
+    "uebernommenVon": null,
+    "verwZustimmung": false,
+    "naechsteETV": "21.05.2026",
+    "naechsteWahl": "31.12.2026"
+   },
+   "gebaeude": [],
+   "einheiten": [
+    {
+     "id": "e1",
+     "nr": "1",
+     "art": "teileigentum",
+     "typ": "Teileigentum",
+     "mea": "171/1000",
+     "spStellung": "eigenstaendig",
+     "flaeche": "118.40",
+     "zimmer": "",
+     "lage": "EG",
+     "eigentuemer": [
+      {
+       "kontaktId": 10001,
+       "name": "Saaleblick Gewerbe GmbH",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "",
+       "grundbuch": "Ja"
+      }
+     ],
+     "verwendungen": [
+      {
+       "name": "Verpachtet",
+       "status": "aktiv"
+      }
+     ],
+     "sev": [],
+     "teile": [
+      {
+       "id": "t1",
+       "name": "",
+       "flaeche": "118.40",
+       "zimmer": "",
+       "lage": "EG",
+       "raeume": [
+        {
+         "id": "",
+         "name": "Hauptnutzfläche (Verkauf)",
+         "art": "Gewerbe",
+         "flaeche": "73.40",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Nebennutzfläche (Lager/Personal)",
+         "art": "Lager",
+         "flaeche": "27.20",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Sanitär / WC",
+         "art": "WC",
+         "flaeche": "9.50",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Flur / Verkehrsfläche",
+         "art": "Flur",
+         "flaeche": "8.30",
+         "lage": "",
+         "notizen": ""
+        }
+       ],
+       "belegungen": [
+        {
+         "id": "b1",
+         "typ": "vermietung",
+         "von": "01.01.2021",
+         "bis": "",
+         "vertragsparteiId": 10002,
+         "mietvertrag": {
+          "von": "01.01.2021",
+          "kaution": "7.200,00 €",
+          "hoehe": "2.400,00 €",
+          "kuendigung": "6 Monate (Gewerbe)"
+         },
+         "haushalt": {
+          "mitglieder": [
+           {
+            "id": "m1",
+            "kontaktId": 10002,
+            "name": "Bäckerei Körnig e.K.",
+            "vermerk": "",
+            "recht": "mieter",
+            "anzahl": 1
+           }
+          ]
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "e2",
+     "nr": "2",
+     "art": "wohnung",
+     "typ": "Wohneigentum",
+     "mea": "90/1000",
+     "spStellung": "eigenstaendig",
+     "flaeche": "62.10",
+     "zimmer": "2",
+     "lage": "EG",
+     "eigentuemer": [
+      {
+       "kontaktId": 1,
+       "name": "Andreas Lindqvist",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/2",
+       "grundbuch": "Ja"
+      },
+      {
+       "kontaktId": 2,
+       "name": "Petra Lindqvist",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/2",
+       "grundbuch": "Ja"
+      }
+     ],
+     "verwendungen": [
+      {
+       "name": "Eigennutzung",
+       "status": "aktiv"
+      }
+     ],
+     "sev": [],
+     "teile": [
+      {
+       "id": "t1",
+       "name": "",
+       "flaeche": "62.10",
+       "zimmer": "2",
+       "lage": "EG",
+       "raeume": [
+        {
+         "id": "",
+         "name": "Wohnzimmer",
+         "art": "Wohnzimmer",
+         "flaeche": "18.04",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Schlafzimmer",
+         "art": "Schlafzimmer",
+         "flaeche": "13.22",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Küche",
+         "art": "Küche",
+         "flaeche": "8.41",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Bad/WC",
+         "art": "Bad",
+         "flaeche": "6.01",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Diele/Flur",
+         "art": "Diele",
+         "flaeche": "8.41",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Abstellraum",
+         "art": "Abstellraum",
+         "flaeche": "6.01",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Terrasse",
+         "art": "Terrasse",
+         "flaeche": "8.00",
+         "lage": "",
+         "notizen": ""
+        }
+       ],
+       "belegungen": [
+        {
+         "id": "b1",
+         "typ": "selbstnutzung",
+         "von": "01.01.2020",
+         "bis": "",
+         "vertragsparteiId": 1,
+         "haushalt": {
+          "mitglieder": [
+           {
+            "id": "m1",
+            "kontaktId": 1,
+            "name": "Andreas Lindqvist",
+            "vermerk": "",
+            "recht": "eigennutzer",
+            "anzahl": 1
+           },
+           {
+            "id": "m2",
+            "kontaktId": 2,
+            "name": "Petra Lindqvist",
+            "vermerk": "",
+            "recht": "eigennutzer",
+            "anzahl": 1
+           }
+          ]
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "e3",
+     "nr": "3",
+     "art": "wohnung",
+     "typ": "Wohneigentum",
+     "mea": "122/1000",
+     "spStellung": "eigenstaendig",
+     "flaeche": "84.30",
+     "zimmer": "3",
+     "lage": "1. OG links",
+     "eigentuemer": [
+      {
+       "kontaktId": 3,
+       "name": "Dr. Friederike Aalbers",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "",
+       "grundbuch": "Ja"
+      }
+     ],
+     "verwendungen": [
+      {
+       "name": "Vermietet",
+       "status": "aktiv"
+      }
+     ],
+     "sev": [],
+     "teile": [
+      {
+       "id": "t1",
+       "name": "",
+       "flaeche": "84.30",
+       "zimmer": "3",
+       "lage": "1. OG links",
+       "raeume": [
+        {
+         "id": "",
+         "name": "Wohnzimmer",
+         "art": "Wohnzimmer",
+         "flaeche": "21.53",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Schlafzimmer",
+         "art": "Schlafzimmer",
+         "flaeche": "14.90",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Kinder-/Arbeitszimmer",
+         "art": "Zimmer",
+         "flaeche": "12.42",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Küche",
+         "art": "Küche",
+         "flaeche": "9.94",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Bad",
+         "art": "Bad",
+         "flaeche": "6.62",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "WC",
+         "art": "WC",
+         "flaeche": "3.31",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Diele/Flur",
+         "art": "Diele",
+         "flaeche": "9.94",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Abstellraum",
+         "art": "Abstellraum",
+         "flaeche": "4.14",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Balkon",
+         "art": "Balkon",
+         "flaeche": "6.00",
+         "lage": "",
+         "notizen": ""
+        }
+       ],
+       "belegungen": [
+        {
+         "id": "b1",
+         "typ": "vermietung",
+         "von": "01.03.2022",
+         "bis": "",
+         "vertragsparteiId": 4,
+         "mietvertrag": {
+          "von": "01.03.2022",
+          "kaution": "2.760,00 €",
+          "hoehe": "920,00 €",
+          "kuendigung": "3 Monate"
+         },
+         "haushalt": {
+          "mitglieder": [
+           {
+            "id": "m1",
+            "kontaktId": 4,
+            "name": "Tomasz Wieczorek",
+            "vermerk": "",
+            "recht": "mieter",
+            "anzahl": 1
+           }
+          ]
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "e4",
+     "nr": "4",
+     "art": "wohnung",
+     "typ": "Wohneigentum",
+     "mea": "104/1000",
+     "spStellung": "eigenstaendig",
+     "flaeche": "71.80",
+     "zimmer": "3",
+     "lage": "1. OG rechts",
+     "eigentuemer": [
+      {
+       "kontaktId": 5,
+       "name": "Holger Mahler",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/3",
+       "grundbuch": "Nein",
+       "sub": "Vertreter der Erbengemeinschaft",
+       "notiz": "Erbengemeinschaft"
+      },
+      {
+       "kontaktId": 6,
+       "name": "Sabine Mahler-Frey",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/3",
+       "grundbuch": "Ja",
+       "notiz": "Erbengemeinschaft"
+      },
+      {
+       "kontaktId": 7,
+       "name": "Dirk Mahler",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/3",
+       "grundbuch": "Ja",
+       "notiz": "Erbengemeinschaft"
+      }
+     ],
+     "verwendungen": [
+      {
+       "name": "Vermietet",
+       "status": "aktiv"
+      }
+     ],
+     "sev": [],
+     "teile": [
+      {
+       "id": "t1",
+       "name": "",
+       "flaeche": "71.80",
+       "zimmer": "3",
+       "lage": "1. OG rechts",
+       "raeume": [
+        {
+         "id": "",
+         "name": "Wohnzimmer",
+         "art": "Wohnzimmer",
+         "flaeche": "18.34",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Schlafzimmer",
+         "art": "Schlafzimmer",
+         "flaeche": "12.70",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Kinder-/Arbeitszimmer",
+         "art": "Zimmer",
+         "flaeche": "10.58",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Küche",
+         "art": "Küche",
+         "flaeche": "8.47",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Bad",
+         "art": "Bad",
+         "flaeche": "5.64",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "WC",
+         "art": "WC",
+         "flaeche": "2.82",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Diele/Flur",
+         "art": "Diele",
+         "flaeche": "8.47",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Abstellraum",
+         "art": "Abstellraum",
+         "flaeche": "3.53",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Balkon",
+         "art": "Balkon",
+         "flaeche": "5.00",
+         "lage": "",
+         "notizen": ""
+        }
+       ],
+       "belegungen": [
+        {
+         "id": "b1",
+         "typ": "vermietung",
+         "von": "01.06.2021",
+         "bis": "",
+         "vertragsparteiId": 8,
+         "mietvertrag": {
+          "von": "01.06.2021",
+          "kaution": "2.340,00 €",
+          "hoehe": "780,00 €",
+          "kuendigung": "3 Monate"
+         },
+         "haushalt": {
+          "mitglieder": [
+           {
+            "id": "m1",
+            "kontaktId": 8,
+            "name": "Familie Demirkan",
+            "vermerk": "",
+            "recht": "mieter",
+            "anzahl": 1
+           },
+           {
+            "id": "m2",
+            "kontaktId": null,
+            "name": "",
+            "vermerk": "weitere Haushaltsmitglieder",
+            "recht": "angehoeriger",
+            "anzahl": 3
+           }
+          ]
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "e5",
+     "nr": "5",
+     "art": "wohnung",
+     "typ": "Wohneigentum",
+     "mea": "122/1000",
+     "spStellung": "eigenstaendig",
+     "flaeche": "84.30",
+     "zimmer": "3",
+     "lage": "2. OG links",
+     "eigentuemer": [
+      {
+       "kontaktId": 9,
+       "name": "Jonas Mahler",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "",
+       "grundbuch": "Ja"
+      }
+     ],
+     "verwendungen": [
+      {
+       "name": "Nießbrauch",
+       "status": "aktiv"
+      }
+     ],
+     "sev": [],
+     "teile": [
+      {
+       "id": "t1",
+       "name": "",
+       "flaeche": "84.30",
+       "zimmer": "3",
+       "lage": "2. OG links",
+       "raeume": [
+        {
+         "id": "",
+         "name": "Wohnzimmer",
+         "art": "Wohnzimmer",
+         "flaeche": "21.53",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Schlafzimmer",
+         "art": "Schlafzimmer",
+         "flaeche": "14.90",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Kinder-/Arbeitszimmer",
+         "art": "Zimmer",
+         "flaeche": "12.42",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Küche",
+         "art": "Küche",
+         "flaeche": "9.94",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Bad",
+         "art": "Bad",
+         "flaeche": "6.62",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "WC",
+         "art": "WC",
+         "flaeche": "3.31",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Diele/Flur",
+         "art": "Diele",
+         "flaeche": "9.94",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Abstellraum",
+         "art": "Abstellraum",
+         "flaeche": "4.14",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Balkon",
+         "art": "Balkon",
+         "flaeche": "6.00",
+         "lage": "",
+         "notizen": ""
+        }
+       ],
+       "belegungen": [
+        {
+         "id": "b1",
+         "typ": "selbstnutzung",
+         "von": "01.01.2020",
+         "bis": "",
+         "vertragsparteiId": 10,
+         "haushalt": {
+          "mitglieder": [
+           {
+            "id": "m1",
+            "kontaktId": 10,
+            "name": "Hildegard Mahler",
+            "vermerk": "bewohnt selbst",
+            "recht": "niessbraucher",
+            "anzahl": 1
+           }
+          ]
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "e6",
+     "nr": "6",
+     "art": "wohnung",
+     "typ": "Wohneigentum",
+     "mea": "104/1000",
+     "spStellung": "eigenstaendig",
+     "flaeche": "71.80",
+     "zimmer": "3",
+     "lage": "2. OG rechts",
+     "eigentuemer": [
+      {
+       "kontaktId": 11,
+       "name": "Sven Olbrich",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/2",
+       "grundbuch": "Ja"
+      },
+      {
+       "kontaktId": 12,
+       "name": "Marco Reiter",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/2",
+       "grundbuch": "Ja"
+      }
+     ],
+     "verwendungen": [
+      {
+       "name": "Eigennutzung",
+       "status": "aktiv"
+      }
+     ],
+     "sev": [],
+     "teile": [
+      {
+       "id": "t1",
+       "name": "",
+       "flaeche": "71.80",
+       "zimmer": "3",
+       "lage": "2. OG rechts",
+       "raeume": [
+        {
+         "id": "",
+         "name": "Wohnzimmer",
+         "art": "Wohnzimmer",
+         "flaeche": "18.34",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Schlafzimmer",
+         "art": "Schlafzimmer",
+         "flaeche": "12.70",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Kinder-/Arbeitszimmer",
+         "art": "Zimmer",
+         "flaeche": "10.58",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Küche",
+         "art": "Küche",
+         "flaeche": "8.47",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Bad",
+         "art": "Bad",
+         "flaeche": "5.64",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "WC",
+         "art": "WC",
+         "flaeche": "2.82",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Diele/Flur",
+         "art": "Diele",
+         "flaeche": "8.47",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Abstellraum",
+         "art": "Abstellraum",
+         "flaeche": "3.53",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Balkon",
+         "art": "Balkon",
+         "flaeche": "5.00",
+         "lage": "",
+         "notizen": ""
+        }
+       ],
+       "belegungen": [
+        {
+         "id": "b1",
+         "typ": "selbstnutzung",
+         "von": "01.01.2020",
+         "bis": "",
+         "vertragsparteiId": 11,
+         "haushalt": {
+          "mitglieder": [
+           {
+            "id": "m1",
+            "kontaktId": 11,
+            "name": "Sven Olbrich",
+            "vermerk": "",
+            "recht": "eigennutzer",
+            "anzahl": 1
+           },
+           {
+            "id": "m2",
+            "kontaktId": 12,
+            "name": "Marco Reiter",
+            "vermerk": "",
+            "recht": "eigennutzer",
+            "anzahl": 1
+           }
+          ]
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "e7",
+     "nr": "7",
+     "art": "wohnung",
+     "typ": "Wohneigentum",
+     "mea": "287/1000",
+     "spStellung": "eigenstaendig",
+     "flaeche": "138.60",
+     "zimmer": "5",
+     "lage": "3. OG / DG",
+     "eigentuemer": [
+      {
+       "kontaktId": 13,
+       "name": "Igor Wassiljew",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/2",
+       "grundbuch": "Ja"
+      },
+      {
+       "kontaktId": 14,
+       "name": "Natalia Wassiljewa",
+       "von": "01.01.2020",
+       "bis": "",
+       "anteil": "1/2",
+       "grundbuch": "Ja"
+      }
+     ],
+     "verwendungen": [
+      {
+       "name": "Eigennutzung",
+       "status": "aktiv"
+      }
+     ],
+     "sev": [],
+     "teile": [
+      {
+       "id": "t1",
+       "name": "",
+       "flaeche": "138.60",
+       "zimmer": "5",
+       "lage": "3. OG / DG",
+       "raeume": [
+        {
+         "id": "",
+         "name": "Wohn-/Esszimmer",
+         "art": "Wohnzimmer",
+         "flaeche": "21.92",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Schlafzimmer",
+         "art": "Schlafzimmer",
+         "flaeche": "22.52",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Zimmer 2",
+         "art": "Zimmer",
+         "flaeche": "18.01",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Zimmer 3",
+         "art": "Zimmer",
+         "flaeche": "16.51",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Küche",
+         "art": "Küche",
+         "flaeche": "15.01",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Bad",
+         "art": "Bad",
+         "flaeche": "10.51",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Gäste-WC",
+         "art": "WC",
+         "flaeche": "2.70",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Diele/Flur",
+         "art": "Diele",
+         "flaeche": "19.51",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Abstellraum",
+         "art": "Abstellraum",
+         "flaeche": "7.51",
+         "lage": "",
+         "notizen": ""
+        },
+        {
+         "id": "",
+         "name": "Dachterrasse",
+         "art": "Dachterrasse",
+         "flaeche": "14.00",
+         "lage": "",
+         "notizen": ""
+        }
+       ],
+       "belegungen": [
+        {
+         "id": "b1",
+         "typ": "selbstnutzung",
+         "von": "01.01.2020",
+         "bis": "",
+         "vertragsparteiId": 13,
+         "haushalt": {
+          "mitglieder": [
+           {
+            "id": "m1",
+            "kontaktId": 13,
+            "name": "Igor Wassiljew",
+            "vermerk": "",
+            "recht": "eigennutzer",
+            "anzahl": 1
+           },
+           {
+            "id": "m2",
+            "kontaktId": 14,
+            "name": "Natalia Wassiljewa",
+            "vermerk": "",
+            "recht": "eigennutzer",
+            "anzahl": 1
+           },
+           {
+            "id": "m3",
+            "kontaktId": null,
+            "name": "",
+            "vermerk": "Kinder",
+            "recht": "angehoeriger",
+            "anzahl": 3
+           }
+          ]
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "vertraege": [],
+   "etvHistorie": [
+    {
+     "id": "etv1",
+     "datum": "15.05.2025",
+     "art": "ordentlich",
+     "notiz": "Ordentliche Eigentümerversammlung 2025"
+    }
+   ],
+   "termine": [
+    {
+     "id": 700001,
+     "titel": "Eigentümerversammlung 2026",
+     "datum": "21.05.2026",
+     "uhrzeit": "18:30",
+     "farbe": "#8B5CF6",
+     "dauer": 120,
+     "notizen": "",
+     "einheitIds": [],
+     "kontaktIds": []
+    },
+    {
+     "id": 700002,
+     "titel": "Aufzug-Wartung (Schindler)",
+     "datum": "06.09.2026",
+     "uhrzeit": "09:00",
+     "farbe": "#0EA5E9",
+     "dauer": 60,
+     "notizen": "vierteljährlicher Turnus",
+     "einheitIds": [],
+     "kontaktIds": [
+      10005
+     ]
+    },
+    {
+     "id": 700003,
+     "titel": "Heizungswartung (Förster)",
+     "datum": "14.10.2026",
+     "uhrzeit": "08:00",
+     "farbe": "#EF4444",
+     "dauer": 120,
+     "notizen": "jährlich",
+     "einheitIds": [],
+     "kontaktIds": [
+      10004
+     ]
+    }
+   ],
+   "legionellen": {
+    "letzte": "15.04.2024",
+    "befund": "unauffaellig",
+    "naechste": "15.04.2027",
+    "naechsteManuell": "",
+    "pruefstellen": [
+     {
+      "id": "p1",
+      "bezeichnung": "Speicher Heizraum / Technikzentrale",
+      "art": "speicher",
+      "hausId": "2",
+      "raumId": "g1_r4",
+      "einheitId": null,
+      "notiz": ""
+     }
+    ]
+   },
+   "verteilerschluessel": [],
+   "dokAnalysen": [],
+   "karten": [
+    {
+     "id": 1,
+     "name": "Stammdaten",
+     "icon": "🏷",
+     "fixed": true,
+     "kategorie": "stammdaten",
+     "stamm": [
+      {
+       "id": 1,
+       "name": "VE-Nummer",
+       "value": "VE-001",
+       "type": "text",
+       "required": true
+      },
+      {
+       "id": 2,
+       "name": "Verwaltungsart",
+       "value": "WEG-Verwaltung",
+       "type": "text",
+       "required": true
+      },
+      {
+       "id": 3,
+       "name": "Straße",
+       "value": "Lessingstraße 22",
+       "type": "text",
+       "required": true
+      },
+      {
+       "id": 4,
+       "name": "PLZ",
+       "value": "04109",
+       "type": "text",
+       "required": true
+      },
+      {
+       "id": 5,
+       "name": "Ort",
+       "value": "Leipzig",
+       "type": "text",
+       "required": true
+      },
+      {
+       "id": 7,
+       "name": "Abstimmung nach",
+       "value": "Objekt",
+       "type": "select",
+       "optionen": [
+        "MEA",
+        "Objekt",
+        "Kopf"
+       ],
+       "immerSichtbar": true,
+       "syncKey": "abstimmung"
+      },
+      {
+       "id": 8,
+       "name": "Gesamt-MEA",
+       "value": "1000",
+       "type": "select",
+       "optionen": [
+        "1000",
+        "10000"
+       ],
+       "freitextBei": "Andere…",
+       "freitextTyp": "number",
+       "immerSichtbar": true,
+       "syncKey": "gesamtanteile"
+      },
+      {
+       "id": 9,
+       "name": "Wirtschaftsjahr",
+       "value": "Kalenderjahr",
+       "type": "select",
+       "optionen": [
+        "Kalenderjahr"
+       ],
+       "freitextBei": "Selbst definieren…",
+       "freitextTyp": "zeitraum",
+       "immerSichtbar": true,
+       "syncKey": "wirtschaftsjahr"
+      }
+     ],
+     "einheiten": []
+    },
+    {
+     "id": 2,
+     "name": "Haus 1",
+     "icon": "🏠",
+     "fixed": false,
+     "kategorie": "gebaeude",
+     "stamm": [
+      {
+       "id": 1,
+       "name": "Baujahr",
+       "value": "1903",
+       "type": "number",
+       "required": true
+      },
+      {
+       "id": 2,
+       "name": "Stockwerke",
+       "value": "5",
+       "type": "number"
+      },
+      {
+       "id": 3,
+       "name": "Aufgänge",
+       "value": "1",
+       "type": "number"
+      },
+      {
+       "id": 4,
+       "name": "Ein-/Ausgänge",
+       "value": "1",
+       "type": "number"
+      },
+      {
+       "id": 5,
+       "name": "Grundstücksfläche m²",
+       "value": "412",
+       "type": "number"
+      },
+      {
+       "id": 6,
+       "name": "Sanierung",
+       "value": "2018/2019 Vollsanierung",
+       "type": "text"
+      },
+      {
+       "id": 7,
+       "name": "Aufzug vorhanden",
+       "value": "true",
+       "type": "bool"
+      }
+     ],
+     "einheiten": [
+      {
+       "id": "e1",
+       "nr": "1",
+       "art": "teileigentum",
+       "typ": "Teileigentum",
+       "mea": "171/1000",
+       "spStellung": "eigenstaendig",
+       "flaeche": "118.40",
+       "zimmer": "",
+       "lage": "EG",
+       "eigentuemer": [
+        {
+         "kontaktId": 10001,
+         "name": "Saaleblick Gewerbe GmbH",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "",
+         "grundbuch": "Ja"
+        }
+       ],
+       "verwendungen": [
+        {
+         "name": "Verpachtet",
+         "status": "aktiv"
+        }
+       ],
+       "sev": [],
+       "teile": [
+        {
+         "id": "t1",
+         "name": "",
+         "flaeche": "118.40",
+         "zimmer": "",
+         "lage": "EG",
+         "raeume": [
+          {
+           "id": "",
+           "name": "Hauptnutzfläche (Verkauf)",
+           "art": "Gewerbe",
+           "flaeche": "73.40",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Nebennutzfläche (Lager/Personal)",
+           "art": "Lager",
+           "flaeche": "27.20",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Sanitär / WC",
+           "art": "WC",
+           "flaeche": "9.50",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Flur / Verkehrsfläche",
+           "art": "Flur",
+           "flaeche": "8.30",
+           "lage": "",
+           "notizen": ""
+          }
+         ],
+         "belegungen": [
+          {
+           "id": "b1",
+           "typ": "vermietung",
+           "von": "01.01.2021",
+           "bis": "",
+           "vertragsparteiId": 10002,
+           "mietvertrag": {
+            "von": "01.01.2021",
+            "kaution": "",
+            "hoehe": "",
+            "kuendigung": ""
+           },
+           "haushalt": {
+            "mitglieder": [
+             {
+              "id": "m1",
+              "kontaktId": 10002,
+              "name": "Bäckerei Körnig e.K.",
+              "vermerk": "",
+              "recht": "mieter",
+              "anzahl": 1
+             }
+            ]
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "e2",
+       "nr": "2",
+       "art": "wohnung",
+       "typ": "Wohneigentum",
+       "mea": "90/1000",
+       "spStellung": "eigenstaendig",
+       "flaeche": "62.10",
+       "zimmer": "2",
+       "lage": "EG",
+       "eigentuemer": [
+        {
+         "kontaktId": 1,
+         "name": "Andreas Lindqvist",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/2",
+         "grundbuch": "Ja"
+        },
+        {
+         "kontaktId": 2,
+         "name": "Petra Lindqvist",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/2",
+         "grundbuch": "Ja"
+        }
+       ],
+       "verwendungen": [
+        {
+         "name": "Eigennutzung",
+         "status": "aktiv"
+        }
+       ],
+       "sev": [],
+       "teile": [
+        {
+         "id": "t1",
+         "name": "",
+         "flaeche": "62.10",
+         "zimmer": "2",
+         "lage": "EG",
+         "raeume": [
+          {
+           "id": "",
+           "name": "Wohnzimmer",
+           "art": "Wohnzimmer",
+           "flaeche": "18.04",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Schlafzimmer",
+           "art": "Schlafzimmer",
+           "flaeche": "13.22",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Küche",
+           "art": "Küche",
+           "flaeche": "8.41",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Bad/WC",
+           "art": "Bad",
+           "flaeche": "6.01",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Diele/Flur",
+           "art": "Diele",
+           "flaeche": "8.41",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Abstellraum",
+           "art": "Abstellraum",
+           "flaeche": "6.01",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Terrasse",
+           "art": "Terrasse",
+           "flaeche": "8.00",
+           "lage": "",
+           "notizen": ""
+          }
+         ],
+         "belegungen": [
+          {
+           "id": "b1",
+           "typ": "selbstnutzung",
+           "von": "01.01.2020",
+           "bis": "",
+           "vertragsparteiId": 1,
+           "haushalt": {
+            "mitglieder": [
+             {
+              "id": "m1",
+              "kontaktId": 1,
+              "name": "Andreas Lindqvist",
+              "vermerk": "",
+              "recht": "eigennutzer",
+              "anzahl": 1
+             },
+             {
+              "id": "m2",
+              "kontaktId": 2,
+              "name": "Petra Lindqvist",
+              "vermerk": "",
+              "recht": "eigennutzer",
+              "anzahl": 1
+             }
+            ]
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "e3",
+       "nr": "3",
+       "art": "wohnung",
+       "typ": "Wohneigentum",
+       "mea": "122/1000",
+       "spStellung": "eigenstaendig",
+       "flaeche": "84.30",
+       "zimmer": "3",
+       "lage": "1. OG links",
+       "eigentuemer": [
+        {
+         "kontaktId": 3,
+         "name": "Dr. Friederike Aalbers",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "",
+         "grundbuch": "Ja"
+        }
+       ],
+       "verwendungen": [
+        {
+         "name": "Vermietet",
+         "status": "aktiv"
+        }
+       ],
+       "sev": [],
+       "teile": [
+        {
+         "id": "t1",
+         "name": "",
+         "flaeche": "84.30",
+         "zimmer": "3",
+         "lage": "1. OG links",
+         "raeume": [
+          {
+           "id": "",
+           "name": "Wohnzimmer",
+           "art": "Wohnzimmer",
+           "flaeche": "21.53",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Schlafzimmer",
+           "art": "Schlafzimmer",
+           "flaeche": "14.90",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Kinder-/Arbeitszimmer",
+           "art": "Zimmer",
+           "flaeche": "12.42",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Küche",
+           "art": "Küche",
+           "flaeche": "9.94",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Bad",
+           "art": "Bad",
+           "flaeche": "6.62",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "WC",
+           "art": "WC",
+           "flaeche": "3.31",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Diele/Flur",
+           "art": "Diele",
+           "flaeche": "9.94",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Abstellraum",
+           "art": "Abstellraum",
+           "flaeche": "4.14",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Balkon",
+           "art": "Balkon",
+           "flaeche": "6.00",
+           "lage": "",
+           "notizen": ""
+          }
+         ],
+         "belegungen": [
+          {
+           "id": "b1",
+           "typ": "vermietung",
+           "von": "01.03.2022",
+           "bis": "",
+           "vertragsparteiId": 4,
+           "mietvertrag": {
+            "von": "01.03.2022",
+            "kaution": "",
+            "hoehe": "",
+            "kuendigung": ""
+           },
+           "haushalt": {
+            "mitglieder": [
+             {
+              "id": "m1",
+              "kontaktId": 4,
+              "name": "Tomasz Wieczorek",
+              "vermerk": "",
+              "recht": "mieter",
+              "anzahl": 1
+             }
+            ]
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "e4",
+       "nr": "4",
+       "art": "wohnung",
+       "typ": "Wohneigentum",
+       "mea": "104/1000",
+       "spStellung": "eigenstaendig",
+       "flaeche": "71.80",
+       "zimmer": "3",
+       "lage": "1. OG rechts",
+       "eigentuemer": [
+        {
+         "kontaktId": 5,
+         "name": "Holger Mahler",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/3",
+         "grundbuch": "Nein",
+         "sub": "Vertreter der Erbengemeinschaft",
+         "notiz": "Erbengemeinschaft"
+        },
+        {
+         "kontaktId": 6,
+         "name": "Sabine Mahler-Frey",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/3",
+         "grundbuch": "Ja",
+         "notiz": "Erbengemeinschaft"
+        },
+        {
+         "kontaktId": 7,
+         "name": "Dirk Mahler",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/3",
+         "grundbuch": "Ja",
+         "notiz": "Erbengemeinschaft"
+        }
+       ],
+       "verwendungen": [
+        {
+         "name": "Vermietet",
+         "status": "aktiv"
+        }
+       ],
+       "sev": [],
+       "teile": [
+        {
+         "id": "t1",
+         "name": "",
+         "flaeche": "71.80",
+         "zimmer": "3",
+         "lage": "1. OG rechts",
+         "raeume": [
+          {
+           "id": "",
+           "name": "Wohnzimmer",
+           "art": "Wohnzimmer",
+           "flaeche": "18.34",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Schlafzimmer",
+           "art": "Schlafzimmer",
+           "flaeche": "12.70",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Kinder-/Arbeitszimmer",
+           "art": "Zimmer",
+           "flaeche": "10.58",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Küche",
+           "art": "Küche",
+           "flaeche": "8.47",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Bad",
+           "art": "Bad",
+           "flaeche": "5.64",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "WC",
+           "art": "WC",
+           "flaeche": "2.82",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Diele/Flur",
+           "art": "Diele",
+           "flaeche": "8.47",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Abstellraum",
+           "art": "Abstellraum",
+           "flaeche": "3.53",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Balkon",
+           "art": "Balkon",
+           "flaeche": "5.00",
+           "lage": "",
+           "notizen": ""
+          }
+         ],
+         "belegungen": [
+          {
+           "id": "b1",
+           "typ": "vermietung",
+           "von": "01.06.2021",
+           "bis": "",
+           "vertragsparteiId": 8,
+           "mietvertrag": {
+            "von": "01.06.2021",
+            "kaution": "",
+            "hoehe": "",
+            "kuendigung": ""
+           },
+           "haushalt": {
+            "mitglieder": [
+             {
+              "id": "m1",
+              "kontaktId": 8,
+              "name": "Familie Demirkan",
+              "vermerk": "",
+              "recht": "mieter",
+              "anzahl": 1
+             },
+             {
+              "id": "m2",
+              "kontaktId": null,
+              "name": "",
+              "vermerk": "weitere Haushaltsmitglieder",
+              "recht": "angehoeriger",
+              "anzahl": 3
+             }
+            ]
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "e5",
+       "nr": "5",
+       "art": "wohnung",
+       "typ": "Wohneigentum",
+       "mea": "122/1000",
+       "spStellung": "eigenstaendig",
+       "flaeche": "84.30",
+       "zimmer": "3",
+       "lage": "2. OG links",
+       "eigentuemer": [
+        {
+         "kontaktId": 9,
+         "name": "Jonas Mahler",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "",
+         "grundbuch": "Ja"
+        }
+       ],
+       "verwendungen": [
+        {
+         "name": "Nießbrauch",
+         "status": "aktiv"
+        }
+       ],
+       "sev": [],
+       "teile": [
+        {
+         "id": "t1",
+         "name": "",
+         "flaeche": "84.30",
+         "zimmer": "3",
+         "lage": "2. OG links",
+         "raeume": [
+          {
+           "id": "",
+           "name": "Wohnzimmer",
+           "art": "Wohnzimmer",
+           "flaeche": "21.53",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Schlafzimmer",
+           "art": "Schlafzimmer",
+           "flaeche": "14.90",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Kinder-/Arbeitszimmer",
+           "art": "Zimmer",
+           "flaeche": "12.42",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Küche",
+           "art": "Küche",
+           "flaeche": "9.94",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Bad",
+           "art": "Bad",
+           "flaeche": "6.62",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "WC",
+           "art": "WC",
+           "flaeche": "3.31",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Diele/Flur",
+           "art": "Diele",
+           "flaeche": "9.94",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Abstellraum",
+           "art": "Abstellraum",
+           "flaeche": "4.14",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Balkon",
+           "art": "Balkon",
+           "flaeche": "6.00",
+           "lage": "",
+           "notizen": ""
+          }
+         ],
+         "belegungen": [
+          {
+           "id": "b1",
+           "typ": "selbstnutzung",
+           "von": "01.01.2020",
+           "bis": "",
+           "vertragsparteiId": 10,
+           "haushalt": {
+            "mitglieder": [
+             {
+              "id": "m1",
+              "kontaktId": 10,
+              "name": "Hildegard Mahler",
+              "vermerk": "bewohnt selbst",
+              "recht": "niessbraucher",
+              "anzahl": 1
+             }
+            ]
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "e6",
+       "nr": "6",
+       "art": "wohnung",
+       "typ": "Wohneigentum",
+       "mea": "104/1000",
+       "spStellung": "eigenstaendig",
+       "flaeche": "71.80",
+       "zimmer": "3",
+       "lage": "2. OG rechts",
+       "eigentuemer": [
+        {
+         "kontaktId": 11,
+         "name": "Sven Olbrich",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/2",
+         "grundbuch": "Ja"
+        },
+        {
+         "kontaktId": 12,
+         "name": "Marco Reiter",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/2",
+         "grundbuch": "Ja"
+        }
+       ],
+       "verwendungen": [
+        {
+         "name": "Eigennutzung",
+         "status": "aktiv"
+        }
+       ],
+       "sev": [],
+       "teile": [
+        {
+         "id": "t1",
+         "name": "",
+         "flaeche": "71.80",
+         "zimmer": "3",
+         "lage": "2. OG rechts",
+         "raeume": [
+          {
+           "id": "",
+           "name": "Wohnzimmer",
+           "art": "Wohnzimmer",
+           "flaeche": "18.34",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Schlafzimmer",
+           "art": "Schlafzimmer",
+           "flaeche": "12.70",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Kinder-/Arbeitszimmer",
+           "art": "Zimmer",
+           "flaeche": "10.58",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Küche",
+           "art": "Küche",
+           "flaeche": "8.47",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Bad",
+           "art": "Bad",
+           "flaeche": "5.64",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "WC",
+           "art": "WC",
+           "flaeche": "2.82",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Diele/Flur",
+           "art": "Diele",
+           "flaeche": "8.47",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Abstellraum",
+           "art": "Abstellraum",
+           "flaeche": "3.53",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Balkon",
+           "art": "Balkon",
+           "flaeche": "5.00",
+           "lage": "",
+           "notizen": ""
+          }
+         ],
+         "belegungen": [
+          {
+           "id": "b1",
+           "typ": "selbstnutzung",
+           "von": "01.01.2020",
+           "bis": "",
+           "vertragsparteiId": 11,
+           "haushalt": {
+            "mitglieder": [
+             {
+              "id": "m1",
+              "kontaktId": 11,
+              "name": "Sven Olbrich",
+              "vermerk": "",
+              "recht": "eigennutzer",
+              "anzahl": 1
+             },
+             {
+              "id": "m2",
+              "kontaktId": 12,
+              "name": "Marco Reiter",
+              "vermerk": "",
+              "recht": "eigennutzer",
+              "anzahl": 1
+             }
+            ]
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "e7",
+       "nr": "7",
+       "art": "wohnung",
+       "typ": "Wohneigentum",
+       "mea": "287/1000",
+       "spStellung": "eigenstaendig",
+       "flaeche": "138.60",
+       "zimmer": "5",
+       "lage": "3. OG / DG",
+       "eigentuemer": [
+        {
+         "kontaktId": 13,
+         "name": "Igor Wassiljew",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/2",
+         "grundbuch": "Ja"
+        },
+        {
+         "kontaktId": 14,
+         "name": "Natalia Wassiljewa",
+         "von": "01.01.2020",
+         "bis": "",
+         "anteil": "1/2",
+         "grundbuch": "Ja"
+        }
+       ],
+       "verwendungen": [
+        {
+         "name": "Eigennutzung",
+         "status": "aktiv"
+        }
+       ],
+       "sev": [],
+       "teile": [
+        {
+         "id": "t1",
+         "name": "",
+         "flaeche": "138.60",
+         "zimmer": "5",
+         "lage": "3. OG / DG",
+         "raeume": [
+          {
+           "id": "",
+           "name": "Wohn-/Esszimmer",
+           "art": "Wohnzimmer",
+           "flaeche": "21.92",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Schlafzimmer",
+           "art": "Schlafzimmer",
+           "flaeche": "22.52",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Zimmer 2",
+           "art": "Zimmer",
+           "flaeche": "18.01",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Zimmer 3",
+           "art": "Zimmer",
+           "flaeche": "16.51",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Küche",
+           "art": "Küche",
+           "flaeche": "15.01",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Bad",
+           "art": "Bad",
+           "flaeche": "10.51",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Gäste-WC",
+           "art": "WC",
+           "flaeche": "2.70",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Diele/Flur",
+           "art": "Diele",
+           "flaeche": "19.51",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Abstellraum",
+           "art": "Abstellraum",
+           "flaeche": "7.51",
+           "lage": "",
+           "notizen": ""
+          },
+          {
+           "id": "",
+           "name": "Dachterrasse",
+           "art": "Dachterrasse",
+           "flaeche": "14.00",
+           "lage": "",
+           "notizen": ""
+          }
+         ],
+         "belegungen": [
+          {
+           "id": "b1",
+           "typ": "selbstnutzung",
+           "von": "01.01.2020",
+           "bis": "",
+           "vertragsparteiId": 13,
+           "haushalt": {
+            "mitglieder": [
+             {
+              "id": "m1",
+              "kontaktId": 13,
+              "name": "Igor Wassiljew",
+              "vermerk": "",
+              "recht": "eigennutzer",
+              "anzahl": 1
+             },
+             {
+              "id": "m2",
+              "kontaktId": 14,
+              "name": "Natalia Wassiljewa",
+              "vermerk": "",
+              "recht": "eigennutzer",
+              "anzahl": 1
+             },
+             {
+              "id": "m3",
+              "kontaktId": null,
+              "name": "",
+              "vermerk": "Kinder",
+              "recht": "angehoeriger",
+              "anzahl": 3
+             }
+            ]
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "raeume": [
+      {
+       "id": "g1_r1",
+       "name": "Fahrrad- und Kinderwagenabstellraum",
+       "lage": "UG",
+       "flaeche": "16.0",
+       "art": "Fahrradraum",
+       "notizen": "",
+       "snrAn": null,
+       "abrechnungsrelevant": true,
+       "zaehler": [],
+       "technik": []
+      },
+      {
+       "id": "g1_r2",
+       "name": "Müll- und Wertstoffraum",
+       "lage": "EG",
+       "flaeche": "7.5",
+       "art": "Müllraum",
+       "notizen": "",
+       "snrAn": null,
+       "abrechnungsrelevant": true,
+       "zaehler": [],
+       "technik": []
+      },
+      {
+       "id": "g1_r3",
+       "name": "Wasch- und Trockenraum",
+       "lage": "UG",
+       "flaeche": "9.0",
+       "art": "Waschküche",
+       "notizen": "",
+       "snrAn": null,
+       "abrechnungsrelevant": true,
+       "zaehler": [],
+       "technik": []
+      },
+      {
+       "id": "g1_r4",
+       "name": "Heizraum / Technikzentrale",
+       "lage": "UG",
+       "flaeche": "11.0",
+       "art": "Heizungsraum",
+       "notizen": "Kessel, Hausanschluss, WW-Bereitung",
+       "snrAn": null,
+       "abrechnungsrelevant": true,
+       "zaehler": [],
+       "technik": []
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "name": "Zugang / Schließanlage",
+     "icon": "🔑",
+     "fixed": false,
+     "kategorie": "zugang",
+     "stamm": [
+      {
+       "id": 1,
+       "name": "Schlüsseldienst",
+       "value": ""
+      },
+      {
+       "id": 2,
+       "name": "Sicherheitskarte",
+       "value": ""
+      },
+      {
+       "id": 3,
+       "name": "Hersteller",
+       "value": "Siedle Vario"
+      }
+     ],
+     "einheiten": []
+    },
+    {
+     "id": 7,
+     "name": "Technik",
+     "icon": "⚙",
+     "fixed": false,
+     "kategorie": "technik",
+     "stamm": [
+      {
+       "id": 1,
+       "name": "Heizart",
+       "value": "Zentralheizung",
+       "type": "text"
+      },
+      {
+       "id": 2,
+       "name": "Heizungstyp",
+       "value": "Gas-Brennwert",
+       "type": "text"
+      },
+      {
+       "id": 3,
+       "name": "Warmwasserversorgung",
+       "value": "Zentral",
+       "type": "select",
+       "optionen": [
+        "Zentral",
+        "Dezentral"
+       ],
+       "immerSichtbar": true,
+       "hinweis": "Bei zentraler Warmwasserversorgung gilt die Legionellen-Prüfpflicht (TrinkwV)."
+      }
+     ],
+     "einheiten": [],
+     "technikGeraete": [
+      {
+       "id": 1781978160001,
+       "typ": "heizung",
+       "typLabel": "Heizungsanlage",
+       "icon": "🔥",
+       "hausId": 2,
+       "raumId": "g1_r4",
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "System",
+         "type": "select",
+         "value": "Gas-Brennwert",
+         "optionen": [
+          "Gas-Brennwert",
+          "Gas-Niedertemperatur",
+          "Öl-Brennwert",
+          "Wärmepumpe (Luft)",
+          "Fernwärme",
+          "Pelletheizung",
+          "Elektroheizung",
+          "Hybridheizung"
+         ],
+         "freitextBei": "Andere…"
+        },
+        {
+         "id": 1002,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "Viessmann Vitocrossal 300"
+        },
+        {
+         "id": 1003,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2018"
+        },
+        {
+         "id": 1004,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "VIE-0300-184772"
+        },
+        {
+         "id": 1005,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Heizungsbau Förster GmbH",
+         "kontaktId": 10004
+        },
+        {
+         "id": 1006,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "14.10.2025"
+        },
+        {
+         "id": 1007,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "14.10.2026"
+        },
+        {
+         "id": 1008,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Verwalter / Schlüsselkasten Hauseingang",
+         "kontaktId": 10003
+        }
+       ]
+      },
+      {
+       "id": 1781978160002,
+       "typ": "warmwasser",
+       "typLabel": "Warmwasserspeicher / Boiler",
+       "icon": "♨",
+       "hausId": 2,
+       "raumId": "g1_r4",
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "System",
+         "type": "select",
+         "value": "Zentralspeicher 500 l",
+         "optionen": [
+          "Zentralspeicher",
+          "Durchlauferhitzer",
+          "Frischwasserstation"
+         ],
+         "freitextBei": "Andere…"
+        },
+        {
+         "id": 1002,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "Viessmann Vitocell 100-L"
+        },
+        {
+         "id": 1003,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2018"
+        },
+        {
+         "id": 1004,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "VIE-VC-558210"
+        },
+        {
+         "id": 1005,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Heizungsbau Förster GmbH",
+         "kontaktId": 10004
+        },
+        {
+         "id": 1006,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "14.10.2025"
+        },
+        {
+         "id": 1007,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "14.10.2026"
+        },
+        {
+         "id": 1008,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Verwalter",
+         "kontaktId": 10003
+        }
+       ]
+      },
+      {
+       "id": 1781978160003,
+       "typ": "zirkulationspumpe",
+       "typLabel": "Zirkulationspumpen",
+       "icon": "🔧",
+       "hausId": 2,
+       "raumId": "g1_r4",
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "Grundfos ALPHA2"
+        },
+        {
+         "id": 1002,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2018"
+        },
+        {
+         "id": 1003,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "GFS-A2-771044"
+        },
+        {
+         "id": 1004,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Heizungsbau Förster GmbH",
+         "kontaktId": 10004
+        },
+        {
+         "id": 1005,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "14.10.2025"
+        },
+        {
+         "id": 1006,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "14.10.2026"
+        },
+        {
+         "id": 1007,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Verwalter",
+         "kontaktId": 10003
+        }
+       ]
+      },
+      {
+       "id": 1781978160004,
+       "typ": "druckerhoehung",
+       "typLabel": "Druckerhöhungsanlage",
+       "icon": "🔧",
+       "hausId": 2,
+       "raumId": "g1_r4",
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "System",
+         "type": "select",
+         "value": "Einzelpumpe (5 Geschosse)",
+         "optionen": [
+          "Einzelpumpe",
+          "Doppelpumpe",
+          "drehzahlgeregelt"
+         ],
+         "freitextBei": "Andere…"
+        },
+        {
+         "id": 1002,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "KSB Hya-Solo"
+        },
+        {
+         "id": 1003,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2018"
+        },
+        {
+         "id": 1004,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "KSB-HS-205518"
+        },
+        {
+         "id": 1005,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Heizungsbau Förster GmbH",
+         "kontaktId": 10004
+        },
+        {
+         "id": 1006,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "14.10.2025"
+        },
+        {
+         "id": 1007,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "14.10.2026"
+        },
+        {
+         "id": 1008,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Verwalter",
+         "kontaktId": 10003
+        }
+       ]
+      },
+      {
+       "id": 1781978160005,
+       "typ": "aufzug",
+       "typLabel": "Personen- / Lastenaufzug",
+       "icon": "🛗",
+       "hausId": 2,
+       "raumId": null,
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "System",
+         "type": "select",
+         "value": "Seil, maschinenraumlos (MRL)",
+         "optionen": [
+          "Seilaufzug",
+          "Hydraulikaufzug",
+          "Maschinenraumlos (MRL)"
+         ],
+         "freitextBei": "Andere…"
+        },
+        {
+         "id": 1002,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "Schindler 3300"
+        },
+        {
+         "id": 1003,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2019"
+        },
+        {
+         "id": 1004,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "SCH-3300-209815"
+        },
+        {
+         "id": 1005,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Schindler Aufzüge GmbH",
+         "kontaktId": 10005
+        },
+        {
+         "id": 1006,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "06.03.2026"
+        },
+        {
+         "id": 1007,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "06.09.2026"
+        },
+        {
+         "id": 1008,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Wartungsfirma / Notruf 24h",
+         "kontaktId": 10005
+        }
+       ]
+      },
+      {
+       "id": 1781978160006,
+       "typ": "rwa",
+       "typLabel": "RWA (Rauch-/Wärmeabzug)",
+       "icon": "🌫",
+       "hausId": 2,
+       "raumId": null,
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "D+H / GEZE OL90"
+        },
+        {
+         "id": 1002,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2019"
+        },
+        {
+         "id": 1003,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "DH-RWA-330275"
+        },
+        {
+         "id": 1004,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "GEZE Service",
+         "kontaktId": 10007
+        },
+        {
+         "id": 1005,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "22.11.2025"
+        },
+        {
+         "id": 1006,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "22.11.2026"
+        },
+        {
+         "id": 1007,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Verwalter",
+         "kontaktId": 10003
+        }
+       ]
+      },
+      {
+       "id": 1781978160007,
+       "typ": "hauptverteiler",
+       "typLabel": "Hauptverteiler / Zähleranlage",
+       "icon": "🔢",
+       "hausId": 2,
+       "raumId": null,
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "System",
+         "type": "select",
+         "value": "Zählerschrank + Unterverteilung",
+         "optionen": [
+          "Zählerschrank",
+          "Hauptverteilung (NSHV)",
+          "Unterverteilung"
+         ],
+         "freitextBei": "Andere…"
+        },
+        {
+         "id": 1002,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "Hager"
+        },
+        {
+         "id": 1003,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2018"
+        },
+        {
+         "id": 1004,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "HAG-ZS-118903"
+        },
+        {
+         "id": 1005,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Elektro Bauer GmbH",
+         "kontaktId": 10008
+        },
+        {
+         "id": 1006,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "01.03.2024"
+        },
+        {
+         "id": 1007,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "01.03.2028"
+        },
+        {
+         "id": 1008,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Verwalter",
+         "kontaktId": 10003
+        }
+       ]
+      },
+      {
+       "id": 1781978160008,
+       "typ": "sprechanlage",
+       "typLabel": "Sprech- / Klingelanlage",
+       "icon": "🔔",
+       "hausId": 2,
+       "raumId": null,
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "Siedle Vario"
+        },
+        {
+         "id": 1002,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2018"
+        },
+        {
+         "id": 1003,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "SDL-VAR-662140"
+        },
+        {
+         "id": 1004,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Elektro Bauer GmbH",
+         "kontaktId": 10008
+        },
+        {
+         "id": 1005,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "01.03.2024"
+        },
+        {
+         "id": 1006,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": ""
+        },
+        {
+         "id": 1007,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Verwalter",
+         "kontaktId": 10003
+        }
+       ]
+      },
+      {
+       "id": 1781978160009,
+       "typ": "rwm",
+       "typLabel": "Rauchwarnmelder (vernetzt)",
+       "icon": "🔥",
+       "hausId": 2,
+       "raumId": null,
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "System",
+         "type": "select",
+         "value": "Funkvernetzt, Ferninspektion",
+         "optionen": [
+          "Funkvernetzt",
+          "Drahtvernetzt",
+          "mit Ferninspektion"
+         ],
+         "freitextBei": "Andere…"
+        },
+        {
+         "id": 1002,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "Ei Electronics Ei650W"
+        },
+        {
+         "id": 1003,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2018"
+        },
+        {
+         "id": 1004,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "EI-650W-Serie"
+        },
+        {
+         "id": 1005,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Techem",
+         "kontaktId": 10009
+        },
+        {
+         "id": 1006,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "01.09.2025"
+        },
+        {
+         "id": 1007,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "01.09.2026"
+        },
+        {
+         "id": 1008,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Mieter/Eigentümer je Einheit",
+         "kontaktId": null
+        }
+       ]
+      },
+      {
+       "id": 1781978160010,
+       "typ": "blitzschutz",
+       "typLabel": "Blitzschutzanlage",
+       "icon": "⚡",
+       "hausId": 2,
+       "raumId": "g1_r4",
+       "einheitId": null,
+       "zustaendigkeit": "weg",
+       "felder": [
+        {
+         "id": 1001,
+         "name": "Hersteller",
+         "type": "text",
+         "value": "Fangeinrichtung Dach"
+        },
+        {
+         "id": 1002,
+         "name": "Baujahr",
+         "type": "number",
+         "value": "2019"
+        },
+        {
+         "id": 1003,
+         "name": "Nummer / Serien-Nr.",
+         "type": "text",
+         "value": "BSA-LE-22-07"
+        },
+        {
+         "id": 1004,
+         "name": "Wartungsfirma",
+         "type": "kontakt",
+         "value": "Elektro Bauer GmbH",
+         "kontaktId": 10008
+        },
+        {
+         "id": 1005,
+         "name": "Letzte Wartung",
+         "type": "date",
+         "value": "01.06.2023"
+        },
+        {
+         "id": 1006,
+         "name": "Nächste Wartung",
+         "type": "date",
+         "value": "01.06.2027"
+        },
+        {
+         "id": 1007,
+         "name": "Zugang / Ansprechpartner",
+         "type": "kontakt",
+         "value": "Verwalter",
+         "kontaktId": 10003
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "verwaltungsKarten": [
+    {
+     "id": 1,
+     "name": "Verwaltung – Stammdaten",
+     "icon": "🏷",
+     "fixed": true,
+     "kategorie": "verwaltung_stamm",
+     "stamm": [
+      {
+       "id": 1,
+       "name": "Verwaltung ab",
+       "value": "01.01.2020",
+       "type": "date",
+       "required": true
+      },
+      {
+       "id": 2,
+       "name": "Bestellt bis",
+       "value": "31.12.2026",
+       "type": "date",
+       "required": true
+      },
+      {
+       "id": 3,
+       "name": "Verwalter (Firma)",
+       "value": "Pro Immo Hausverwaltung GmbH",
+       "kontaktId": 10003,
+       "type": "kontakt"
+      },
+      {
+       "id": 4,
+       "name": "Buchhalter",
+       "value": "",
+       "kontaktId": null,
+       "type": "kontakt"
+      },
+      {
+       "id": 5,
+       "name": "Übernommen von",
+       "value": "",
+       "kontaktId": null,
+       "type": "kontakt"
+      },
+      {
+       "id": 6,
+       "name": "Verw.-Zustimmung erforderlich",
+       "value": "Nein",
+       "type": "select",
+       "optionen": [
+        "Ja",
+        "Nein"
+       ]
+      },
+      {
+       "id": 8,
+       "name": "Letzte Begehung",
+       "value": "",
+       "type": "date"
+      },
+      {
+       "id": 9,
+       "name": "Nächste Begehung",
+       "value": "",
+       "type": "date"
+      }
+     ],
+     "einheiten": []
+    },
+    {
+     "id": 2,
+     "name": "ETV – Stammdaten",
+     "icon": "📋",
+     "fixed": false,
+     "kategorie": "etv",
+     "stamm": [
+      {
+       "id": 1,
+       "name": "Versammlungsort",
+       "value": "",
+       "type": "kontakte",
+       "kontaktIds": [],
+       "immerSichtbar": true
+      },
+      {
+       "id": 7,
+       "name": "Letzte ETV",
+       "value": "15.05.2025",
+       "type": "date",
+       "immerSichtbar": true
+      },
+      {
+       "id": 4,
+       "name": "Nächste ETV",
+       "value": "21.05.2026",
+       "type": "etv_naechste",
+       "immerSichtbar": true
+      }
+     ],
+     "einheiten": []
+    },
+    {
+     "id": 3,
+     "name": "Versicherungen",
+     "icon": "🛡",
+     "fixed": false,
+     "kategorie": "versicherungen",
+     "stamm": [],
+     "einheiten": [],
+     "vertraege": [
+      {
+       "id": "vs1",
+       "typ": "Versicherung",
+       "leistung": "Wohngebäudeversicherung (gleitender Neuwert)",
+       "firmaId": 10010,
+       "vertragsnr": "WGV-M1-9182550",
+       "ab": "21.03.2024",
+       "bis": "",
+       "intervall": "jährlich",
+       "status": "aktiv"
+      },
+      {
+       "id": "vs2",
+       "typ": "Versicherung",
+       "leistung": "Haus- und Grundbesitzerhaftpflicht",
+       "firmaId": 10010,
+       "vertragsnr": "HGH-M1-4749890",
+       "ab": "14.08.2024",
+       "bis": "",
+       "intervall": "jährlich",
+       "status": "aktiv"
+      },
+      {
+       "id": "vs3",
+       "typ": "Versicherung",
+       "leistung": "Glasversicherung (Gemeinschaftseigentum)",
+       "firmaId": 10011,
+       "vertragsnr": "GLA-M1-9196382",
+       "ab": "02.04.2024",
+       "bis": "",
+       "intervall": "jährlich",
+       "status": "aktiv"
+      },
+      {
+       "id": "vs4",
+       "typ": "Versicherung",
+       "leistung": "Technische Versicherung Aufzug (Maschinenbruch)",
+       "firmaId": 10010,
+       "vertragsnr": "MB-AUF-M1-8266731",
+       "ab": "15.08.2024",
+       "bis": "",
+       "intervall": "jährlich",
+       "status": "aktiv"
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "name": "Versorger",
+     "icon": "⚡",
+     "fixed": false,
+     "kategorie": "versorger",
+     "stamm": [],
+     "einheiten": [],
+     "vertraege": [
+      {
+       "id": "vg1",
+       "typ": "Versorger",
+       "leistung": "Allgemeinstrom (Gemeinschaftsstrom)",
+       "firmaId": 10013,
+       "vertragsnr": "VK-M1-821056",
+       "ab": "11.03.2023",
+       "bis": "",
+       "intervall": "",
+       "status": "aktiv"
+      },
+      {
+       "id": "vg2",
+       "typ": "Versorger",
+       "leistung": "Erdgas (Heizzentrale)",
+       "firmaId": 10013,
+       "vertragsnr": "VK-M1-320489",
+       "ab": "17.04.2023",
+       "bis": "",
+       "intervall": "",
+       "status": "aktiv"
+      },
+      {
+       "id": "vg3",
+       "typ": "Versorger",
+       "leistung": "Trinkwasser / Abwasser",
+       "firmaId": 10013,
+       "vertragsnr": "VK-M1-866487",
+       "ab": "14.11.2020",
+       "bis": "",
+       "intervall": "",
+       "status": "aktiv"
+      },
+      {
+       "id": "vg4",
+       "typ": "Versorger",
+       "leistung": "Abfallentsorgung (kommunal)",
+       "firmaId": 10014,
+       "vertragsnr": "VK-M1-778780",
+       "ab": "18.02.2020",
+       "bis": "",
+       "intervall": "",
+       "status": "aktiv"
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "Messdienst",
+     "icon": "📊",
+     "fixed": false,
+     "kategorie": "messdienst",
+     "stamm": [],
+     "einheiten": [],
+     "vertraege": [
+      {
+       "id": "md1",
+       "typ": "Messdienst",
+       "leistung": "Heiz-/Wasserkostenverteilung + RWM-Service",
+       "firmaId": 10012,
+       "vertragsnr": "MD-M1-1709316",
+       "ab": "27.11.2023",
+       "bis": "",
+       "intervall": "jährlich",
+       "status": "aktiv"
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "name": "Verträge",
+     "icon": "📄",
+     "fixed": false,
+     "kategorie": "vertraege",
+     "stamm": [],
+     "einheiten": [],
+     "vertraege": [
+      {
+       "id": "vt1",
+       "typ": "Wartung",
+       "leistung": "Wartung Heizung / WW / Zirkulation / Druckerhöhung",
+       "firmaId": 10004,
+       "vertragsnr": "",
+       "ab": "01.01.2020",
+       "bis": "",
+       "intervall": "jährlich",
+       "status": "aktiv"
+      },
+      {
+       "id": "vt2",
+       "typ": "Wartung",
+       "leistung": "Wartung Aufzug",
+       "firmaId": 10005,
+       "vertragsnr": "",
+       "ab": "01.01.2020",
+       "bis": "",
+       "intervall": "vierteljährlich",
+       "status": "aktiv"
+      },
+      {
+       "id": "vt3",
+       "typ": "Prüfung",
+       "leistung": "ZÜS-Hauptprüfung Aufzug",
+       "firmaId": 10006,
+       "vertragsnr": "ZÜS-LE-44021",
+       "ab": "06.03.2024",
+       "bis": "",
+       "intervall": "alle 2 Jahre",
+       "status": "aktiv"
+      },
+      {
+       "id": "vt4",
+       "typ": "Wartung",
+       "leistung": "Wartung RWA (Rauch-/Wärmeabzug)",
+       "firmaId": 10007,
+       "vertragsnr": "",
+       "ab": "01.01.2020",
+       "bis": "",
+       "intervall": "jährlich",
+       "status": "aktiv"
+      },
+      {
+       "id": "vt5",
+       "typ": "Prüfung",
+       "leistung": "Prüfung Elektro / Blitzschutz",
+       "firmaId": 10008,
+       "vertragsnr": "",
+       "ab": "01.01.2020",
+       "bis": "",
+       "intervall": "alle 2 Jahre",
+       "status": "aktiv"
+      }
+     ]
+    }
+   ],
+   "_geschaetzt": [
+    "verwaltung · Verwaltung ab/bestelltBis (01.01.2020 / 31.12.2026) – kein Datum in M1-Quellen, plausibel gesetzt",
+    "verwaltungsKarten · ETV-Daten (letzte 15.05.2025 / nächste 21.05.2026) – nicht in Quellen, plausibel gesetzt",
+    "einheit e4 · Erbengemeinschaft – Holger Mahler als Miterbe mit Anteil 1/3 angenommen (DB: Bevollmächtigter, 3 Erben)",
+    "belegung · Mietbeginn-Daten (e1 01.01.2021, e3 01.03.2022, e4 01.06.2021) – nicht in Quellen, plausibel gesetzt",
+    "legionellen · Prüfdaten (letzte 15.04.2024 / nächste 15.04.2027) – nicht in Quellen, plausibel gesetzt",
+    "kontakt firma 'Heizungsbau Förster GmbH' · Tel/Mail/Adresse als Muster ergänzt (keine Quelle in Unterlagen)",
+    "kontakt firma 'Schindler Aufzüge GmbH' · Tel/Mail/Adresse als Muster ergänzt (keine Quelle in Unterlagen)",
+    "kontakt firma 'TÜV Süd Industrie Service' · Tel/Mail/Adresse als Muster ergänzt (keine Quelle in Unterlagen)",
+    "kontakt firma 'GEZE Service' · Tel/Mail/Adresse als Muster ergänzt (keine Quelle in Unterlagen)",
+    "kontakt firma 'Elektro Bauer GmbH' · Tel/Mail/Adresse als Muster ergänzt (keine Quelle in Unterlagen)",
+    "kontakt firma 'Techem' · Tel/Mail/Adresse als Muster ergänzt (keine Quelle in Unterlagen)",
+    "kontakte · Postanschriften aller Personen + Saaleblick/Körnig als Muster ergänzt (keine Quelle); im Haus Wohnende unter Objektadresse Lessingstraße 22, externe mit Leipziger Musteradressen",
+    "belegung · Mietkonditionen E1/E3/E4 (Kaution, Kaltmiete, Kündigungsfrist) als Muster ergänzt (keine Quelle)"
+   ]
+  }
+ ]
+}

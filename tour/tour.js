@@ -1,0 +1,604 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// tour.js — Feature-Tour AllesDa: Overlay-Engine
+// ---------------------------------------------------------------------------
+// Läuft NEBEN der echten App (kein App-Code wird verändert). Aufgaben:
+//   A) Geführte Phase: Abdunkeln + Spotlight-Loch + Sprechblase je Station.
+//      Bei „tippen"-Schritten ist NUR das Ziel klickbar (Blocker-Divs
+//      fangen alle anderen Klicks) — Prinzip C+B aus der Spec.
+//   B) Freie Phase: Overlay weg, app-fremde Leiste unten
+//      (Zurücksetzen · Tour ansehen · Ausgiebiger kennenlernen).
+//   C) Dauerhaft (beide Phasen):
+//      · Einstellungen-Kacheln aus TOUR_BESCHNITT.einstellungenAusblenden
+//        per DOM verstecken (Titel+Sub-Paar → eindeutig).
+//      · Karten aus nurAnsichtKarten bekommen einen Nur-Ansicht-Schleier
+//        (pointer-events aus + Badge) — verhindert Re-Aktivieren
+//        ausgeblendeter Bereiche über die Einstellungen.
+//      · Sicherheitsnetz: verboteneNavTexte in Nav-/Tab-Kontexten verstecken.
+//
+// Anker-Suche ist TEXT-basiert (keine Klassen/IDs der App nötig) und
+// damit robust gegen Minify + Mobile/Desktop-Unterschiede. Wird ein Anker
+// nicht gefunden → zentrierte Karte mit Weiter (Tour bricht nie hart).
+// Alle Inhalte/Anker: inhalte.js. Doku: TOUR_BAUANLEITUNG.md.
+// ═══════════════════════════════════════════════════════════════════════════
+
+(function () {
+  var LS_STATUS = "allesda:tour:status"; // fehlt = Tour zeigen · "frei" = freie Phase
+  var Z = 100000; // Basis-z-index (über allem App-eigenen)
+
+  // ── Mini-Helfer ────────────────────────────────────────────────────────────
+  function el(tag, css, text) {
+    var d = document.createElement(tag);
+    if (css) { for (var k in css) { d.style[k] = css[k]; } }
+    if (text) d.textContent = text;
+    return d;
+  }
+  function sichtbar(n) {
+    if (!n || !n.getBoundingClientRect) return false;
+    var r = n.getBoundingClientRect();
+    if (r.width < 2 || r.height < 2) return false;
+    var st = window.getComputedStyle(n);
+    return st.display !== "none" && st.visibility !== "hidden" && st.opacity !== "0";
+  }
+  function eigenerText(n) {
+    // Nur direkte Textknoten (nicht die der Kinder)
+    var s = "";
+    for (var i = 0; i < n.childNodes.length; i++) {
+      var c = n.childNodes[i];
+      if (c.nodeType === 3) s += c.nodeValue;
+    }
+    return s.replace(/\s+/g, " ").trim();
+  }
+  function alleElemente(wurzel) {
+    return (wurzel || document.body).querySelectorAll("*");
+  }
+  function istTourKnoten(n) {
+    while (n) { if (n.__tour) return true; n = n.parentNode; }
+    return false;
+  }
+
+  // ── Anker-Suche ────────────────────────────────────────────────────────────
+  // {text:"…"}: sichtbares Element, dessen EIGENER Text exakt so lautet oder
+  //   so beginnt; wir nehmen das mit der kleinsten Fläche (präzisester Treffer)
+  //   und klettern zum klickbaren Wrapper hoch (max. 4 Ebenen).
+  function findeText(text) {
+    var best = null, bestA = Infinity;
+    var alle = alleElemente();
+    for (var i = 0; i < alle.length; i++) {
+      var n = alle[i];
+      if (istTourKnoten(n) || !sichtbar(n)) continue;
+      var t = eigenerText(n);
+      if (!t) continue;
+      if (t === text || t.indexOf(text) === 0) {
+        var r = n.getBoundingClientRect();
+        var a = r.width * r.height;
+        if (a < bestA) { bestA = a; best = n; }
+      }
+    }
+    if (!best) return null;
+    // Zum ganzen Eintrag hochklettern: solange Eltern (fast) nur diesen
+    // Text tragen. cursor taugt nicht als Kriterium (erbt auf Kinder).
+    // Echte <button>/<a>-Vorfahren gewinnen zusätzlich (max. 4 Ebenen).
+    var n2 = best, p2 = best.parentElement, hoch = 0;
+    while (p2 && hoch < 4) {
+      var tag = (p2.tagName || "").toLowerCase();
+      var pt = (p2.textContent || "").replace(/\s+/g, " ").trim();
+      if (tag === "button" || tag === "a") { n2 = p2; break; }
+      if (pt.length > text.length + 12) break;
+      n2 = p2; p2 = p2.parentElement; hoch++;
+    }
+    return n2;
+  }
+  // {alleTexte:[…]}: kleinster sichtbarer Container, der ALLE Texte enthält
+  function findeContainer(texte) {
+    var best = null, bestA = Infinity;
+    var alle = alleElemente();
+    for (var i = 0; i < alle.length; i++) {
+      var n = alle[i];
+      if (istTourKnoten(n) || !sichtbar(n)) continue;
+      var tc = n.textContent || "";
+      var ok = true;
+      for (var j = 0; j < texte.length; j++) {
+        if (tc.indexOf(texte[j]) < 0) { ok = false; break; }
+      }
+      if (!ok) continue;
+      var r = n.getBoundingClientRect();
+      var a = r.width * r.height;
+      if (a > 4 && a < bestA) { bestA = a; best = n; }
+    }
+    return best;
+  }
+  function findeAnker(anker) {
+    if (!anker) return null;
+    if (anker.alleTexte) return findeContainer(anker.alleTexte);
+    if (anker.text) return findeText(anker.text);
+    return null;
+  }
+
+  // ── Overlay-Bausteine (Spotlight + Blocker + Sprechblase) ──────────────────
+  var ov = { loch: null, blocker: [], blase: null, ziel: null, schrittIdx: 0, aktiv: false };
+
+  function raeumeOverlay() {
+    if (ov.loch && ov.loch.parentNode) ov.loch.parentNode.removeChild(ov.loch);
+    ov.loch = null;
+    for (var i = 0; i < ov.blocker.length; i++) {
+      var b = ov.blocker[i];
+      if (b.parentNode) b.parentNode.removeChild(b);
+    }
+    ov.blocker = [];
+    if (ov.blase && ov.blase.parentNode) ov.blase.parentNode.removeChild(ov.blase);
+    ov.blase = null;
+    ov.ziel = null;
+  }
+
+  function macheBlocker(x, y, w, h) {
+    var b = el("div", {
+      position: "fixed", left: x + "px", top: y + "px",
+      width: Math.max(0, w) + "px", height: Math.max(0, h) + "px",
+      zIndex: String(Z + 1), background: "transparent"
+    });
+    b.__tour = true;
+    // Klicks schlucken (Sperren = Technik B)
+    b.addEventListener("click", function (e) { e.stopPropagation(); e.preventDefault(); }, true);
+    b.addEventListener("touchstart", function (e) { e.stopPropagation(); e.preventDefault(); }, { capture: true, passive: false });
+    document.body.appendChild(b);
+    return b;
+  }
+
+  function zeichneSpotlight(ziel, klickDurch) {
+    // Optik: Loch-Div mit riesigem box-shadow als Abdunklung
+    var r = ziel ? ziel.getBoundingClientRect() : null;
+    var pad = 6;
+    var x = r ? r.left - pad : window.innerWidth / 2;
+    var y = r ? r.top - pad : window.innerHeight / 2;
+    var w = r ? r.width + pad * 2 : 0;
+    var h = r ? r.height + pad * 2 : 0;
+
+    if (!ov.loch) {
+      ov.loch = el("div", {
+        position: "fixed", zIndex: String(Z),
+        borderRadius: "14px", pointerEvents: "none",
+        boxShadow: "0 0 0 200vmax rgba(4,4,10,0.72)",
+        transition: "left .25s ease, top .25s ease, width .25s ease, height .25s ease",
+        border: "2px solid rgba(14,116,144,0.9)"
+      });
+      ov.loch.__tour = true;
+      document.body.appendChild(ov.loch);
+    }
+    ov.loch.style.left = x + "px";
+    ov.loch.style.top = y + "px";
+    ov.loch.style.width = w + "px";
+    ov.loch.style.height = h + "px";
+    ov.loch.style.display = r ? "block" : "none";
+
+    // Blocker neu legen: 4 Rechtecke um das Loch (nur wenn Loch existiert)
+    for (var i = 0; i < ov.blocker.length; i++) {
+      var b = ov.blocker[i];
+      if (b.parentNode) b.parentNode.removeChild(b);
+    }
+    ov.blocker = [];
+    var W = window.innerWidth, H = window.innerHeight;
+    if (r) {
+      ov.blocker.push(macheBlocker(0, 0, W, y));                       // oben
+      ov.blocker.push(macheBlocker(0, y + h, W, H - y - h));           // unten
+      ov.blocker.push(macheBlocker(0, y, x, h));                       // links
+      ov.blocker.push(macheBlocker(x + w, y, W - x - w, h));           // rechts
+      if (!klickDurch) {
+        // „zeigen"-Schritt: auch das Loch nicht klickbar
+        ov.blocker.push(macheBlocker(x, y, w, h));
+      }
+    } else {
+      ov.blocker.push(macheBlocker(0, 0, W, H)); // Vollsperre (Karten-Schritt)
+    }
+  }
+
+  function zeichneBlase(schritt, mitWeiter, ohneAnker) {
+    if (ov.blase && ov.blase.parentNode) ov.blase.parentNode.removeChild(ov.blase);
+    var blase = el("div", {
+      position: "fixed", left: "12px", right: "12px",
+      bottom: "calc(16px + env(safe-area-inset-bottom, 0px))",
+      zIndex: String(Z + 2),
+      background: "#12121E", color: "#F0F0FF",
+      border: "1px solid #2A2A45", borderRadius: "16px",
+      padding: "16px 18px", maxWidth: "480px", margin: "0 auto",
+      boxShadow: "0 12px 40px rgba(0,0,0,0.55)",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    });
+    blase.__tour = true;
+
+    var fortschritt = "";
+    var gesamt = TOUR_SCHRITTE.length;
+    fortschritt = (ov.schrittIdx + 1) + " / " + gesamt;
+
+    var kopf = el("div", { display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "6px" });
+    kopf.appendChild(el("div", { fontSize: "16px", fontWeight: "700", letterSpacing: "-0.01em" }, schritt.titel || ""));
+    kopf.appendChild(el("div", { fontSize: "12px", color: "#7575A0", flexShrink: "0", marginLeft: "10px" }, fortschritt));
+    blase.appendChild(kopf);
+    blase.appendChild(el("div", { fontSize: "14px", lineHeight: "1.5", color: "#C9C9E8" }, schritt.text || ""));
+
+    var reihe = el("div", { display: "flex", gap: "10px", marginTop: "14px", flexWrap: "wrap" });
+    var buttons = schritt.buttons;
+    if (!buttons) {
+      buttons = [];
+      if (mitWeiter || ohneAnker) buttons.push({ label: "Weiter", aktion: "weiter", primaer: true });
+    }
+    for (var i = 0; i < buttons.length; i++) {
+      (function (bd) {
+        var btn = el("button", {
+          flex: "1 1 auto", minHeight: "44px", padding: "10px 14px",
+          fontSize: "16px", fontWeight: bd.primaer ? "700" : "500",
+          borderRadius: "999px", cursor: "pointer",
+          border: bd.primaer ? "none" : "1px solid #2A2A45",
+          background: bd.primaer ? "#0E7490" : "transparent",
+          color: bd.primaer ? "#FFFFFF" : "#C9C9E8"
+        }, bd.label);
+        btn.__tour = true;
+        btn.addEventListener("click", function () { fuehreAktionAus(bd.aktion); });
+        reihe.appendChild(btn);
+      })(buttons[i]);
+    }
+    if (reihe.childNodes.length > 0) blase.appendChild(reihe);
+
+    // Dezenter Abbruch (immer): „Tour beenden"
+    var abbruch = el("div", {
+      marginTop: "10px", textAlign: "center", fontSize: "12px",
+      color: "#7575A0", cursor: "pointer", textDecoration: "underline"
+    }, "Tour beenden und frei umschauen");
+    abbruch.__tour = true;
+    abbruch.addEventListener("click", function () { fuehreAktionAus("freigeben"); });
+    blase.appendChild(abbruch);
+
+    document.body.appendChild(blase);
+    ov.blase = blase;
+  }
+
+  // ── Schritt-Steuerung ──────────────────────────────────────────────────────
+  var sucheTimer = null;
+
+  function zeigeSchritt(idx) {
+    ov.schrittIdx = idx;
+    if (idx >= TOUR_SCHRITTE.length) { fuehreAktionAus("freigeben"); return; }
+    var s = TOUR_SCHRITTE[idx];
+    raeumeOverlay();
+
+    if (s.art === "karte") {
+      zeichneSpotlight(null, false);
+      zeichneBlase(s, false, false);
+      return;
+    }
+
+    // Anker suchen — mit Retry (App rendert evtl. noch), max. ~3s
+    var versuche = 0;
+    function versuche_finden() {
+      var ziel = findeAnker(s.anker);
+      if (ziel) {
+        try { ziel.scrollIntoView({ block: "center", behavior: "smooth" }); } catch (e) {}
+        setTimeout(function () {
+          ov.ziel = ziel;
+          zeichneSpotlight(ziel, s.art === "tippen");
+          zeichneBlase(s, s.art === "zeigen", false);
+          if (s.art === "tippen") lauscheAufZielKlick(ziel);
+        }, 220);
+      } else if (versuche++ < 10) {
+        sucheTimer = setTimeout(versuche_finden, 300);
+      } else {
+        // Fallback: Anker fehlt (App geändert?) → Karte mit Weiter
+        zeichneSpotlight(null, false);
+        zeichneBlase(s, false, true);
+      }
+    }
+    versuche_finden();
+  }
+
+  function lauscheAufZielKlick(ziel) {
+    function handler(e) {
+      if (!ov.aktiv) { document.removeEventListener("click", handler, true); return; }
+      var r = ziel.getBoundingClientRect();
+      var x = e.clientX, y = e.clientY;
+      if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) {
+        document.removeEventListener("click", handler, true);
+        // App klicken lassen, dann weiter (Render abwarten)
+        setTimeout(function () { zeigeSchritt(ov.schrittIdx + 1); }, 400);
+      }
+    }
+    document.addEventListener("click", handler, true);
+  }
+
+  function fuehreAktionAus(aktion) {
+    if (aktion === "weiter") { zeigeSchritt(ov.schrittIdx + 1); return; }
+    if (aktion === "freigeben") {
+      ov.aktiv = false;
+      if (sucheTimer) clearTimeout(sucheTimer);
+      raeumeOverlay();
+      try { localStorage.setItem(LS_STATUS, "frei"); } catch (e) {}
+      zeigeLeiste();
+      return;
+    }
+    if (aktion === "kennenlernen") {
+      if (typeof ZIEL_KENNENLERNEN === "string" && ZIEL_KENNENLERNEN) {
+        window.location.href = ZIEL_KENNENLERNEN;
+      } else {
+        zeigeInfoKarte(KARTE_KENNENLERNEN);
+      }
+      return;
+    }
+  }
+
+  // ── Info-Karte (Kennenlernen-Platzhalter, Reset-Bestätigung) ──────────────
+  function zeigeInfoKarte(inhalt, buttons) {
+    var deckel = el("div", {
+      position: "fixed", left: "0", top: "0", right: "0", bottom: "0",
+      zIndex: String(Z + 10), background: "rgba(4,4,10,0.72)",
+      display: "flex", alignItems: "center", justifyContent: "center", padding: "20px"
+    });
+    deckel.__tour = true;
+    var karte = el("div", {
+      background: "#12121E", color: "#F0F0FF",
+      border: "1px solid #2A2A45", borderRadius: "16px",
+      padding: "20px", maxWidth: "420px", width: "100%",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      boxShadow: "0 12px 40px rgba(0,0,0,0.55)"
+    });
+    karte.__tour = true;
+    karte.appendChild(el("div", { fontSize: "17px", fontWeight: "700", marginBottom: "8px" }, inhalt.titel));
+    karte.appendChild(el("div", { fontSize: "14px", lineHeight: "1.5", color: "#C9C9E8" }, inhalt.text));
+    var reihe = el("div", { display: "flex", gap: "10px", marginTop: "16px" });
+    var defs = buttons || [{ label: inhalt.schliessen || "Schließen", primaer: true, tue: function () { schliesse(); } }];
+    function schliesse() { if (deckel.parentNode) deckel.parentNode.removeChild(deckel); }
+    for (var i = 0; i < defs.length; i++) {
+      (function (bd) {
+        var btn = el("button", {
+          flex: "1 1 auto", minHeight: "44px", padding: "10px 14px",
+          fontSize: "16px", fontWeight: bd.primaer ? "700" : "500",
+          borderRadius: "999px", cursor: "pointer",
+          border: bd.primaer ? "none" : "1px solid #2A2A45",
+          background: bd.primaer ? "#0E7490" : "transparent",
+          color: bd.primaer ? "#FFFFFF" : "#C9C9E8"
+        }, bd.label);
+        btn.__tour = true;
+        btn.addEventListener("click", function () { schliesse(); if (bd.tue) bd.tue(); });
+        reihe.appendChild(btn);
+      })(defs[i]);
+    }
+    karte.appendChild(reihe);
+    deckel.appendChild(karte);
+    document.body.appendChild(deckel);
+  }
+
+  // ── Freie Phase: die app-fremde Leiste unten ───────────────────────────────
+  var leiste = null;
+  function zeigeLeiste() {
+    if (leiste) return;
+    leiste = el("div", {
+      position: "fixed", left: "0", right: "0", bottom: "0",
+      zIndex: String(Z + 3),
+      display: "flex", gap: "8px", alignItems: "center", justifyContent: "center",
+      padding: "8px 10px calc(8px + env(safe-area-inset-bottom, 0px))",
+      // Bewusst APP-FREMD: warmer, heller Streifen statt App-Dunkelblau
+      background: "#F5EFE0", borderTop: "2px solid #D9CDA8",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    });
+    leiste.__tour = true;
+
+    function knopf(label, primaer, tue) {
+      var b = el("button", {
+        minHeight: "40px", padding: "8px 14px", fontSize: "14px",
+        fontWeight: primaer ? "700" : "600", borderRadius: "999px",
+        cursor: "pointer", whiteSpace: "nowrap",
+        border: primaer ? "none" : "1px solid #B9AC85",
+        background: primaer ? "#8A6D1F" : "transparent",
+        color: primaer ? "#FFFFFF" : "#5C512E"
+      }, label);
+      b.__tour = true;
+      b.addEventListener("click", tue);
+      return b;
+    }
+
+    leiste.appendChild(knopf(LEISTE.zuruecksetzen, false, function () {
+      zeigeInfoKarte(KARTE_RESET, [
+        { label: KARTE_RESET.nein, primaer: false, tue: null },
+        { label: KARTE_RESET.ja, primaer: true, tue: setzeAllesZurueck }
+      ]);
+    }));
+    leiste.appendChild(knopf(LEISTE.tourNochmal, false, function () {
+      try { localStorage.removeItem(LS_STATUS); } catch (e) {}
+      window.location.reload();
+    }));
+    leiste.appendChild(knopf(LEISTE.kennenlernen, true, function () {
+      fuehreAktionAus("kennenlernen");
+    }));
+
+    document.body.appendChild(leiste);
+    // Platz schaffen, damit die Leiste nichts verdeckt
+    document.body.style.paddingBottom = "64px";
+  }
+
+  function setzeAllesZurueck() {
+    try {
+      var loeschen = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf("allesda") === 0) loeschen.push(k);
+      }
+      for (var j = 0; j < loeschen.length; j++) localStorage.removeItem(loeschen[j]);
+    } catch (e) {}
+    window.location.reload();
+  }
+
+  // ── Dauer-Wächter: Einstellungen ausblenden, Nur-Ansicht, Sicherheitsnetz ──
+  function versteckeEinstellKacheln() {
+    var liste = (TOUR_BESCHNITT && TOUR_BESCHNITT.einstellungenAusblenden) || [];
+    for (var i = 0; i < liste.length; i++) {
+      var p = liste[i];
+      // Kachel = kleinstes sichtbares Element, das Titel UND Sub enthält
+      // und nicht viel mehr Text als beide zusammen trägt.
+      var alle = alleElemente();
+      var best = null, bestA = Infinity;
+      var maxLen = p.titel.length + p.sub.length + 24;
+      for (var j = 0; j < alle.length; j++) {
+        var n = alle[j];
+        if (istTourKnoten(n) || n.__tourVersteckt) continue;
+        var tc = (n.textContent || "").replace(/\s+/g, " ").trim();
+        if (tc.length > maxLen) continue;
+        if (tc.indexOf(p.titel) < 0 || tc.indexOf(p.sub) < 0) continue;
+        if (!sichtbar(n)) continue;
+        var r = n.getBoundingClientRect();
+        var a = r.width * r.height;
+        if (a < bestA) { bestA = a; best = n; }
+      }
+      if (best) {
+        // Zum Karten-Wrapper hochklettern, solange Eltern nicht mehr Text tragen
+        var n2 = best;
+        while (n2.parentElement) {
+          var pt = (n2.parentElement.textContent || "").replace(/\s+/g, " ").trim();
+          if (pt.length <= maxLen) n2 = n2.parentElement; else break;
+        }
+        n2.style.display = "none";
+        n2.__tourVersteckt = true;
+      }
+    }
+  }
+
+  function legeNurAnsichtSchleier() {
+    var titel = (TOUR_BESCHNITT && TOUR_BESCHNITT.nurAnsichtKarten) || [];
+    for (var i = 0; i < titel.length; i++) {
+      var t = titel[i];
+      // Karten-Titel finden (eigener Text exakt = Titel)
+      var alle = alleElemente();
+      for (var j = 0; j < alle.length; j++) {
+        var n = alle[j];
+        if (istTourKnoten(n) || !sichtbar(n)) continue;
+        if (eigenerText(n) !== t) continue;
+        // Hochklettern bis zum Container, der Bedienelemente enthält (= Karte)
+        var karte = n, hoch = 0;
+        while (karte && hoch < 8) {
+          if (karte.__tourSchleier) { karte = null; break; }
+          if (karte.querySelector && karte.querySelector("button, input, select") &&
+              (karte.textContent || "").indexOf(t) >= 0 && karte !== document.body) {
+            break;
+          }
+          karte = karte.parentElement; hoch++;
+        }
+        if (!karte || karte === document.body || karte.__tourSchleier) continue;
+        // Übersichts-Kachel (klein, ohne Bedienelemente) NICHT treffen:
+        if (!karte.querySelector("button, input, select")) continue;
+        karte.__tourSchleier = true;
+        karte.style.position = karte.style.position || "relative";
+        var deckel = el("div", {
+          position: "absolute", left: "0", top: "0", right: "0", bottom: "0",
+          zIndex: "50", background: "rgba(7,7,12,0.35)",
+          borderRadius: "inherit", display: "flex",
+          alignItems: "flex-start", justifyContent: "flex-end", padding: "8px"
+        });
+        deckel.__tour = true;
+        deckel.addEventListener("click", function (e) { e.stopPropagation(); e.preventDefault(); }, true);
+        var badge = el("div", {
+          fontSize: "11px", fontWeight: "700", color: "#0B0B14",
+          background: "#EAB308", borderRadius: "999px", padding: "4px 10px"
+        }, TXT_NUR_ANSICHT);
+        badge.__tour = true;
+        deckel.appendChild(badge);
+        karte.appendChild(deckel);
+      }
+    }
+  }
+
+  function sicherheitsnetz() {
+    var verboten = (TOUR_BESCHNITT && TOUR_BESCHNITT.verboteneNavTexte) || [];
+    var kontext = (TOUR_BESCHNITT && TOUR_BESCHNITT.navKontextTexte) || [];
+    var alle = alleElemente();
+    for (var i = 0; i < alle.length; i++) {
+      var n = alle[i];
+      if (istTourKnoten(n) || n.__tourVersteckt || !sichtbar(n)) continue;
+      var t = eigenerText(n);
+      if (!t || verboten.indexOf(t) < 0) continue;
+      // Kontext prüfen: Eltern (bis 4 Ebenen) müssen ≥ 2 Kontext-Texte tragen
+      var p = n.parentElement, tiefe = 0, istNav = false;
+      while (p && tiefe < 4) {
+        var tc = p.textContent || "";
+        var treffer = 0;
+        for (var j = 0; j < kontext.length; j++) {
+          if (tc.indexOf(kontext[j]) >= 0) treffer++;
+          if (treffer >= 2) break;
+        }
+        if (treffer >= 2) { istNav = true; break; }
+        p = p.parentElement; tiefe++;
+      }
+      if (!istNav) continue;
+      // Ganzen Nav-Eintrag verstecken: hochklettern, solange das Eltern-
+      // Element (fast) nur diesen Text trägt. cursor/onclick taugen NICHT
+      // als Kriterium (cursor erbt auf Kinder!) — Textumfang schon: der
+      // Button trägt nur „ETV", die ganze Leiste trägt viel mehr.
+      var ziel = n, p2 = n.parentElement, hoch = 0;
+      while (p2 && hoch < 4) {
+        var pt = (p2.textContent || "").replace(/\s+/g, " ").trim();
+        if (pt.length > t.length + 12) break; // Eltern enthält mehr Einträge
+        ziel = p2; p2 = p2.parentElement; hoch++;
+      }
+      ziel.style.display = "none";
+      ziel.__tourVersteckt = true;
+    }
+  }
+
+  function waechter() {
+    try { versteckeEinstellKacheln(); } catch (e) {}
+    try { legeNurAnsichtSchleier(); } catch (e) {}
+    try { sicherheitsnetz(); } catch (e) {}
+  }
+
+  // ── Neupositionieren bei Scroll/Resize (geführte Phase) ────────────────────
+  var rafGeplant = false;
+  function neuLegen() {
+    if (rafGeplant) return;
+    rafGeplant = true;
+    requestAnimationFrame(function () {
+      rafGeplant = false;
+      if (ov.aktiv && ov.ziel && ov.loch) {
+        var s = TOUR_SCHRITTE[ov.schrittIdx];
+        if (s && s.art !== "karte") zeichneSpotlight(ov.ziel, s.art === "tippen");
+      }
+    });
+  }
+  window.addEventListener("scroll", neuLegen, true);
+  window.addEventListener("resize", neuLegen);
+
+  // ── Start: auf App-Mount warten, dann Phase wählen ─────────────────────────
+  function starteWennBereit() {
+    var root = document.getElementById("root");
+    if (!root) { setTimeout(starteWennBereit, 200); return; }
+    if (root.childNodes.length === 0) {
+      var mo = new MutationObserver(function () {
+        if (root.childNodes.length > 0) { mo.disconnect(); losGehts(); }
+      });
+      mo.observe(root, { childList: true });
+      return;
+    }
+    losGehts();
+  }
+
+  function losGehts() {
+    // Dauer-Wächter: sofort + bei jeder DOM-Änderung (gedrosselt) + Sicherungs-Takt
+    waechter();
+    var moTimer = null;
+    var mo = new MutationObserver(function () {
+      if (moTimer) return;
+      moTimer = setTimeout(function () { moTimer = null; waechter(); }, 250);
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+    setInterval(waechter, 1500);
+
+    var status = null;
+    try { status = localStorage.getItem(LS_STATUS); } catch (e) {}
+    if (status === "frei") {
+      zeigeLeiste();
+    } else {
+      ov.aktiv = true;
+      setTimeout(function () { zeigeSchritt(0); }, 600);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", starteWennBereit);
+  } else {
+    starteWennBereit();
+  }
+})();
