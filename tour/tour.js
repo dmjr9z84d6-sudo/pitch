@@ -170,6 +170,19 @@
     var y = r ? r.top - pad : window.innerHeight / 2;
     var w = r ? r.width + pad * 2 : 0;
     var h = r ? r.height + pad * 2 : 0;
+    if (r) {
+      // In den Viewport klemmen (3 px Kantenabstand), damit der Rahmen bei
+      // randbündigen Zielen (Kopf, Seitenleiste, Hauptfenster) komplett
+      // sichtbar bleibt und nicht über die Bildschirmkante läuft.
+      var rand = 3;
+      var x2 = Math.max(rand, x);
+      var y2 = Math.max(rand, y);
+      var rechts = Math.min(window.innerWidth - rand, x + w);
+      var unten = Math.min(window.innerHeight - rand, y + h);
+      x = x2; y = y2;
+      w = Math.max(0, rechts - x2);
+      h = Math.max(0, unten - y2);
+    }
 
     if (!ov.loch) {
       ov.loch = el("div", {
@@ -409,19 +422,44 @@
   }
 
   function lauscheAufZielKlick(ziel) {
-    function handler(e) {
-      if (!ov.aktiv) { document.removeEventListener("click", handler, true); return; }
-      var r = ziel.getBoundingClientRect();
+    // WICHTIG: Beim Tippen re-rendert React die Liste — das gemerkte
+    // Ziel-Element wird aus dem DOM entfernt, sein Rect wird 0/0 und
+    // contains() greift ins Leere. Deshalb: (a) Rect beim Registrieren
+    // EINFRIEREN und dagegen prüfen, (b) zusätzlich pointerdown abhören,
+    // das VOR dem Re-Render feuert. Sonst hängt die Tour in einer
+    // Öffnen/Schließen-Schleife (Bug v0.18, Station 2).
+    var fr = ziel.getBoundingClientRect();
+    var frozen = { left: fr.left, top: fr.top, right: fr.right, bottom: fr.bottom };
+    var erledigt = false;
+
+    function treffer(e) {
       var x = e.clientX, y = e.clientY;
-      var imRect = (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom);
-      var imZiel = ziel.contains && e.target && ziel.contains(e.target);
-      if (imRect || imZiel) {
-        document.removeEventListener("click", handler, true);
-        // App klicken lassen, dann weiter. Etwas mehr Zeit, damit das Detail
-        // fertig rendert, bevor der nächste Anker gesucht wird.
-        setTimeout(function () { zeigeSchritt(ov.schrittIdx + 1); }, 550);
-      }
+      if (x == null && e.touches && e.touches.length) { x = e.touches[0].clientX; y = e.touches[0].clientY; }
+      if (x == null) return false;
+      var imFrozen = (x >= frozen.left && x <= frozen.right && y >= frozen.top && y <= frozen.bottom);
+      var imAktuell = false;
+      try {
+        var r2 = ziel.getBoundingClientRect();
+        imAktuell = (r2.width > 0 && x >= r2.left && x <= r2.right && y >= r2.top && y <= r2.bottom);
+      } catch (e2) {}
+      var imZiel = false;
+      try { imZiel = !!(ziel.contains && e.target && ziel.contains(e.target)); } catch (e3) {}
+      return imFrozen || imAktuell || imZiel;
     }
+    function handler(e) {
+      if (erledigt) return;
+      if (!ov.aktiv) { abmelden(); return; }
+      if (!treffer(e)) return;
+      erledigt = true;
+      abmelden();
+      // App klicken lassen, dann weiter (Render abwarten).
+      setTimeout(function () { zeigeSchritt(ov.schrittIdx + 1); }, 550);
+    }
+    function abmelden() {
+      document.removeEventListener("pointerdown", handler, true);
+      document.removeEventListener("click", handler, true);
+    }
+    document.addEventListener("pointerdown", handler, true);
     document.addEventListener("click", handler, true);
   }
 

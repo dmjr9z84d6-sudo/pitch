@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.18";
+var TOUR_VERSION = "0.19";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -119,15 +119,15 @@ var TOUR_SCHRITTE = [
   },
   {
     id: "s2-karte", art: "zeigen",
-    anker: { text: "Andreas Lindqvist" },
+    anker: { alleTexte: ["Andreas Lindqvist", "a.lindqvist@example.com"] },
     titel: "Die Kontakt-Karte",
     text: "Jeder Kontakt ist eine Karte. Am Avatar erkennen Sie sofort, wen Sie vor sich haben: rund bei Personen, abgerundet bei Firmen."
   },
   {
     id: "s2-person", art: "tippen",
-    anker: { text: "Andreas Lindqvist" },
+    anker: { alleTexte: ["Andreas Lindqvist", "a.lindqvist@example.com"] },
     titel: "Eine Person ansehen",
-    text: "Tippen Sie auf Andreas Lindqvist."
+    text: "Tippen Sie auf die Karte von Andreas Lindqvist."
   },
   {
     id: "s2-person-detail", art: "zeigen",
@@ -143,9 +143,9 @@ var TOUR_SCHRITTE = [
   },
   {
     id: "s2-firma", art: "tippen",
-    anker: { text: "Heizungsbau Förster GmbH" },
+    anker: { alleTexte: ["Heizungsbau Förster GmbH", "service@foerster.example.com"] },
     titel: "Und jetzt eine Firma",
-    text: "Tippen Sie auf die Heizungsbau Förster GmbH."
+    text: "Tippen Sie auf die Karte der Heizungsbau Förster GmbH."
   },
   {
     id: "s2-firma-detail", art: "zeigen",

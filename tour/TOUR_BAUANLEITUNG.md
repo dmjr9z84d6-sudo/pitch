@@ -327,6 +327,22 @@ Kompletter inhaltlicher Umbau nach Bennys Plan (05.07.2026):
   prüfen!); s2-firma-detail=[Name+„Vertr"]; s3-liegenschaft=
   [Stammdaten+Haus 1]; s3-verwaltung-info=[Stammdaten].
 
+## 5.19 Änderungen v0.19 (05.07.2026)
+
+- **KRITISCHER FIX Klick-Erkennung (Öffnen/Schließen-Schleife, St. 2):**
+  Beim Tippen re-rendert React die Kontaktliste → das gemerkte
+  Ziel-Element ist detached, Rect=0, contains() leer → Handler erkannte
+  den Treffer nie; Detail ging auf/zu ohne Fortschritt. Fix in
+  `lauscheAufZielKlick`: Ziel-Rect beim Registrieren EINFRIEREN und
+  Koordinaten dagegen prüfen + zusätzlich `pointerdown` (feuert VOR dem
+  Re-Render) abhören; Einmal-Auslösung per Flag.
+- **Spotlight-Rahmen vollständig sichtbar:** Loch-Rect wird in den
+  Viewport geklemmt (3 px Kantenabstand) — betraf alle randbündigen
+  Ziele (Kopf, Seitenleiste, Hauptfenster in Station 1).
+- **Kontakt-Anker = ganze Karte:** s2-karte/s2-person/s2-firma ankern
+  jetzt auf Name+E-Mail (kleinster Container = komplette Karte statt nur
+  Namens-Link). Texte angepasst: „Tippen Sie auf die Karte von/der …".
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).
