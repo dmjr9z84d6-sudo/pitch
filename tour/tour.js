@@ -23,12 +23,58 @@
 
 (function () {
   var LS_STATUS = "allesda:tour:status"; // fehlt = Tour zeigen · "frei" = freie Phase
+  var LS_MODUS = "allesda:tour:modus";   // "hell"|"dunkel" — vom Pitch übergeben
   var Z = 100000; // Basis-z-index (über allem App-eigenen)
+
+  // ── Hell/Dunkel (Bruch-Fix 05.07.2026) ────────────────────────────────────
+  // Der Pitch übergibt die Wahl via localStorage; ohne Wert gilt die
+  // Systemeinstellung. Die Tour-UI übersetzt ihre Dunkel-Farben zentral in
+  // Hell-Pendants (Paletten = Pitch tokens.js LIGHT/DARK). Der Wächter hält
+  // die Tour LIVE synchron zum App-Modus (Nutzer kann im Kopf umschalten).
+  var istHell = false;
+  var FARBMAP_HELL = {
+    "#12121E": "#FFFFFF",              // Karten-/Blasen-Hintergrund
+    "#F0F0FF": "#0F1022",              // Haupttext
+    "#C9C9E8": "#4A5072",              // Fließtext
+    "#A0A0CD": "#4A5072",              // Sub/Links
+    "#7575A0": "#737896",              // gedämpft
+    "#2A2A45": "#D8DCE8",              // Border
+    "#20203A": "#E4E7F0",              // Kopf-Border
+    "#252540": "#D8DCE8",              // Overlay-Border
+    "#5A5A80": "#A0A6C0",              // Griff-Punkte
+    "#07070C": "#ECEEF3",              // Vollflächen-Overlay (Rechtliches)
+    "rgba(10,10,18,0.92)": "rgba(244,246,250,0.94)",  // Leiste
+    "rgba(3,3,8,0.92)": "rgba(245,246,249,0.94)",     // Spotlight-Ausblendung
+    "rgba(4,4,10,0.72)": "rgba(235,238,244,0.8)",     // Info-Karten-Deckel
+    "rgba(0,0,0,0.55)": "rgba(15,16,34,0.18)"         // Schatten
+  };
+  function uebersetzeFarbe(wert) {
+    if (!istHell || typeof wert !== "string") return wert;
+    for (var k in FARBMAP_HELL) {
+      if (wert.indexOf(k) >= 0) wert = wert.split(k).join(FARBMAP_HELL[k]);
+    }
+    return wert;
+  }
+  function ermittleStartModusHell() {
+    var v = null;
+    try { v = localStorage.getItem(LS_MODUS); } catch (e) {}
+    if (v === "hell") return true;
+    if (v === "dunkel") return false;
+    try {
+      return !(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    } catch (e) { return false; }
+  }
+  // App-Modus am Kopf-Button ablesen: title="Dunkelmodus" existiert → App hell.
+  function appIstHell() {
+    if (document.querySelector('button[title="Dunkelmodus"]')) return true;
+    if (document.querySelector('button[title="Hellmodus"]')) return false;
+    return null; // App-Kopf (noch) nicht da
+  }
 
   // ── Mini-Helfer ────────────────────────────────────────────────────────────
   function el(tag, css, text) {
     var d = document.createElement(tag);
-    if (css) { for (var k in css) { d.style[k] = css[k]; } }
+    if (css) { for (var k in css) { d.style[k] = uebersetzeFarbe(css[k]); } }
     if (text) d.textContent = text;
     return d;
   }
@@ -241,6 +287,7 @@
   }
 
   function zeichneBlase(schritt, mitWeiter, ohneAnker, ausweichRect) {
+    ov.blaseArgs = [schritt, mitWeiter, ohneAnker, ausweichRect]; // für Theme-Neuzeichnen
     if (ov.blase && ov.blase.parentNode) ov.blase.parentNode.removeChild(ov.blase);
     var blase = el("div", {
       position: "fixed", left: "50%", top: "50%",
@@ -563,7 +610,8 @@
       leiste.__tour = true;
       document.body.appendChild(leiste);
     }
-    zeichneLeisteInhalt(modus || "frei");
+    leiste.__modus = modus || "frei";
+    zeichneLeisteInhalt(leiste.__modus);
   }
 
   function zeichneLeisteInhalt(modus) {
@@ -791,12 +839,17 @@
 
   function setzeAllesZurueck() {
     try {
+      // Aktuellen Anzeige-Modus über den Reset retten (sonst fiele die
+      // Wahl vom Pitch/Nutzer zurück auf die Systemeinstellung).
+      var modusJetzt = appIstHell();
+      if (modusJetzt === null) modusJetzt = istHell;
       var loeschen = [];
       for (var i = 0; i < localStorage.length; i++) {
         var k = localStorage.key(i);
         if (k && k.indexOf("allesda") === 0) loeschen.push(k);
       }
       for (var j = 0; j < loeschen.length; j++) localStorage.removeItem(loeschen[j]);
+      localStorage.setItem(LS_MODUS, modusJetzt ? "hell" : "dunkel");
     } catch (e) {}
     window.location.reload();
   }
@@ -916,7 +969,30 @@
     }
   }
 
+  // Theme wechseln + alle lebenden Tour-Elemente nachziehen.
+  function setzeModusHell(neu) {
+    if (istHell === neu) return;
+    istHell = neu;
+    // Spotlight-Ausblendung direkt patchen (Loch lebt über Schritte hinweg)
+    if (ov.loch) {
+      ov.loch.style.boxShadow = "0 0 0 200vmax " + uebersetzeFarbe("rgba(3,3,8,0.92)");
+    }
+    // Blase mit gemerkten Args neu zeichnen (alte entfernt sich selbst)
+    if (ov.blase && ov.blaseArgs) {
+      zeichneBlase(ov.blaseArgs[0], ov.blaseArgs[1], ov.blaseArgs[2], ov.blaseArgs[3]);
+    }
+    // Leiste: Container patchen + Inhalt (inkl. Fußzeile) neu zeichnen
+    if (leiste) {
+      leiste.style.background = uebersetzeFarbe("rgba(10,10,18,0.92)");
+      leiste.style.borderTop = "1px solid " + uebersetzeFarbe("#2A2A45");
+      zeichneLeisteInhalt(leiste.__modus || "frei");
+    }
+  }
+
   function waechter() {
+    // Live-Sync: Tour-Theme folgt dem App-Modus (Kopf-Button der App).
+    var h = appIstHell();
+    if (h !== null && h !== istHell) { try { setzeModusHell(h); } catch (e) {} }
     try { versteckeEinstellKacheln(); } catch (e) {}
     try { legeNurAnsichtSchleier(); } catch (e) {}
     try { sicherheitsnetz(); } catch (e) {}
@@ -952,7 +1028,28 @@
     losGehts();
   }
 
+  // App auf den Wunsch-Modus schalten: programmatischer Klick auf den
+  // Hell/Dunkel-Button im Kopf (Weg Y: App-Code bleibt unangetastet).
+  // Die App startet immer dunkel — nur der Hell-Fall braucht den Klick.
+  function schalteAppAufWunsch(wunschHell, versuch) {
+    versuch = versuch || 0;
+    var ist = appIstHell();
+    if (ist === wunschHell) return;
+    if (ist !== null) {
+      var btn = document.querySelector(wunschHell
+        ? 'button[title="Hellmodus"]' : 'button[title="Dunkelmodus"]');
+      if (btn) { try { btn.click(); } catch (e) {} return; }
+    }
+    if (versuch < 12) setTimeout(function () { schalteAppAufWunsch(wunschHell, versuch + 1); }, 300);
+  }
+
   function losGehts() {
+    // Hell/Dunkel: Wunsch ermitteln (Pitch-Übergabe → sonst System),
+    // Tour-UI sofort darauf stellen, App per Kopf-Button nachziehen.
+    var wunschHell = ermittleStartModusHell();
+    istHell = wunschHell;
+    schalteAppAufWunsch(wunschHell, 0);
+
     // Die App markiert per Tastatur-Navigation ein „aktives" Element mit
     // outline:2px solid #3B82F6 (data-kb-aktiv, allesda_merged.jsx ~Z.1999).
     // In der Touch-Demo navigiert niemand per Tastatur → dieser blaue Ring

@@ -372,6 +372,32 @@ Kompletter inhaltlicher Umbau nach Bennys Plan (05.07.2026):
 - **Kopf-Text:** „Schnelleingabe" gestrichen (existiert im Kopf nicht).
 - **Schnellzugriff-Text:** „… in den Einstellungen an." ergänzt.
 
+## 5.22 Änderungen v0.22 (05.07.2026) — HELL/DUNKEL-KETTE
+
+Bruch behoben: Pitch hell gewählt → Tour startete trotzdem dunkel.
+Drei Schichten, drei Fixes (App bleibt unangetastet, Weg Y):
+
+- **Pitch v0.19:** „Reinschauen" schreibt die aktuelle Wahl nach
+  localStorage `allesda:tour:modus` ("hell"|"dunkel") vor der Navigation.
+  (Der Pitch persistiert seine Wahl selbst NICHT — nur die Übergabe.)
+- **Tour-Start:** `ermittleStartModusHell()` liest die Übergabe; ohne
+  Wert gilt die SYSTEMEINSTELLUNG (prefers-color-scheme). Die App
+  startet hart dunkel (useState("dark"), keine Persistenz) → die Tour
+  klickt bei Hell-Wunsch programmatisch den Kopf-Button
+  (`button[title="Hellmodus"]`, Retry 12×300 ms).
+- **Tour-UI theme-fähig:** zentrale Farbübersetzung in `el()`
+  (FARBMAP_HELL, Paletten = Pitch tokens.js LIGHT/DARK) — deckt Blase,
+  Leiste, Fußzeile, Info-Karten, Rechtliches-Overlay, Spotlight-
+  Ausblendung (hell = weißes Ausbleichen) ab.
+- **LIVE-Sync:** Der Wächter liest den App-Modus am Kopf-Button-`title`
+  ab (`Dunkelmodus` sichtbar = App hell) und zieht die Tour-UI bei
+  jedem Wechsel nach (`setzeModusHell`: Loch patchen, Blase mit
+  gemerkten Args neu zeichnen, Leiste neu einfärben).
+- **index.html:** Modus-Skript vor dem Rendern (kein Dunkel-Blitz),
+  Hell-CSS für den Ladescreen (`html[data-hell]`).
+- **Reset behält den Modus:** aktueller App-Modus wird über das
+  Löschen der allesda-Keys hinweg gerettet.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).
