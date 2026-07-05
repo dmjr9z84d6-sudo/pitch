@@ -361,6 +361,17 @@ Kompletter inhaltlicher Umbau nach Bennys Plan (05.07.2026):
   mit präzisem Anker später möglich (echten Verwaltung-Tab-Titel vom
   iPhone ablesen).
 
+## 5.21 Änderungen v0.21 (05.07.2026)
+
+- **Flächen-Bremse in der Karten-Kletterei:** Textarme, aber riesige
+  Wrapper (Scroll-Container, Listen) werden nicht mehr mitgenommen —
+  Aufstieg stoppt, wenn der Eltern-Container >1,8× Fläche hat. Behebt
+  den v0.20-Bug, dass der Spotlight bei der Objekt-Karte den ganzen
+  Screen umfasste. Text-Toleranz (+80) UND Flächen-Grenze müssen beide
+  erfüllt sein.
+- **Kopf-Text:** „Schnelleingabe" gestrichen (existiert im Kopf nicht).
+- **Schnellzugriff-Text:** „… in den Einstellungen an." ergänzt.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

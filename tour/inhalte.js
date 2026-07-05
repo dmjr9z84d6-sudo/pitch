@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.20";
+var TOUR_VERSION = "0.21";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -95,13 +95,13 @@ var TOUR_SCHRITTE = [
     id: "s1-kopf", art: "zeigen",
     anker: { alleTexte: ["Alle Objekte", "Suchen"] },
     titel: "Station 1 — Der Kopf",
-    text: "Ganz oben finden Sie die Schnelleingabe, die Suche über den gesamten Bestand, den Wechsel zwischen Hell und Dunkel, den Kalender und Ihre Einstellungen."
+    text: "Ganz oben finden Sie die Suche über den gesamten Bestand, den Wechsel zwischen Hell und Dunkel, den Kalender und Ihre Einstellungen."
   },
   {
     id: "s1-schnellzugriff", art: "zeigen",
     anker: { alleTexte: ["Objekte", "Kontakte", "Kalender"] },
     titel: "Station 1 — Der Schnellzugriff",
-    text: "Ihre Bereiche, immer griffbereit. Welche hier liegen und in welcher Reihenfolge, passen Sie nach Ihren Wünschen und Bedürfnissen an."
+    text: "Ihre Bereiche, immer griffbereit. Welche hier liegen und in welcher Reihenfolge, passen Sie nach Ihren Wünschen und Bedürfnissen in den Einstellungen an."
   },
   {
     id: "s1-hauptfenster", art: "zeigen",

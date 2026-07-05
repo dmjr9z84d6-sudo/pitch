@@ -129,6 +129,16 @@
       if (!p || p === document.body) break;
       var pt = (p.textContent || "").replace(/\s+/g, " ").trim();
       if (pt.length > startTxt.length + 80) break; // Eltern = Liste/Gruppe
+      // FLÄCHEN-BREMSE: textarme, aber riesige Wrapper (Scroll-Container,
+      // Listen) nicht mitnehmen — sonst umfasst der Spotlight den ganzen
+      // Screen statt nur die Karte (Bug v0.20, Objekt-Karte).
+      try {
+        var nr = n2.getBoundingClientRect();
+        var pr = p.getBoundingClientRect();
+        var nA = Math.max(1, nr.width * nr.height);
+        var pA = pr.width * pr.height;
+        if (pA > nA * 1.8) break;
+      } catch (e) {}
       n2 = p; hoch++;
     }
     return n2;
