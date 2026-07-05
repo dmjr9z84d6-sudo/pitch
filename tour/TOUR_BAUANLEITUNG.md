@@ -427,6 +427,20 @@ Drei Schichten, drei Fixes (App bleibt unangetastet, Weg Y):
   „Schnellzugriff".
 - **Letzte Folie:** „Und jetzt Sie:" gestrichen.
 
+## 5.25 Änderungen v0.25 (05.07.2026)
+
+- **FIX: Pitch=hell → Tour startete trotzdem dunkel (Timing-Bug).**
+  Ursache: Die App startet immer dunkel; die Tour schaltet sie
+  programmatisch auf hell (asynchron, mehrere 100 ms mit Retries). Der
+  Live-Sync-Wächter persistierte aber sofort den AKTUELLEN App-Modus
+  nach `allesda:tour:modus` — und las in der Umschalt-Phase noch
+  „dunkel", überschrieb also die Pitch-Wahl „hell". Fix: neues Flag
+  `appSyncFertig`; der Wächter persistiert erst, wenn die anfängliche
+  Umschaltung den Wunschmodus tatsächlich erreicht hat.
+  `schalteAppAufWunsch` verifiziert nach dem Klick und setzt das Flag.
+- Pitch-Schreiblogik (`t === DARK ? "dunkel" : "hell"`) war korrekt —
+  der Fehler lag allein auf der Tour-Seite.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

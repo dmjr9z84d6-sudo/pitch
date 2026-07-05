@@ -32,6 +32,7 @@
   // Hell-Pendants (Paletten = Pitch tokens.js LIGHT/DARK). Der Wächter hält
   // die Tour LIVE synchron zum App-Modus (Nutzer kann im Kopf umschalten).
   var istHell = false;
+  var appSyncFertig = false; // true, sobald App den Wunschmodus erreicht hat
   var FARBMAP_HELL = {
     "#12121E": "#FFFFFF",              // Karten-/Blasen-Hintergrund
     "#F0F0FF": "#0F1022",              // Haupttext
@@ -998,9 +999,14 @@
     // Live-Sync: Tour-Theme folgt dem App-Modus (Kopf-Button der App).
     var h = appIstHell();
     if (h !== null && h !== istHell) { try { setzeModusHell(h); } catch (e) {} }
-    // Aktuellen Modus persistieren, damit „Tour ansehen" (Neustart) und ein
-    // Reload ihn übernehmen — sonst käme wieder die alte Pitch-Wahl (Benny).
-    if (h !== null) { try { localStorage.setItem(LS_MODUS, h ? "hell" : "dunkel"); } catch (e) {} }
+    // Aktuellen Modus NUR persistieren, wenn die anfängliche App-Umschaltung
+    // abgeschlossen ist. Sonst überschreibt der Wächter die Pitch-Wahl mit dem
+    // App-Default (dunkel), solange die programmatische Umschaltung noch läuft
+    // (asynchron, mehrere 100 ms) — dann startete die Tour trotz Pitch=hell
+    // dunkel (Bug bis v0.24).
+    if (h !== null && appSyncFertig) {
+      try { localStorage.setItem(LS_MODUS, h ? "hell" : "dunkel"); } catch (e) {}
+    }
     try { versteckeEinstellKacheln(); } catch (e) {}
     try { legeNurAnsichtSchleier(); } catch (e) {}
     try { sicherheitsnetz(); } catch (e) {}
@@ -1042,13 +1048,23 @@
   function schalteAppAufWunsch(wunschHell, versuch) {
     versuch = versuch || 0;
     var ist = appIstHell();
-    if (ist === wunschHell) return;
+    if (ist === wunschHell) { appSyncFertig = true; return; } // Ziel erreicht
     if (ist !== null) {
       var btn = document.querySelector(wunschHell
         ? 'button[title="Hellmodus"]' : 'button[title="Dunkelmodus"]');
-      if (btn) { try { btn.click(); } catch (e) {} return; }
+      if (btn) {
+        try { btn.click(); } catch (e) {}
+        // nach dem Klick prüfen, ob es gegriffen hat; Flag erst dann setzen
+        setTimeout(function () {
+          if (appIstHell() === wunschHell) appSyncFertig = true;
+          else if (versuch < 12) schalteAppAufWunsch(wunschHell, versuch + 1);
+          else appSyncFertig = true; // aufgeben, nicht ewig blockieren
+        }, 250);
+        return;
+      }
     }
     if (versuch < 12) setTimeout(function () { schalteAppAufWunsch(wunschHell, versuch + 1); }, 300);
+    else appSyncFertig = true;
   }
 
   function losGehts() {
