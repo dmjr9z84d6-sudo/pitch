@@ -521,7 +521,7 @@
         fontSize: "14px", fontWeight: "700", borderRadius: "999px",
         cursor: "pointer", border: "none",
         background: "#0E7490", color: "#FFFFFF",
-        boxShadow: "0 6px 18px rgba(14,116,144,0.30)",
+        boxShadow: "0 1px 2px rgba(14,116,144,0.25)",
         WebkitTapHighlightColor: "transparent"
       }, LEISTE.kennenlernen);
       primaerBtn.__tour = true;
@@ -880,6 +880,18 @@
   }
 
   function losGehts() {
+    // Die App markiert per Tastatur-Navigation ein „aktives" Element mit
+    // outline:2px solid #3B82F6 (data-kb-aktiv, allesda_merged.jsx ~Z.1999).
+    // In der Touch-Demo navigiert niemand per Tastatur → dieser blaue Ring
+    // (z. B. um den +-Button) wirkt wie ein ungewollter Glow. Neutralisieren.
+    // App-Regel nutzt !important, daher hier ebenfalls !important nötig.
+    try {
+      var st = document.createElement("style");
+      st.id = "tour-kein-kb-ring";
+      st.textContent = 'html body [data-kb-aktiv="1"]{outline:none !important;box-shadow:none !important;}';
+      document.head.appendChild(st);
+    } catch (e) {}
+
     // Dauer-Wächter: sofort + bei jeder DOM-Änderung (gedrosselt) + Sicherungs-Takt
     waechter();
     var moTimer = null;
