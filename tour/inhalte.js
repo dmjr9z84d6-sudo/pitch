@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.17";
+var TOUR_VERSION = "0.18";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -79,63 +79,152 @@ var TXT_NUR_ANSICHT = "Nur Ansicht (Demo)";
 // Wird ein Anker nicht gefunden, zeigt die Tour den Text als zentrierte
 // Karte mit Weiter-Button (bricht nie hart — wichtig bei App-Updates).
 var TOUR_SCHRITTE = [
+  // ── Folie 1: Willkommen ────────────────────────────────────────────────────
   {
     id: "willkommen", art: "karte",
     titel: "Willkommen bei AllesDa",
-    text: "Das hier ist die echte App — mit einem Beispiel-Objekt zum Anfassen. In vier kurzen Stationen zeigen wir Ihnen, wie alles zusammenhängt. Danach dürfen Sie frei herumklicken: Es wird nichts gespeichert, Sie können nichts kaputt machen.",
+    text: "Das hier ist die echte App — mit einem Beispiel-Objekt zum Anfassen. Wir zeigen Ihnen, wo Sie was finden, welche Möglichkeiten wir Ihnen bieten und wie alles zusammenhängt. Danach dürfen Sie frei erkunden: Es wird nichts gespeichert, Sie können nichts kaputt machen.",
     buttons: [
-      { label: "Tour starten", aktion: "weiter", primaer: true },
-      { label: "Lieber gleich frei erkunden", aktion: "freigeben" }
+      { label: "Frei erkunden", aktion: "freigeben" },
+      { label: "Tour starten", aktion: "weiter", primaer: true }
     ]
   },
+
+  // ── Station 1: Bereiche zeigen (3× Spotlight + Weiter) ─────────────────────
   {
-    id: "orientierung", art: "zeigen",
+    id: "s1-kopf", art: "zeigen",
+    anker: { alleTexte: ["Alle Objekte", "Suchen"] },
+    titel: "Station 1 — Der Kopf",
+    text: "Ganz oben finden Sie die Schnelleingabe, die Suche über den gesamten Bestand, den Wechsel zwischen Hell und Dunkel, den Kalender und Ihre Einstellungen."
+  },
+  {
+    id: "s1-schnellzugriff", art: "zeigen",
     anker: { alleTexte: ["Objekte", "Kontakte", "Kalender"] },
-    titel: "Station 1 — So finden Sie sich zurecht",
-    text: "Alles Wichtige liegt in klar benannten Bereichen: Objekte, Kontakte, Kalender und mehr. Keine verschachtelten Menüs — ein Tipp, und Sie sind da."
+    titel: "Station 1 — Der Schnellzugriff",
+    text: "Ihre Bereiche, immer griffbereit. Welche hier liegen und in welcher Reihenfolge, passen Sie nach Ihren Wünschen und Bedürfnissen an."
   },
   {
-    id: "objekt-oeffnen", art: "tippen",
-    anker: { text: "Objekte" },
-    titel: "Station 2 — Das Objekt",
-    text: "Das Herzstück. Tippen Sie auf „Objekte\"."
+    id: "s1-hauptfenster", art: "zeigen",
+    anker: { alleTexte: ["Objekte", "VE-001", "Legende"] },
+    titel: "Station 1 — Das Hauptfenster",
+    text: "Hier arbeiten Sie: oben der Kopf des Bereichs — teils mit Filter-Pillen oder „Neu anlegen“ —, links die Karten oder die Liste, in der Mitte das Detailfenster."
   },
+
+  // ── Station 2: Kontakte (Nutzer tippt selbst) ──────────────────────────────
   {
-    id: "objekt-karte", art: "tippen",
-    anker: { alleTexte: ["VE-001", "WEG Lessingstraße"] },
-    titel: "Ihr Objekt auf einen Blick",
-    text: "Jedes Objekt ist eine Karte. Tippen Sie auf VE-001 — die WEG Lessingstraße 22 in Leipzig."
-  },
-  {
-    id: "objekt-tabs", art: "zeigen",
-    anker: { alleTexte: ["Liegenschaft", "Verwaltung"] },
-    titel: "Alles am Objekt — nichts verstreut",
-    text: "Haus, Einheiten und Räume unter „Liegenschaft\". Verwalterbestellung, ETV-Fristen, Versicherungen und Verträge unter „Verwaltung\". Sogar die Legionellen-Prüfung hat ihren festen Platz. Die App passt sich dem Objekt an — nicht umgekehrt."
-  },
-  {
-    id: "kontakt-oeffnen", art: "tippen",
+    id: "s2-oeffnen", art: "tippen",
     anker: { text: "Kontakte" },
-    titel: "Station 3 — Die Menschen dahinter",
-    text: "Eigentümer, Mieter, Firmen — alle an einem Ort. Tippen Sie auf „Kontakte\"."
+    titel: "Station 2 — Die Menschen dahinter",
+    text: "Eigentümer, Mieter, Firmen — alle an einem Ort. Tippen Sie auf „Kontakte“."
   },
   {
-    id: "kontakte", art: "zeigen",
-    anker: { alleTexte: ["Lindqvist"] },
-    titel: "Personen und Firmen, sauber verknüpft",
-    text: "Jeder Kontakt trägt seine Rollen sichtbar als farbige Kürzel: Eigentümer, Mieter, Nießbraucher. Und jeder Kontakt weiß, zu welchem Objekt und welcher Einheit er gehört — ein Tipp bringt Sie hin."
+    id: "s2-karte", art: "zeigen",
+    anker: { text: "Andreas Lindqvist" },
+    titel: "Die Kontakt-Karte",
+    text: "Jeder Kontakt ist eine Karte. Am Avatar erkennen Sie sofort, wen Sie vor sich haben: rund bei Personen, abgerundet bei Firmen."
   },
   {
-    id: "kalender-oeffnen", art: "tippen",
-    anker: { text: "Kalender" },
-    titel: "Station 4 — Nichts mehr verpassen",
-    text: "Der Kreis schließt sich. Tippen Sie auf „Kalender\"."
+    id: "s2-person", art: "tippen",
+    anker: { text: "Andreas Lindqvist" },
+    titel: "Eine Person ansehen",
+    text: "Tippen Sie auf Andreas Lindqvist."
   },
   {
-    id: "kalender", art: "karte",
-    titel: "Fristen denken mit",
-    text: "ETV-Termine, Verwalterbestellung, Prüfungen — die Fristen entstehen automatisch aus Ihren Objektdaten und landen hier. Sie tragen nichts doppelt ein.",
+    id: "s2-person-detail", art: "zeigen",
+    anker: { alleTexte: ["Andreas Lindqvist", "Rollen"] },
+    titel: "Rollen und Objekt — sauber verknüpft",
+    text: "Jede Person trägt ihre Rollen sichtbar: Eigentümer, Mieter, Nießbraucher. Und sie weiß, zu welchem Objekt und welcher Einheit sie gehört — ein Tipp bringt Sie hin."
+  },
+  {
+    id: "s2-zurueck", art: "tippen",
+    anker: { text: "Zurück" },
+    titel: "Zurück zur Liste",
+    text: "Tippen Sie auf „Zurück“, um wieder zur Kontaktliste zu kommen."
+  },
+  {
+    id: "s2-firma", art: "tippen",
+    anker: { text: "Heizungsbau Förster GmbH" },
+    titel: "Und jetzt eine Firma",
+    text: "Tippen Sie auf die Heizungsbau Förster GmbH."
+  },
+  {
+    id: "s2-firma-detail", art: "zeigen",
+    anker: { alleTexte: ["Heizungsbau Förster GmbH", "Vertr"] },
+    titel: "Firmen mit allem, was dazugehört",
+    text: "Bei Firmen nehmen Sie Mitarbeiter als Ansprechpartner auf. Verträge und Zuständigkeiten legen Sie hier an und verwalten sie — alles am Kontakt, nichts verstreut."
+  },
+
+  // ── Station 3: Das Objekt (Nutzer tippt selbst) ────────────────────────────
+  {
+    id: "s3-oeffnen", art: "tippen",
+    anker: { text: "Objekte" },
+    titel: "Station 3 — Das Objekt",
+    text: "Das Herzstück. Tippen Sie auf „Objekte“."
+  },
+  {
+    id: "s3-karte", art: "zeigen",
+    anker: { alleTexte: ["VE-001", "WEG Lessingstraße"] },
+    titel: "Die Objekt-Karte",
+    text: "Jedes Objekt ist eine Karte — mit Icons für die Belegung und einer Statusanzeige, die Sie sofort auf Überfälliges hinweist."
+  },
+  {
+    id: "s3-tippen", art: "tippen",
+    anker: { alleTexte: ["VE-001", "WEG Lessingstraße"] },
+    titel: "Öffnen Sie das Objekt",
+    text: "Tippen Sie auf VE-001 — die WEG Lessingstraße 22 in Leipzig."
+  },
+  {
+    id: "s3-tabs", art: "zeigen",
+    anker: { alleTexte: ["Liegenschaft", "Verwaltung"] },
+    titel: "Vier Tabs — alles am Objekt",
+    text: "Liegenschaft, Verwaltung, Legionellen und Kontakte: Jeder Tab bündelt seinen Bereich. Nichts liegt verstreut, alles hat seinen festen Platz."
+  },
+  {
+    id: "s3-liegenschaft", art: "zeigen",
+    anker: { alleTexte: ["Stammdaten", "Haus 1"] },
+    titel: "Liegenschaft",
+    text: "Die Stammdaten der Liegenschaft, das Haus mit seinen Einheiten und Räumen, Zugang und Schließanlage, die Technik — alles hier."
+  },
+  {
+    id: "s3-verwaltung", art: "tippen",
+    anker: { text: "Verwaltung" },
+    titel: "Weiter zur Verwaltung",
+    text: "Tippen Sie auf „Verwaltung“."
+  },
+  {
+    id: "s3-verwaltung-info", art: "zeigen",
+    anker: { alleTexte: ["Stammdaten"] },
+    titel: "Verwaltung",
+    text: "Verwalter-Stammdaten und Bestellung, Versicherungen, Verträge, Verteilerschlüssel — die ganze Verwaltungsseite des Objekts, übersichtlich beieinander."
+  },
+  {
+    id: "s3-legionellen", art: "tippen",
+    anker: { text: "Legionellen" },
+    titel: "Und die Legionellen?",
+    text: "Tippen Sie auf „Legionellen“."
+  },
+  {
+    id: "s3-legionellen-info", art: "karte",
+    titel: "Legionellen — automatisch im Blick",
+    text: "Legionellen werden erst dann Thema, wenn in der Technik eine zentrale Wasserversorgung angelegt ist. Die Prüftermine entstehen von selbst und landen im Kalender — Sie tragen nichts doppelt ein.",
     buttons: [{ label: "Weiter", aktion: "weiter", primaer: true }]
   },
+
+  // ── Station 4: Der Kalender (Nutzer tippt selbst) ──────────────────────────
+  {
+    id: "s4-oeffnen", art: "tippen",
+    anker: { text: "Kalender" },
+    titel: "Station 4 — Nichts mehr verpassen",
+    text: "Der Kreis schließt sich. Tippen Sie auf „Kalender“."
+  },
+  {
+    id: "s4-info", art: "karte",
+    titel: "Fristen denken mit",
+    text: "Die Übersicht je Objekt oder die Timeline nach Zeitablauf: ETV-Termine, Verwalterbestellung, Prüfungen — alle Fristen entstehen automatisch aus Ihren Objektdaten und landen hier.",
+    buttons: [{ label: "Weiter", aktion: "weiter", primaer: true }]
+  },
+
+  // ── Letzte Folie: Weiche ────────────────────────────────────────────────────
   {
     id: "weiche", art: "karte",
     titel: "Das war der Überblick",

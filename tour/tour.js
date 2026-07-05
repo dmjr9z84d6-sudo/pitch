@@ -242,7 +242,7 @@
     blase.style.top = ov.blasePos.y + "px";
     blase.style.transform = "none";
 
-    var fortschritt = (ov.schrittIdx + 1) + " / " + TOUR_SCHRITTE.length;
+    var fortschritt = (ov.schrittIdx + 1) / TOUR_SCHRITTE.length;
 
     // ── Titelleiste (zugleich Zieh-Griff) ──
     var kopf = el("div", {
@@ -262,7 +262,6 @@
       whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
     }, schritt.titel || ""));
     kopf.appendChild(titelWrap);
-    kopf.appendChild(el("div", { fontSize: "12px", color: "#7575A0", flexShrink: "0" }, fortschritt));
     blase.appendChild(kopf);
     macheZiehbar(blase, kopf);
 
@@ -299,6 +298,21 @@
     if (reihe.childNodes.length > 0) body.appendChild(reihe);
 
     blase.appendChild(body);
+
+    // Fortschritt: dezenter Strich wie im Pitch (2 px, füllt sich in Akzent)
+    var balkenAussen = el("div", {
+      margin: "12px 16px 0", height: "2px",
+      background: "#2A2A45", borderRadius: "999px", overflow: "hidden"
+    });
+    balkenAussen.__tour = true;
+    var balkenInnen = el("div", {
+      height: "100%", background: "#0E7490", borderRadius: "999px",
+      width: Math.round(fortschritt * 100) + "%",
+      transition: "width 340ms ease"
+    });
+    balkenInnen.__tour = true;
+    balkenAussen.appendChild(balkenInnen);
+    blase.appendChild(balkenAussen);
     document.body.appendChild(blase);
     ov.blase = blase;
   }
@@ -373,13 +387,16 @@
     function versuche_finden() {
       var ziel = findeAnker(s.anker);
       if (ziel) {
-        // KEIN scrollIntoView: das verschiebt das App-Layout und ließ die
-        // Blase/den Spotlight springen. Der Spotlight legt sich dorthin, wo
-        // das Ziel gerade steht; die Blase bleibt an ihrer festen Position.
-        ov.ziel = ziel;
-        zeichneSpotlight(ziel, s.art === "tippen");
-        zeichneBlase(s, s.art === "zeigen", false, null);
-        if (s.art === "tippen") lauscheAufZielKlick(ziel);
+        // EINMALIG zum Ziel scrollen (weiter unten liegende Karten, z. B.
+        // Firmen-Kontakte). Die Blase steht fest → kein Springen mehr; nur
+        // der Spotlight wird nach dem Scroll gezeichnet.
+        try { ziel.scrollIntoView({ block: "center" }); } catch (e) {}
+        setTimeout(function () {
+          ov.ziel = ziel;
+          zeichneSpotlight(ziel, s.art === "tippen");
+          zeichneBlase(s, s.art === "zeigen", false, null);
+          if (s.art === "tippen") lauscheAufZielKlick(ziel);
+        }, 180);
       } else if (versuche++ < 10) {
         sucheTimer = setTimeout(versuche_finden, 300);
       } else {
