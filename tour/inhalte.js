@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.19";
+var TOUR_VERSION = "0.20";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -192,10 +192,10 @@ var TOUR_SCHRITTE = [
     text: "Tippen Sie auf „Verwaltung“."
   },
   {
-    id: "s3-verwaltung-info", art: "zeigen",
-    anker: { alleTexte: ["Stammdaten"] },
+    id: "s3-verwaltung-info", art: "karte",
     titel: "Verwaltung",
-    text: "Verwalter-Stammdaten und Bestellung, Versicherungen, Verträge, Verteilerschlüssel — die ganze Verwaltungsseite des Objekts, übersichtlich beieinander."
+    text: "Verwalter-Stammdaten und Bestellung, Versicherungen, Verträge, Verteilerschlüssel — die ganze Verwaltungsseite des Objekts, übersichtlich beieinander.",
+    buttons: [{ label: "Weiter", aktion: "weiter", primaer: true }]
   },
   {
     id: "s3-legionellen", art: "tippen",

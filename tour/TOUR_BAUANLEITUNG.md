@@ -343,6 +343,24 @@ Kompletter inhaltlicher Umbau nach Bennys Plan (05.07.2026):
   jetzt auf Name+E-Mail (kleinster Container = komplette Karte statt nur
   Namens-Link). Texte angepasst: „Tippen Sie auf die Karte von/der …".
 
+## 5.20 Änderungen v0.20 (05.07.2026)
+
+- **Abdunklung stärker:** Spotlight-Hintergrund rgba(3,3,8,0.92) statt
+  0.72 — Umfeld nahezu ausgeblendet.
+- **GANZE Karte im Spotlight:** `findeContainer` klettert nach dem Fund
+  zur kompletten Karte hoch (+80 Zeichen Text-Toleranz für Avatare/
+  Badges/Statuszeilen; die Listen-Gruppe darüber bringt viel mehr Text →
+  stoppt dort). Betrifft Kontakt-Karten (Person/Firma) UND Objekt-Karte.
+- **Exakt-Vorrang in `findeText`:** exakte Treffer schlagen
+  „beginnt mit" — behebt den Bug, dass „Verwaltungsart" statt des Tabs
+  „Verwaltung" getroffen wurde (Folge: falscher Spotlight, kein
+  Tab-Wechsel, Folgeschritt zeigte Liegenschaft-Inhalt).
+- **s3-verwaltung-info als zentrierte Karte** statt Anker-Spotlight:
+  „Stammdaten" existiert in beiden Tabs, „Verwalter" steckt in
+  „Verwaltungsart" — kein eindeutiger Text-Anker möglich. Feinschliff
+  mit präzisem Anker später möglich (echten Verwaltung-Tab-Titel vom
+  iPhone ablesen).
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

@@ -62,18 +62,27 @@
   //   und klettern zum klickbaren Wrapper hoch (max. 4 Ebenen).
   function findeText(text) {
     var best = null, bestA = Infinity;
+    var bestExakt = null, bestExaktA = Infinity;
     var alle = alleElemente();
     for (var i = 0; i < alle.length; i++) {
       var n = alle[i];
       if (istTourKnoten(n) || !sichtbar(n)) continue;
       var t = eigenerText(n);
       if (!t) continue;
-      if (t === text || t.indexOf(text) === 0) {
+      // Exakte Treffer haben VORRANG (sonst gewinnt z. B. "Verwaltungsart"
+      // gegen den Tab "Verwaltung", weil es mit dem Suchtext beginnt und
+      // kleiner ist). "Beginnt mit" zaehlt nur, solange kein exakter da ist.
+      if (t === text) {
         var r = n.getBoundingClientRect();
         var a = r.width * r.height;
-        if (a < bestA) { bestA = a; best = n; }
+        if (!bestExakt || a < bestExaktA) { bestExaktA = a; bestExakt = n; }
+      } else if (t.indexOf(text) === 0) {
+        var r2 = n.getBoundingClientRect();
+        var a2 = r2.width * r2.height;
+        if (a2 < bestA) { bestA = a2; best = n; }
       }
     }
+    if (bestExakt) best = bestExakt;
     if (!best) return null;
     // Zum ganzen Eintrag hochklettern: solange Eltern (fast) nur diesen
     // Text tragen. cursor taugt nicht als Kriterium (erbt auf Kinder).
@@ -108,22 +117,21 @@
       if (a > 4 && a < bestA) { bestA = a; best = n; }
     }
     if (!best) return null;
-    // Zum klickbaren Wrapper hoch (button/a/onclick/cursor:pointer), aber nur
-    // solange der Textumfang gleich bleibt (nicht in die ganze Liste klettern).
+    // Zur GANZEN Karte hochklettern: Avatare (Initialen), Badges und
+    // Statuszeilen bringen nur wenig Zusatztext (+80 Zeichen Toleranz);
+    // die Listen-Gruppe darüber enthält die nächste Karte (viel mehr Text)
+    // → dort stoppt der Aufstieg. So umfasst der Spotlight die komplette
+    // Kontakt-/Objekt-Karte, nicht nur den Textblock (Benny, 05.07.2026).
     var startTxt = (best.textContent || "").replace(/\s+/g, " ").trim();
     var n2 = best, hoch = 0;
-    while (n2 && hoch < 4) {
-      var tag = (n2.tagName || "").toLowerCase();
-      if (tag === "button" || tag === "a" || n2.onclick) return n2;
-      var st = window.getComputedStyle(n2);
-      if (st.cursor === "pointer") return n2;
+    while (n2 && hoch < 6) {
       var p = n2.parentElement;
-      if (!p) break;
+      if (!p || p === document.body) break;
       var pt = (p.textContent || "").replace(/\s+/g, " ").trim();
-      if (pt !== startTxt) break; // Eltern trägt mehr → nicht weiter hoch
+      if (pt.length > startTxt.length + 80) break; // Eltern = Liste/Gruppe
       n2 = p; hoch++;
     }
-    return best;
+    return n2;
   }
   function findeAnker(anker) {
     if (!anker) return null;
@@ -188,7 +196,7 @@
       ov.loch = el("div", {
         position: "fixed", zIndex: String(Z),
         borderRadius: "14px", pointerEvents: "none",
-        boxShadow: "0 0 0 200vmax rgba(4,4,10,0.72)",
+        boxShadow: "0 0 0 200vmax rgba(3,3,8,0.92)",
         transition: "left .25s ease, top .25s ease, width .25s ease, height .25s ease",
         border: "2px solid rgba(14,116,144,0.9)"
       });
