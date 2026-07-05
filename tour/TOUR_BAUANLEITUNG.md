@@ -452,6 +452,13 @@ Drei Schichten, drei Fixes (App bleibt unangetastet, Weg Y):
   daher sichtbare Texte (Logo) als Anker.
 - **Diagnose-Overlay entfernt** (Hell/Dunkel-Übergabe bestätigt ok).
 
+## 5.28 Änderungen v0.28 (05.07.2026)
+
+- **Kopf-Anker inkl. Suchzeile:** v0.27 war zu eng (nur oberste Zeile,
+  Suche ausgeblendet). Neu `[AllesDa, Suchen]` → Container = Logo +
+  Objektwahl + Suchzeile, weiterhin OHNE Kategorien-Leiste. Real
+  getestet (test-kopfanker.js, 430 px).
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

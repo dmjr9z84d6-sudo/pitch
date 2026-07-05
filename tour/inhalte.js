@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.27";
+var TOUR_VERSION = "0.28";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -93,7 +93,7 @@ var TOUR_SCHRITTE = [
   // ── Station 1: Bereiche zeigen (3× Spotlight + Weiter) ─────────────────────
   {
     id: "s1-kopf", art: "zeigen",
-    anker: { alleTexte: ["AllesDa", "Alle Objekte"] },
+    anker: { alleTexte: ["AllesDa", "Suchen"] },
     titel: "Station 1 — Der Kopf",
     text: "Ganz oben finden Sie die Suche über den gesamten Bestand, den Wechsel zwischen Hell und Dunkel, den Kalender und Ihre Einstellungen."
   },
