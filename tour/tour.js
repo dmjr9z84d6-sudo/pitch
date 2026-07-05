@@ -516,8 +516,8 @@
       // Kompakt: Höhe wie der runde +-Button der App (~40 px), nicht mehr
       // bildschirmbreit — dominiert über Farbe, nicht über Masse.
       var primaerBtn = el("button", {
-        alignSelf: "center", minHeight: "40px", padding: "9px 26px",
-        fontSize: "15px", fontWeight: "700", borderRadius: "999px",
+        alignSelf: "center", minHeight: "36px", padding: "7px 22px",
+        fontSize: "14px", fontWeight: "700", borderRadius: "999px",
         cursor: "pointer", border: "none",
         background: "#0E7490", color: "#FFFFFF",
         boxShadow: "0 6px 18px rgba(14,116,144,0.30)",
