@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.22";
+var TOUR_VERSION = "0.23";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -105,9 +105,9 @@ var TOUR_SCHRITTE = [
   },
   {
     id: "s1-hauptfenster", art: "zeigen",
-    anker: { alleTexte: ["Objekte", "VE-001", "Legende"] },
+    anker: { alleTexte: ["Kontakte", "Statistik", "Legende"] },
     titel: "Station 1 — Das Hauptfenster",
-    text: "Hier arbeiten Sie: oben der Kopf des Bereichs — teils mit Filter-Pillen oder „Neu anlegen“ —, links die Karten oder die Liste, in der Mitte das Detailfenster."
+    text: "Hier arbeiten Sie: links der Schnellzugriff, oben der Kopf des Bereichs — teils mit Filter-Pillen oder „Neu anlegen“ —, dann die Karten oder die Liste, in der Mitte das Detailfenster."
   },
 
   // ── Station 2: Kontakte (Nutzer tippt selbst) ──────────────────────────────

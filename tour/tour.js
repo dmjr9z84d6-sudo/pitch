@@ -143,6 +143,16 @@
     }
     return n2;
   }
+  // Erkennt eine „ganze Karte" an den stabilen App-Markierungen.
+  function istKarte(n) {
+    if (!n || !n.getAttribute) return false;
+    if (n.getAttribute("data-kb-item") === "1") return true;
+    var id = n.id || "";
+    if (id.indexOf("obj-") === 0) return true;
+    if (id.indexOf("vekontkarte-") === 0) return true;
+    return false;
+  }
+
   // {alleTexte:[…]}: kleinster sichtbarer Container, der ALLE Texte enthält.
   // Klettert danach zum klickbaren Vorfahren (Karte mit onClick), damit
   // „tippen"-Schritte ein sinnvolles Klickziel bekommen.
@@ -168,26 +178,20 @@
     // die Listen-Gruppe darüber enthält die nächste Karte (viel mehr Text)
     // → dort stoppt der Aufstieg. So umfasst der Spotlight die komplette
     // Kontakt-/Objekt-Karte, nicht nur den Textblock (Benny, 05.07.2026).
-    var startTxt = (best.textContent || "").replace(/\s+/g, " ").trim();
+    // Zur GANZEN Karte: strukturell klettern. Die App markiert jede
+    // klickbare Karte/Zeile mit data-kb-item="1" (Kontakte UND Objekte),
+    // Objektkarten zusätzlich mit id="obj-…", Kontaktgruppen mit
+    // id="vekontkarte-…". Das ist zuverlässiger als jede Flächen-/Text-
+    // Heuristik (Benny: „immer die ganze Karte", 05.07.2026).
+    var kandidat = istKarte(best) ? best : null;
     var n2 = best, hoch = 0;
-    while (n2 && hoch < 6) {
-      var p = n2.parentElement;
-      if (!p || p === document.body) break;
-      var pt = (p.textContent || "").replace(/\s+/g, " ").trim();
-      if (pt.length > startTxt.length + 80) break; // Eltern = Liste/Gruppe
-      // FLÄCHEN-BREMSE: textarme, aber riesige Wrapper (Scroll-Container,
-      // Listen) nicht mitnehmen — sonst umfasst der Spotlight den ganzen
-      // Screen statt nur die Karte (Bug v0.20, Objekt-Karte).
-      try {
-        var nr = n2.getBoundingClientRect();
-        var pr = p.getBoundingClientRect();
-        var nA = Math.max(1, nr.width * nr.height);
-        var pA = pr.width * pr.height;
-        if (pA > nA * 1.8) break;
-      } catch (e) {}
-      n2 = p; hoch++;
+    while (n2 && hoch < 8) {
+      if (istKarte(n2)) { kandidat = n2; break; }
+      n2 = n2.parentElement; hoch++;
     }
-    return n2;
+    if (kandidat) return kandidat;
+    // Fallback (App-Markierung fehlt): eng am Textblock bleiben.
+    return best;
   }
   function findeAnker(anker) {
     if (!anker) return null;
@@ -993,6 +997,9 @@
     // Live-Sync: Tour-Theme folgt dem App-Modus (Kopf-Button der App).
     var h = appIstHell();
     if (h !== null && h !== istHell) { try { setzeModusHell(h); } catch (e) {} }
+    // Aktuellen Modus persistieren, damit „Tour ansehen" (Neustart) und ein
+    // Reload ihn übernehmen — sonst käme wieder die alte Pitch-Wahl (Benny).
+    if (h !== null) { try { localStorage.setItem(LS_MODUS, h ? "hell" : "dunkel"); } catch (e) {} }
     try { versteckeEinstellKacheln(); } catch (e) {}
     try { legeNurAnsichtSchleier(); } catch (e) {}
     try { sicherheitsnetz(); } catch (e) {}

@@ -398,6 +398,23 @@ Drei Schichten, drei Fixes (App bleibt unangetastet, Weg Y):
 - **Reset behält den Modus:** aktueller App-Modus wird über das
   Löschen der allesda-Keys hinweg gerettet.
 
+## 5.23 Änderungen v0.23 (05.07.2026)
+
+- **GANZE Karte — jetzt strukturell (endgültiger Fix):** Text-/Flächen-
+  Heuristik (v0.20/0.21) ersetzt durch Aufstieg zur App-Markierung.
+  `istKarte()`: `data-kb-item="1"` (jede klickbare Karte/Zeile, Kontakte
+  UND Objekte), `id^="obj-"` (Objektkarte), `id^="vekontkarte-"`
+  (Kontaktgruppe). `findeContainer` klettert vom Textblock zum nächsten
+  solchen Vorfahren → exakt die ganze Karte inkl. Avatar/Badges/Status,
+  ohne den Zielkonflikt „ganze Karte vs. nicht den halben Screen".
+- **Hauptfenster-Anker inkl. Seitenleiste:** `[Kontakte, Statistik,
+  Legende]` → kleinster Container mit Schnellzugriff (links) UND Content
+  (rechts) = ganzer Arbeitsbereich. Text nennt jetzt den Schnellzugriff.
+- **Modus-Wahl in freier Phase bleibt:** Wächter persistiert den
+  aktuellen App-Modus laufend nach `allesda:tour:modus` → „Tour ansehen"
+  (Neustart) und Reload übernehmen ihn, statt zur alten Pitch-Wahl
+  zurückzufallen.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).
