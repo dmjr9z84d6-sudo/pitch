@@ -6,7 +6,7 @@
 // Hochzählen bei jeder Änderung: TOUR_VERSION (Cache-Buster).
 // ═══════════════════════════════════════════════════════════════════════════
 
-var TOUR_VERSION = "0.23";
+var TOUR_VERSION = "0.24";
 
 // ── Ziel des Buttons „Ausgiebiger kennenlernen" ─────────────────────────────
 // Leer = Hinweis-Karte "in Kürze" (bis Lead-Capture/Phase 4 steht).
@@ -105,9 +105,9 @@ var TOUR_SCHRITTE = [
   },
   {
     id: "s1-hauptfenster", art: "zeigen",
-    anker: { alleTexte: ["Kontakte", "Statistik", "Legende"] },
+    anker: { alleTexte: ["Legende", "VE-001", "Einstellen"] },
     titel: "Station 1 — Das Hauptfenster",
-    text: "Hier arbeiten Sie: links der Schnellzugriff, oben der Kopf des Bereichs — teils mit Filter-Pillen oder „Neu anlegen“ —, dann die Karten oder die Liste, in der Mitte das Detailfenster."
+    text: "Hier arbeiten Sie: oben der Kopf des Bereichs — teils mit Filter-Pillen oder „Neu anlegen“ —, dann die Karten oder die Liste, in der Mitte das Detailfenster."
   },
 
   // ── Station 2: Kontakte (Nutzer tippt selbst) ──────────────────────────────
@@ -228,7 +228,7 @@ var TOUR_SCHRITTE = [
   {
     id: "weiche", art: "karte",
     titel: "Das war der Überblick",
-    text: "Und jetzt Sie: Schauen Sie sich frei um — tippen Sie, wohin Sie wollen. Es wird nichts gespeichert. Unten finden Sie jederzeit den Weg, AllesDa ausgiebiger kennenzulernen.",
+    text: "Schauen Sie sich frei um — tippen Sie, wohin Sie wollen. Es wird nichts gespeichert. Unten finden Sie jederzeit den Weg, AllesDa ausgiebiger kennenzulernen.",
     buttons: [
       { label: "Frei erkunden", aktion: "freigeben", primaer: true }
     ]

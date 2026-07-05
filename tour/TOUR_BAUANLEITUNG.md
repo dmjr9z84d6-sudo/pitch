@@ -415,6 +415,18 @@ Drei Schichten, drei Fixes (App bleibt unangetastet, Weg Y):
   (Neustart) und Reload übernehmen ihn, statt zur alten Pitch-Wahl
   zurückzufallen.
 
+## 5.24 Änderungen v0.24 (05.07.2026)
+
+- **Firmen-Karte sauber erfasst:** `istKarte()` erkennt jetzt auch
+  `id^="kon-"` — Listen-Kontaktkarten (kontakte-modul.jsx ~Z.4272)
+  tragen diese id IMMER, `data-kb-item` dagegen nur bei Tastatur-Fokus.
+  Deshalb klappte Lindqvist, Förster nicht. Jetzt beide.
+- **Hauptfenster ohne Schnellzugriff:** Anker zurück auf den Content-
+  Bereich (`[Legende, VE-001, Einstellen]`) — Seitenleiste raus (wurde
+  in „Kopf/Schnellzugriff" schon behandelt, nicht doppelt). Text ohne
+  „Schnellzugriff".
+- **Letzte Folie:** „Und jetzt Sie:" gestrichen.
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

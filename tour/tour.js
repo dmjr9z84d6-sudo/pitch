@@ -148,8 +148,9 @@
     if (!n || !n.getAttribute) return false;
     if (n.getAttribute("data-kb-item") === "1") return true;
     var id = n.id || "";
-    if (id.indexOf("obj-") === 0) return true;
-    if (id.indexOf("vekontkarte-") === 0) return true;
+    if (id.indexOf("obj-") === 0) return true;          // Objektkarte
+    if (id.indexOf("kon-") === 0) return true;          // Kontaktkarte (Liste)
+    if (id.indexOf("vekontkarte-") === 0) return true;  // Kontaktgruppe am Objekt
     return false;
   }
 
