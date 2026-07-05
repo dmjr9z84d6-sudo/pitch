@@ -441,6 +441,17 @@ Drei Schichten, drei Fixes (App bleibt unangetastet, Weg Y):
 - Pitch-Schreiblogik (`t === DARK ? "dunkel" : "hell"`) war korrekt —
   der Fehler lag allein auf der Tour-Seite.
 
+## 5.27 Änderungen v0.27 (05.07.2026)
+
+- **Kopf-Spotlight ohne Schnellzugriff-Leiste:** Anker `[Alle Objekte,
+  Suchen]` fasste auf Mobile den ganzen oberen Block inkl. Kategorien-
+  Leiste. Neu `[AllesDa, Alle Objekte]` → kleinster Container =
+  Kopfzeile (Logo/Objektwahl/Suche), OHNE Objekte/Kontakte/Kalender.
+  Per Test gegen echte App bei 430 px verifiziert (test-kopfanker.js).
+  Hinweis: Suchfeld-Platzhalter „VE-Nr." zählt NICHT als textContent —
+  daher sichtbare Texte (Logo) als Anker.
+- **Diagnose-Overlay entfernt** (Hell/Dunkel-Übergabe bestätigt ok).
+
 ## 6. Offene Punkte (Stand v0.1)
 
 - ⬜ Sprechblasen-Texte sind ENTWÜRFE — mit Benny iterieren (nur inhalte.js).

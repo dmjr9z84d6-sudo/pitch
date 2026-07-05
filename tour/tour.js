@@ -1074,23 +1074,6 @@
     istHell = wunschHell;
     schalteAppAufWunsch(wunschHell, 0);
 
-    // ── DIAGNOSE (temporär): zeigt, welcher Modus-Wert gelesen wurde ─────────
-    try {
-      var rohWert = null;
-      try { rohWert = localStorage.getItem(LS_MODUS); } catch (e) {}
-      var sys = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "System=dunkel" : "System=hell";
-      var diag = document.createElement("div");
-      diag.style.cssText = "position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:999999;" +
-        "background:#EAB308;color:#0B0B14;font:600 12px -apple-system,sans-serif;" +
-        "padding:6px 12px;border-radius:8px;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.4)";
-      diag.textContent = "TOUR-DIAGNOSE · gelesen: " + (rohWert === null ? "(nichts)" : rohWert) +
-        " · " + sys + " · → Tour startet " + (wunschHell ? "HELL" : "DUNKEL");
-      diag.__tour = true;
-      document.body.appendChild(diag);
-      setTimeout(function () { if (diag.parentNode) diag.parentNode.removeChild(diag); }, 6000);
-    } catch (e) {}
-    // ── /DIAGNOSE ────────────────────────────────────────────────────────────
-
     // Die App markiert per Tastatur-Navigation ein „aktives" Element mit
     // outline:2px solid #3B82F6 (data-kb-aktiv, allesda_merged.jsx ~Z.1999).
     // In der Touch-Demo navigiert niemand per Tastatur → dieser blaue Ring
