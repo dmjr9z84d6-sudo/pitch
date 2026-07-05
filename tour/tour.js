@@ -516,7 +516,8 @@
       // Kompakt: Höhe wie der runde +-Button der App (~40 px), nicht mehr
       // bildschirmbreit — dominiert über Farbe, nicht über Masse.
       var primaerBtn = el("button", {
-        alignSelf: "center", minHeight: "36px", padding: "7px 22px",
+        alignSelf: "center", minHeight: "36px", minWidth: "min(420px, 70vw)",
+        padding: "7px 40px",
         fontSize: "14px", fontWeight: "700", borderRadius: "999px",
         cursor: "pointer", border: "none",
         background: "#0E7490", color: "#FFFFFF",
@@ -566,11 +567,13 @@
     ver.__tour = true;
     fuss.appendChild(ver);
 
-    // Mitte: Aktionen, zentriert im verbleibenden Raum
+    // Mitte: Aktionen, absolut auf ECHTE Bildschirmmitte zentriert (nicht im
+    // Restraum zwischen Version und Rechtliches — die sind ungleich breit).
     var mitte = el("div", {
-      flex: "1 1 auto", display: "flex", gap: "22px",
+      position: "absolute", left: "50%", transform: "translateX(-50%)",
+      display: "flex", gap: "22px",
       justifyContent: "center", alignItems: "center",
-      pointerEvents: "auto", minWidth: "0"
+      pointerEvents: "auto", whiteSpace: "nowrap"
     });
     mitte.__tour = true;
     if (modus === "gefuehrt") {
@@ -583,6 +586,7 @@
 
     // rechts: Rechtliches (wie Pitch: 11px, opacity .6)
     var rechtEck = el("div", {
+      marginLeft: "auto",
       fontSize: "11px", color: "#7575A0", opacity: "0.6",
       letterSpacing: "0.02em", cursor: "pointer",
       padding: "6px 0 6px 4px", flexShrink: "0",
