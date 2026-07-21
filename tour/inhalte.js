@@ -18,10 +18,13 @@ var ZIEL_KENNENLERNEN = "";
 var TOUR_BESCHNITT = {
   // Hauptmenü (settings.kacheln → aktiv). true = sichtbar in der Tour.
   menue: {
-    objekte: true, kontakte: true, kalender: true, beschluss: true,
-    technik: true, statistik: true,
-    etv: false, auftraege: false, kommunikation: false, finanzen: false,
-    dokumente: false, listen: false, fotos: false, schnelleingabe: false
+    // Sichtbar in der Tour: nur die von den Stationen angesteuerten Bereiche
+    // plus Technik + Statistik (Benny 21.07.2026). Alles andere aus.
+    objekte: true, kontakte: true, kalender: true, technik: true, statistik: true,
+    beschluss: false, etv: false, auftraege: false, kommunikation: false,
+    finanzen: false, dokumente: false, listen: false, fotos: false,
+    schnelleingabe: false, legionellen: false, te: false, historie: false,
+    schreibtisch: false
   },
   // Objekt-Detail-Tabs (settings.objektTabs → aktiv).
   objektTabs: {
@@ -56,13 +59,17 @@ var TOUR_BESCHNITT = {
   },
   // Sicherheitsnetz: Nav-/Tab-Einträge mit exakt diesem Text werden immer
   // versteckt, falls sie doch auftauchen (z. B. nach Einstellungs-Klicks).
+  // ⚠ "Legionellen" bewusst NICHT hier: der Objekt-Tab gleichen Namens bleibt
+  // sichtbar (Station s3-legionellen). Die Hauptmenü-Kachel wird ohnehin über
+  // den Seed (aktiv:false) entfernt — das Netz würde sonst auch den Tab treffen.
   verboteneNavTexte: [
-    "ETV", "Vorgänge", "Kommunikation", "Finanzen", "Dokumente",
-    "Listengenerator", "Fotos", "Schnelleingabe", "TE", "Bilder", "Historie"
+    "ETV", "Beschlusssammlung", "Vorgänge", "Kommunikation", "Finanzen",
+    "Dokumente", "Listengenerator", "Fotos", "Schnelleingabe",
+    "Teilungserklärung", "Bilder", "Schreibtisch"
   ],
   // Kontext-Erkennung fürs Sicherheitsnetz: ein Kandidat wird nur versteckt,
   // wenn sein Umfeld mind. 2 dieser Texte enthält (= Navigations-/Tab-Leiste).
-  navKontextTexte: ["Objekte", "Kontakte", "Kalender", "Liegenschaft", "Verwaltung", "Beschlusssammlung", "Technik", "Statistik", "Legionellen"]
+  navKontextTexte: ["Objekte", "Kontakte", "Kalender", "Liegenschaft", "Verwaltung", "Technik", "Statistik"]
 };
 
 // ── Texte: Nur-Ansicht-Badge ────────────────────────────────────────────────

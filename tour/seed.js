@@ -44,7 +44,11 @@
     { id: "statistik",      label: "Statistik",         icon: "chart",    farbe: "#6366F1", reihenfolge: 10 },
     { id: "listen",         label: "Listengenerator",   icon: "sort",     farbe: "#0E7490", reihenfolge: 11 },
     { id: "fotos",          label: "Fotos",             icon: "paint",    farbe: "#EC4899", reihenfolge: 12 },
-    { id: "schnelleingabe", label: "Schnelleingabe",    icon: "plus",     farbe: "#0080FF", reihenfolge: 13 }
+    { id: "schnelleingabe", label: "Schnelleingabe",    icon: "plus",     farbe: "#0080FF", reihenfolge: 13 },
+    { id: "legionellen",    label: "Legionellen",       icon: "drop",     farbe: "#06B6D4", reihenfolge: 14 },
+    { id: "te",             label: "Teilungserklärung", icon: "badge",    farbe: "#A855F7", reihenfolge: 15 },
+    { id: "historie",       label: "Historie",          icon: "clock",    farbe: "#F97316", reihenfolge: 16 },
+    { id: "schreibtisch",   label: "Schreibtisch",      icon: "check",    farbe: "#6366F1", reihenfolge: 17 }
   ];
 
   // ── Vorlage: Objekt-Detail-Tabs (aus DEFAULT_SETTINGS) ─────────────────────
